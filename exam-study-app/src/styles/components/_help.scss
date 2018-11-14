@@ -1,0 +1,12 @@
+﻿.Help {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: calc( 100vh - 60px );
+}
+
+.Help-Card {
+    text-align: center;
+    align-items: center;
+    width: 300px;
+}
