@@ -1,0 +1,11 @@
+﻿$bgPath: $media-path + "ExamStudyHero.jpg";
+.Hero-Background {
+    background: url($bgPath) no-repeat center;
+    background-size: cover;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:-5;
+}

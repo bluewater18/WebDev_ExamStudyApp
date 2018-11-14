@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 
 //File Imports
 import './styles/main.scss';
-import App from './scripts/containers/App';
+import App from './scripts/containers/App.jsx';
 import Loader from './scripts/components/Loader';
 import { store, persistor } from './scripts/store/index';
 

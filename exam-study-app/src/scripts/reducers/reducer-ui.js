@@ -6,13 +6,9 @@ const initialState = {
 
 export default function uiReducer(state = initialState, action) {
     switch (action.type) {
-        case actionConstants.LEFT_DRAWER_OPEN:
+        case actionConstants.LEFT_DRAWER_TOGGLE:
             return Object.assign({}, state, {
-                leftDrawerOpen: true
-            });
-        case actionConstants.LEFT_DRAWER_CLOSE:
-            return Object.assign({}, state, {
-                leftDrawerOpen: false
+                leftDrawerOpen: action.payload
             });
         default:
             return state;
