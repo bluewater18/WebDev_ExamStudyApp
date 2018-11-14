@@ -37,9 +37,9 @@ class NavAppBar extends React.Component {
                             onClick={() => { this.props.toggleLeftDrawer(true) }}>
                             <MenuIcon color="secondary" />
                         </IconButton>
-                        <Typography variant="title" color="inherit" className={classes.grow}>
-                            Exam Study
-                        </Typography>
+                        <div className="nav-app-bar-title-spacer" style={{ flex: "1" }}/>
+                        {this.linkHelpRender()}
+                        
                         <Link to="/help">
                             <IconButton className={classes.helpButton} color="inherit" aria-label="Help" >
                                 <HelpIcon color="secondary" />
@@ -47,11 +47,30 @@ class NavAppBar extends React.Component {
                         </Link>
                     </Toolbar>
                 </AppBar>
-                <div className="appbar-padding" color="secondary" style={{ height: "60px" }}> </div>
+                <div className="appbar-padding" color="secondary" style={{ height: "60px" }}/> 
                 <NavDrawer/>
             </div>
         );
     };
+
+    linkHelpRender() {
+        if (this.props.user.isAuthenticated === false) {
+            return (
+                <div className="title-links" style={{ display: "inherit" }}>
+                    <Link to="/login">
+                        <Typography variant="title" color="inherit" className="nav-app-bar-title-link" >
+                            Log In
+                        </Typography>
+                    </Link>
+                    <Link to="/register">
+                        <Typography variant="title" color="inherit" className="nav-app-bar-title-link" >
+                            Register
+                        </Typography>
+                    </Link>
+                </div>
+            );
+        };
+    }
 }
 
 
@@ -61,7 +80,8 @@ NavAppBar.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        ui: state.ui
+        ui: state.ui,
+        user: state.user,
     };
 }
 
