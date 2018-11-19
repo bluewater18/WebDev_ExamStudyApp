@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
+using Microsoft.AspNetCore.Cors;
 
 namespace ExamStudy.API.Controllers
 {

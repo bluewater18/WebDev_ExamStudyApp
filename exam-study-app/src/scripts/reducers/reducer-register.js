@@ -1,19 +1,25 @@
 ﻿import { actionConstants } from '../constants/index';
 
 const initialState = {
-    registerStepperState: 0,
+    UserName: '',
+    UserEmail: '',
+    UserPassword: '',
 };
 
-export default function uiReducer(state = initialState, action) {
+export default function registerReducer(state = initialState, action) {
     switch (action.type) {
-        case actionConstants.REGISTER_STEPPER_FORWARD:
+        case actionConstants.REGISTER_NAME_UPDATE:
             return Object.assign({}, state, {
-                registerStepperState: action.payload + 1 //send the current steeper state with the action
+                UserName: action.payload
             });
-        case actionConstants.REGISTER_STEPPER_BACK:
+        case actionConstants.REGISTER_EMAIL_UPDATE:
             return Object.assign({}, state, {
-                registerStepperState: action.payload + 1
+                UserEmail: action.payload
             });
+        case actionConstants.REGISTER_PASSWORD_UPDATE:
+            return Object.assign({}, state, {
+                UserPassword: action.payload
+            })
         default:
             return state;
 
