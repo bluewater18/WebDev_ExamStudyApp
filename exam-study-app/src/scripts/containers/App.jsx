@@ -4,6 +4,7 @@ import NavAppBar from './NavAppBar'
 import Home from './Home';
 import NotFound from '../components/NotFound';
 import Help from '../components/Help';
+import Register from '../containers/Register';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
                     <Switch>
                         
                         <Route path="/Help" component={Help} />
+                        <Route path="/Register" component={Register} />
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>

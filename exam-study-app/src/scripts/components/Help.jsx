@@ -1,13 +1,14 @@
 ﻿import React from 'react';
 import { Card, CardActions, CardContent, Typography, Button, } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Background from './Background';
 
 
 class Help extends React.Component {
     render() {
         return (
             <div className="Help" >
-                <div className="Hero-Background" />
+                <Background/>
                     <Card className="Help-Card">
                     <CardContent>
                         <Typography variant="h4" component="h2" className="Help-Card-Title">
