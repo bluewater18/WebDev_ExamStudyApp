@@ -9,9 +9,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import toggleLeftDrawer from '../actions/action-toggle-left-drawer'
+import SettingsIcon from '@material-ui/icons/Settings';
+import toggleLeftDrawer from '../actions/action-toggle-left-drawer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import { Link } from 'react-router-dom'
 const styles = {
@@ -51,6 +54,25 @@ class NavDrawer extends React.Component {
             </div>
         );
 
+        const userSection = (
+            <div className="nav-drawer-user" >
+                <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=350" width="150" height="150" className="nav-drawer-user-img" />
+                <br />
+                <div style={{ height:"49px"}}>
+                    <div style={{ float: "left" }}>
+                        <Typography variant="title" style={{ marginLeft: "25px", marginTop: "17px", fontSize: "medium" }}> 
+                            John Smith
+                        </Typography>
+                    </div>
+                    <div style={{ float:"right"}}>
+                        <IconButton className="nav-drawer-user-settings" color="inherit" aria-label="Settings">
+                            <SettingsIcon color="secondary" />
+                         </IconButton>
+                    </div>
+                </div>
+            </div>
+            )
+
 
         return (
             <div>
@@ -61,9 +83,10 @@ class NavDrawer extends React.Component {
                         onClick={() => { this.props.toggleLeftDrawer(false) }}
                         onKeyDown={() => { this.props.toggleLeftDrawer(false) }}
                     >
-                        <div className="listHead" style={{ padding: "20px" }}>
-                            <h1> Generic Menu </h1>
-                        </div>
+                        {/*<div className="listHead" style={{ padding: "20px" }}>
+                            <h1> Exam Study </h1>
+                        </div>*/}
+                        {userSection}
                         <Divider />
                         {sideList}
                     </div>

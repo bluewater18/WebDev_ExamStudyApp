@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExamStudy.Business.Interfaces\ExamStudy.Business.Interfaces.csproj" />
+    <ProjectReference Include="..\ExamStudy.Business\ExamStudy.Business.csproj" />
+    <ProjectReference Include="..\ExamStudy.Entities\ExamStudy.Entities.csproj" />
+    <ProjectReference Include="..\ExamStudy.Repository.Interfaces\ExamStudy.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\ExamStudy.Repository\ExamStudy.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

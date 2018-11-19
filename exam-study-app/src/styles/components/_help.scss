@@ -8,5 +8,21 @@
 .Help-Card {
     text-align: center;
     align-items: center;
-    width: 300px;
+    min-width: 200px;
+    max-width: 70vw;
+}
+
+.Help-Card-Title {
+    font-size: x-large !important;
+}
+
+.Help-Card-Title-Sub {
+    font-size: large !important;
+}
+
+.Help-Card-Content {
+    margin-top: 20px !important;
+    margin-left:20px !important;
+    margin-right:20px !important;
+    font-size: medium !important;
 }

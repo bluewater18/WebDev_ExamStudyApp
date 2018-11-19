@@ -1,59 +1,43 @@
 ﻿import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, CardActions, CardContent, CardHeader, Typography, Button, withStyles, Grid } from '@material-ui/core'
+import { Card, CardActions, CardContent, Typography, Button, } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-const styles = {
-    card: {
-        minWidth: 275,
-        maxWidth: 300,
-        maxHeight: 500,
-        float: "center"
-        
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-};
 
 class Help extends React.Component {
     render() {
-        const { classes } = this.props;
         return (
             <div className="Help" >
                 <div className="Hero-Background" />
                     <Card className="Help-Card">
-                        <CardContent>
-                            <Typography variant="h5" component="h2">
-                                About
+                    <CardContent>
+                        <Typography variant="h4" component="h2" className="Help-Card-Title">
+                                Exam Study
                                 </Typography>
-                            <Typography className={classes.pos} color="textSecondary">
-                                adjective
+                        <Typography className="Help-Card-Title-Sub" color="textSecondary">
+                                about
                                 </Typography>
-                            <Typography component="p">
-                                well meaning and kindly.
+                        <br/>
+                        <hr/>
+                        <Typography component="p" className="Help-Card-Content">
+                                This web application is designed to help students study collaboratively online with ease.
                                 <br />
-                                {'"a benevolent smile"'}
+                                To get started simply sign up for an account and create a group to invite classmates and friends to study.
+                                <br />
                             </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Learn More</Button>
-                        </CardActions>
+                    </CardContent>
+                    <CardActions style={{ justifyContent: "center" }}>
+                        <Link to="/register">
+                            <Button style={{ justifySelf: "center", fontSize: "small" }} >
+                                Sign Me Up
+                            </Button>
+                        </Link>
+                    </CardActions>
                     </Card>
             </div>
         );
     }
 }
 
-Help.PropType = {
-    classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(Help);
+
+export default Help;

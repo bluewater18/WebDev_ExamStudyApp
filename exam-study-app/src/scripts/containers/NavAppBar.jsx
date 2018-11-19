@@ -8,6 +8,7 @@ import NavDrawer from './NavDrawer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const styles = {
     root: {
@@ -35,14 +36,14 @@ class NavAppBar extends React.Component {
                     <Toolbar>
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
                             onClick={() => { this.props.toggleLeftDrawer(true) }}>
-                            <MenuIcon color="secondary" />
+                            <MenuIcon color="secondary" fontSize="large" />
                         </IconButton>
                         <div className="nav-app-bar-title-spacer" style={{ flex: "1" }}/>
                         {this.linkHelpRender()}
                         
                         <Link to="/help">
                             <IconButton className={classes.helpButton} color="inherit" aria-label="Help" >
-                                <HelpIcon color="secondary" />
+                                <HelpIcon color="secondary" fontSize="large" />
                             </IconButton>
                         </Link>
                     </Toolbar>
@@ -58,14 +59,18 @@ class NavAppBar extends React.Component {
             return (
                 <div className="title-links" style={{ display: "inherit" }}>
                     <Link to="/login">
-                        <Typography variant="title" color="inherit" className="nav-app-bar-title-link" >
-                            Log In
-                        </Typography>
+                        <Button className="nav-app-bar-title-button">
+                            <Typography variant="title" className="nav-app-bar-title-link" >
+                                Log In
+                            </Typography>
+                        </Button>
                     </Link>
                     <Link to="/register">
-                        <Typography variant="title" color="inherit" className="nav-app-bar-title-link" >
-                            Register
-                        </Typography>
+                        <Button className="nav-app-bar-title-button">
+                            <Typography variant="title" className="nav-app-bar-title-link" >
+                                Register
+                            </Typography>
+                        </Button>
                     </Link>
                 </div>
             );
