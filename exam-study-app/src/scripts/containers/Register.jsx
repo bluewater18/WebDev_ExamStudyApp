@@ -15,33 +15,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeRegisterName, changeRegisterEmail, changeRegisterPassword, registerComplete, changeRegisterStepper } from '../actions/action-register-form-change';
 
-const styles = theme => ({
-    root: {
-        width: '40%',
-    },
-    button: {
-        marginTop: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    actionsContainer: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-    resetContainer: {
-        padding: theme.spacing.unit * 3,
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-});
-
-
-
 class Register extends React.Component {
 
     handleNext = () => {
@@ -61,7 +34,7 @@ class Register extends React.Component {
     };
 
     getSteps() {
-        return ['Required Fields', 'Image (WIP)', 'Submit'];
+        return [<h3>Required Fields</h3>, <h3>Image (WIP) </h3>, <h3>Submit</h3>];
     }
     getStepContent(step) {
         switch (step) {
@@ -80,14 +53,14 @@ class Register extends React.Component {
         const { classes } = this.props;
         return(
             
-            <div id="register-form" className={classes.container}>
+            <div id="register-form" className="register-container">
                 <TextField
                     required
                     value={this.props.register.UserName}
                     onChange={evt => this.props.changeRegisterName(evt.target.value)}
                     id="register-name"
                     label="Name"
-                    className={classes.textField}
+                    className="register-textfield"
                     margin="normal"
                 />
                 <TextField
@@ -96,7 +69,7 @@ class Register extends React.Component {
                     onChange={evt => this.props.changeRegisterEmail(evt.target.value)}
                     id="register-email"
                     label="Email"
-                    className={classes.textField}
+                    className="register-textfield"
                     margin="normal"
                 />
                 <TextField
@@ -105,7 +78,7 @@ class Register extends React.Component {
                     onChange={evt => this.props.changeRegisterPassword(evt.target.value)}
                     id="register-password"
                     label="Password"
-                    className={classes.textField}
+                    className="register-textfield"
                     type="password"
                     margin="normal"
                 />
@@ -126,13 +99,11 @@ class Register extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
         const steps = this.getSteps();
-        const { activeStep } = this.props.ui.registerStepperState;
         return (
-            <div className="Register">
+            <div className="register">
                 <Background />
-                <div className={classes.root}>
+                <div className="register-root">
                     <Stepper activeStep={this.props.ui.registerStepperState} orientation="vertical">
                         {steps.map((label, index) => {
                             return (
@@ -140,12 +111,12 @@ class Register extends React.Component {
                                     <StepLabel>{label}</StepLabel>
                                     <StepContent>
                                         {this.getStepContent(index)}
-                                        <div className={classes.actionsContainer}>
+                                        <div className="register-actionsContainer">
                                             <div>
                                                 <Button
                                                     disabled={this.props.ui.registerStepperState === 0}
                                                     onClick={this.handleBack}
-                                                    className={classes.button}
+                                                    className="register-button"
                                                 >
                                                     Back
                       </Button>
@@ -153,7 +124,7 @@ class Register extends React.Component {
                                                     variant="contained"
                                                     color="primary"
                                                     onClick={this.handleNext}
-                                                    className={classes.button}
+                                                    className="register-button"
                                                 >
                                                     {this.props.ui.registerStepperState === steps.length - 1 ? 'Submit' : 'Next'}
                                                 </Button>
@@ -193,6 +164,5 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-const styled = withStyles(styles)(Register)
 
-export default connect(mapStateToProps, mapDispatchToProps)(styled);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

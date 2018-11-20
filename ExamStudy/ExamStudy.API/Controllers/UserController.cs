@@ -35,9 +35,15 @@ namespace ExamStudy.API.Controllers
 
         // POST api/user
         [HttpPost]
-        public void Post([FromBody] User user)
+        public IActionResult Post([FromBody] User user)
         {
-            _userManager.AddUser(user);
+            string token = _userManager.RegisterUser(user);
+            var result = new ObjectResult(null)
+            {
+                StatusCode = 201
+            };
+            Request.HttpContext.Response.Headers.Add("X-Authorization", token);
+            return result;
         }
 
         // PUT api/user/5

@@ -9,15 +9,24 @@ namespace ExamStudy.Business
     public class UserManager : IUserManager
     {
         IUserRepository _userRepository;
+        IUserTokenRepository _userTokenRepository;
+        Validator _validator;
 
-        public UserManager(IUserRepository userRepository)
+        public UserManager(IUserRepository userRepository, IUserTokenRepository userTokenRepository)
         {
             _userRepository = userRepository;
+            _userTokenRepository = userTokenRepository;
+            _validator = new Validator();
         }
 
-        public bool AddUser(User user)
+        public string RegisterUser(User user)
         {
-            return _userRepository.AddUser(user);
+            _validator.ValidateUser(user);
+            string token = new RandomGenerator().RandomToken();
+            int userId = _userRepository.AddUser(user);
+            UserToken userToken = new UserToken(userId, token);
+            _userTokenRepository.AddUserToken(userToken);
+            return userToken.UserTokenString;
         }
 
         public bool DeleteUser(int userId)

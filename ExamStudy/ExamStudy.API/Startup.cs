@@ -33,6 +33,7 @@ namespace ExamStudy.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserTokenRepository, UserTokenRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +46,8 @@ namespace ExamStudy.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc();
         }

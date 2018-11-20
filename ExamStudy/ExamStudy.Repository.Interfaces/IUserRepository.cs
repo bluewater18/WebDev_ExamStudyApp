@@ -6,7 +6,7 @@ namespace ExamStudy.Repository.Interfaces
 {
     public interface IUserRepository
     {
-        bool AddUser(User user);
+        int AddUser(User user);
         bool UpdateUser(User user);
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();

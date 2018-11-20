@@ -9,11 +9,12 @@ function* apiRegister(user) {
          body(JSON.stringify(user), 'application/json'),
     )
 
-    fetch('/user').then((res) => {
+    yield(fetch('/user').then((res) => {
         console.log('user created')
     }).catch((err) => {
         console.log(err)
         })
+    )
     
 }
 

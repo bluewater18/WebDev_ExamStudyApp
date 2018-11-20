@@ -1,0 +1,30 @@
+﻿.register {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: calc( 100vh - 60px );
+}
+
+.register-root {
+    width: 40%,
+}
+
+.register-button {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.register-actionsContainer {
+    margin-bottom: 15px;
+}
+
+.register-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.register-textfield {
+    margin-left: 15px; 
+    margin-right: 15px;
+    width: 200px;
+}
