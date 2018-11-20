@@ -60,7 +60,9 @@ namespace ExamStudy.Repository
 
         public User GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_Email", email);
+            return SqlMapper.Query<User>(conn, "GetUserByEmail", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
 
         public bool UpdateUser(User user)
@@ -118,10 +120,11 @@ namespace ExamStudy.Repository
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("p_UserId", userToken.UserId);
                 parameters.Add("p_UserToken", userToken.UserTokenString);
+                Console.WriteLine("##############" + userToken.UserId);
                 SqlMapper.Execute(conn, "UpdateUserToken", param: parameters, commandType: StoredProcedure);
             }
             catch (Exception ex) {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("##############" + ex.Message);
                 AddUserToken(userToken);
             }
             return true;

@@ -8,11 +8,40 @@ namespace ExamStudy.Business
     class Validator
     {
 
-        public void ValidateUser(User user)
+        public void ValidateUserRegister(User user)
         {
-            if (user.UserName != null && user.UserName.Length > 4 && user.UserEmail != null && user.UserEmail.Contains("@") && user.UserEmail.Length > 4 && user.UserPassword != null && user.UserPassword.Length > 5)
+             if(ValidateName(user.UserName) && ValidateEmail(user.UserEmail) && ValidatePassword(user.UserPassword))
                 return;
             throw new InvalidObjectException("Invalid User Object");
+        }
+
+
+        public void ValidateUserLogin(User user)
+        {
+            if (ValidateEmail(user.UserEmail) && ValidatePassword(user.UserPassword))
+                return;
+            throw new InvalidObjectException("Invalid Login Request");
+        }
+
+        private bool ValidateName(string name)
+        {
+            if (name != null && name.Length > 2)
+                return true;
+            return false;
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (email != null && email.Contains("@") && email.Length > 4)
+                return true;
+            return false;
+        }
+
+        private bool ValidatePassword(string password)
+        {
+            if (password != null && password.Length > 5)
+                return true;
+            return false;
         }
     }
 }

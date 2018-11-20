@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
-using Microsoft.AspNetCore.Cors;
+
 
 namespace ExamStudy.API.Controllers
 {
@@ -58,7 +58,6 @@ namespace ExamStudy.API.Controllers
         public void Delete(int id)
         {
             _userManager.DeleteUser(id);
-        }
-                
+        }                
     }
 }

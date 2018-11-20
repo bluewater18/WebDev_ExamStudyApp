@@ -7,6 +7,7 @@ Drop PROCEDURE IF EXISTS GetUserById;
 Drop PROCEDURE IF EXISTS AddUserToken;
 Drop PROCEDURE IF EXISTS GetUserByToken;
 Drop PROCEDURE IF EXISTS UpdateUserToken;
+Drop PROCEDURE IF EXISTS GetUserByEmail;
 
 CREATE TABLE IF NOT EXISTS Users(
 	UserId INT AUTO_INCREMENT,
@@ -15,6 +16,12 @@ CREATE TABLE IF NOT EXISTS Users(
 	UserPassword VARCHAR(256),
 	PRIMARY KEY (UserId)
 );
+
+CREATE TABLE IF NOT EXISTS UserTokens(
+UserId INT NOT NULL,
+UserToken VARCHAR(128) NOT NULL,
+KEY (UserToken),
+CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId));
 
 
 DELIMITER $$
@@ -66,11 +73,15 @@ BEGIN
 END $$
 DELIMITER ;
 
-CREATE TABLE IF NOT EXISTS UserTokens(
-UserId INT NOT NULL,
-UserToken VARCHAR(128) NOT NULL,
-PRIMARY KEY (UserToken),
-CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId));
+DELIMITER $$
+
+CREATE PROCEDURE `GetUserByEmail`(
+	IN p_Email varchar(50)
+)
+BEGIN
+	SELECT * FROM Users WHERE UserEmail = p_Email;
+END $$
+DELIMITER;
 
 DELIMITER $$
 
@@ -103,15 +114,17 @@ CREATE PROCEDURE `UpdateUserToken`(
 )
 BEGIN
 	DECLARE token INT;
-	SELECT * INTO token FROM UserTokens WHERE UserId = p_UserId;
+	SELECT COUNT(*) INTO token FROM UserTokens WHERE UserId = p_UserId;
 	IF token = 0 THEN
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = 'No Existing Token';
 	END IF;
-	UPDATE UserTokens
-	SET
-		UserToken = p_UserToken
-	WHERE
-		UserId = p_UserId;
+	IF token = 1 THEN
+		UPDATE UserTokens
+		SET
+			UserToken = p_UserToken
+		WHERE
+			UserId = p_UserId;
+	END IF;
 END $$
 DELIMITER ;

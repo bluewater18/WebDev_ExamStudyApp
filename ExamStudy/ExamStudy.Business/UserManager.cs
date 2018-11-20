@@ -20,7 +20,7 @@ namespace ExamStudy.Business
         public string RegisterUser(User user)
         {
 
-            _validator.ValidateUser(user);//validate
+            _validator.ValidateUserRegister(user);//validate
             user.UserPassword = PasswordSecurity.PasswordStorage.CreateHash(user.UserPassword);//hash password
             string token = GenerateToken();
             int userId = _userRepository.AddUser(user);//add user to db with id returned
@@ -48,18 +48,25 @@ namespace ExamStudy.Business
             return _userRepository.UpdateUser(user);
         }
 
-        public string LoginUser(string email, string password)
+        public User LoginUser(User user)
         {
             try
             {
+                _validator.ValidateUserLogin(user);
                 //check password
-                User user = _userRepository.GetUserByEmail(email);
-                PasswordSecurity.PasswordStorage.VerifyPassword(password, user.UserPassword);
-                user.UserPassword = "";
+                User dbUser = _userRepository.GetUserByEmail(user.UserEmail);
+                PasswordSecurity.PasswordStorage.VerifyPassword(user.UserPassword, dbUser.UserPassword);
+                
                 //update user token
                 string token = GenerateToken();
-                _userRepository.UpdateOrCreateUserToken(new UserToken(user.UserId, token));
-                return token;
+                _userRepository.UpdateOrCreateUserToken(new UserToken(dbUser.UserId, token));
+
+                //sanitise returned user (could look to make a special return class)
+                dbUser.UserPassword = null;
+                dbUser.UserId = 0;
+                dbUser.UserToken = token;
+
+                return dbUser;
             }catch(Exception ex){
                 throw new InvalidAuthorizationException(ex.Message);
             }
