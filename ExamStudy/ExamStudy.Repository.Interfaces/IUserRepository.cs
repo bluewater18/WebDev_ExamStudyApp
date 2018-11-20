@@ -11,5 +11,8 @@ namespace ExamStudy.Repository.Interfaces
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();
         User GetUserById(int userId);
+        User GetUserByEmail(string email);
+        User GetUserByToken(string token);
+        bool UpdateOrCreateUserToken(UserToken userToken);
     }
 }

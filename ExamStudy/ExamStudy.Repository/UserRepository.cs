@@ -58,6 +58,11 @@ namespace ExamStudy.Repository
             }
         }
 
+        public User GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool UpdateUser(User user)
         {
             try
@@ -73,6 +78,53 @@ namespace ExamStudy.Repository
             {
                 throw ex;
             }
+        }
+
+        //user token methods
+
+        private bool AddUserToken(UserToken userToken)
+        {
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("p_UserId", userToken.UserId);
+                parameters.Add("p_UserToken", userToken.UserTokenString);
+
+                int result = SqlMapper.Query<int>(conn, "AddUserToken", param: parameters, commandType: StoredProcedure).FirstOrDefault();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public User GetUserByToken(string token)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserToken", token);
+            return SqlMapper.Query<User>(conn, "GetUserByToken", param: parameters, commandType: StoredProcedure).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Updates a users token or will add it if there isnt one
+        /// </summary>
+        /// <param name="userToken">Usertoken to be updated/added</param>
+        /// <returns>if successfull</returns>
+        public bool UpdateOrCreateUserToken(UserToken userToken)
+        {
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("p_UserId", userToken.UserId);
+                parameters.Add("p_UserToken", userToken.UserTokenString);
+                SqlMapper.Execute(conn, "UpdateUserToken", param: parameters, commandType: StoredProcedure);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                AddUserToken(userToken);
+            }
+            return true;
         }
     }
 }

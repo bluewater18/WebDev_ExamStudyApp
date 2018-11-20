@@ -37,6 +37,5 @@ namespace ExamStudy.Business
             builder.Append("==");
             return builder.ToString();
         }
-
     }
 }
