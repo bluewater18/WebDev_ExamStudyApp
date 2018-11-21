@@ -1,18 +1,15 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import Background from '../components/Background';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Card, CardContent } from '@material-ui/core';
 import { changeRegisterName, changeRegisterEmail, changeRegisterPassword, registerComplete, changeRegisterStepper } from '../actions/action-register-form-change';
 
 class Register extends React.Component {
@@ -34,7 +31,7 @@ class Register extends React.Component {
     };
 
     getSteps() {
-        return [<h3>Required Fields</h3>, <h3>Image (WIP) </h3>, <h3>Submit</h3>];
+        return [<h2>Required Fields</h2>, <h2>Image (WIP)</h2>, <h2>Submit</h2>];
     }
     getStepContent(step) {
         switch (step) {
@@ -50,7 +47,6 @@ class Register extends React.Component {
     }
 
     renderStep1() {
-        const { classes } = this.props;
         return(
             
             <div id="register-form" className="register-container">
@@ -103,49 +99,47 @@ class Register extends React.Component {
         return (
             <div className="register">
                 <Background />
-                <div className="register-root">
-                    <Stepper activeStep={this.props.ui.registerStepperState} orientation="vertical">
-                        {steps.map((label, index) => {
-                            return (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                    <StepContent>
-                                        {this.getStepContent(index)}
-                                        <div className="register-actionsContainer">
-                                            <div>
-                                                <Button
-                                                    disabled={this.props.ui.registerStepperState === 0}
-                                                    onClick={this.handleBack}
-                                                    className="register-button"
-                                                >
-                                                    Back
-                      </Button>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={this.handleNext}
-                                                    className="register-button"
-                                                >
-                                                    {this.props.ui.registerStepperState === steps.length - 1 ? 'Submit' : 'Next'}
-                                                </Button>
+                <Card className="register-card">
+                    <CardContent>
+                        <h1>Register</h1>
+                        <Stepper className="register-stepper" activeStep={this.props.ui.registerStepperState} orientation="vertical">
+                            {steps.map((label, index) => {
+                                return (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                        <StepContent>
+                                            {this.getStepContent(index)}
+                                            <div className="register-actionsContainer">
+                                                <div>
+                                                    <Button
+                                                        disabled={this.props.ui.registerStepperState === 0}
+                                                        onClick={this.handleBack}
+                                                        className="register-button"
+                                                    >
+                                                        Back
+                                                    </Button>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        onClick={this.handleNext}
+                                                        className="register-button"
+                                                    >
+                                                        {this.props.ui.registerStepperState === steps.length - 1 ? 'Submit' : 'Next'}
+                                                    </Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </StepContent>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                    {this.props.ui.registerStepperState === steps.length ? this.renderFinalStep() : null}
-                </div>
-
+                                        </StepContent>
+                                    </Step>
+                                );
+                            })}
+                        </Stepper>
+                    </CardContent>
+                </Card>
+                {this.props.ui.registerStepperState === steps.length ? this.renderFinalStep() : null}
             </div>
         )
     }
 }
-
-Register.propTypes = {
-    classes: PropTypes.object,
-};
 
 function mapStateToProps(state) {
     return {

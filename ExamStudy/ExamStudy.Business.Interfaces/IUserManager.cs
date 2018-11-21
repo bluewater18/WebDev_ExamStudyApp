@@ -6,7 +6,7 @@ namespace ExamStudy.Business.Interfaces
 {
     public interface IUserManager
     {
-        string RegisterUser(User user);
+        User RegisterUser(User user);
         User LoginUser(User user);
         bool UpdateUser(User user);
         bool DeleteUser(int userId);

@@ -55,7 +55,7 @@ class NavAppBar extends React.Component {
     };
 
     linkHelpRender() {
-        if (this.props.user.isAuthenticated === false) {
+        if (true) {
             return (
                 <div className="title-links" style={{ display: "inherit" }}>
                     <Link to="/login">

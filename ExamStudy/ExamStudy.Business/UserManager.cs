@@ -17,15 +17,16 @@ namespace ExamStudy.Business
             _validator = new Validator();
         }
 
-        public string RegisterUser(User user)
+        public User RegisterUser(User user)
         {
 
             _validator.ValidateUserRegister(user);//validate
             user.UserPassword = PasswordSecurity.PasswordStorage.CreateHash(user.UserPassword);//hash password
-            string token = GenerateToken();
-            int userId = _userRepository.AddUser(user);//add user to db with id returned
-            _userRepository.UpdateOrCreateUserToken(new UserToken(userId, token));//sets the new token for the user
-            return token;
+            user.UserToken = GenerateToken();
+            user.UserId = _userRepository.AddUser(user);//add user to db with id returned
+            _userRepository.UpdateOrCreateUserToken(new UserToken(user.UserId, user.UserToken));//sets the new token for the user
+            user.UserPassword = null;
+            return user;
         }
 
         public bool DeleteUser(int userId)
@@ -63,7 +64,6 @@ namespace ExamStudy.Business
 
                 //sanitise returned user (could look to make a special return class)
                 dbUser.UserPassword = null;
-                dbUser.UserId = 0;
                 dbUser.UserToken = token;
 
                 return dbUser;

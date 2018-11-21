@@ -1,20 +1,20 @@
 ﻿import { apiRegister } from '../api-calls/api-register';
-import { takeLatest } from 'redux-saga';
 import { actionConstants } from '../constants/index'
-import { call, all, put } from 'redux-saga/effects';
+import { call, all, put, takeLatest } from 'redux-saga/effects';
 
 export function* registerUser({ payload }) {
     try {
-        console.log('a')
-        let token = yield call(apiRegister, payload)
-        yield put({ type: actionConstants.REGISTER_SUCCESS, payload: token })
-    } catch(err) {
-        console.log (err)
+        console.log('a');
+        let user = yield call(apiRegister, payload);
+        console.log("returned from api: " + user);
+        yield put({ type: actionConstants.REGISTER_SUCCESS, payload: user });
+    } catch (err) {
+        yield put({ type: actionConstants.REGISTER_FAILURE })
     }
 }
 
 export default function* root() {
     yield all([
         takeLatest(actionConstants.REGISTER_COMPLETE, registerUser),
-    ])
+    ]);
 }

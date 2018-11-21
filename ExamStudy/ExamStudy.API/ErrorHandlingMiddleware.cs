@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace ExamStudy.API
 {
+    // reference: https://stackoverflow.com/questions/38630076/asp-net-core-web-api-exception-handling
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate next;

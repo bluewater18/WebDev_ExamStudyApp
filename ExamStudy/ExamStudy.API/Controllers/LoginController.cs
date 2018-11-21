@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ExamStudy.API.Controllers
 {
@@ -22,11 +26,7 @@ namespace ExamStudy.API.Controllers
         public IActionResult Post([FromBody]User user)
         {
             User returnableUser = _userManager.LoginUser(user);
-            var result = new ObjectResult(returnableUser)
-            { StatusCode = 200 };
-            Request.HttpContext.Response.Headers.Add("X-Authorization", returnableUser.UserToken);
-            return result;
-
+            return Ok(returnableUser);
         }
     }
 }

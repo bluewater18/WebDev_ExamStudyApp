@@ -56,7 +56,7 @@ class NavDrawer extends React.Component {
 
         const userSection = (
             <div className="nav-drawer-user" >
-                <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=350" width="150" height="150" className="nav-drawer-user-img" />
+                <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=350" alt="user profile" width="150" height="150" className="nav-drawer-user-img" />
                 <br />
                 <div style={{ height:"49px"}}>
                     <div style={{ float: "left" }}>
