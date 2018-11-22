@@ -1,5 +1,6 @@
 ﻿import { actionConstants } from '../constants/index';
 
+
 const initialState = {
     isAuthenticated: false,
     id: 0,
@@ -10,8 +11,8 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
-        case actionConstants.REGISTER_SUCCESS:
-        case actionConstants.LOGIN_SUCCESS:
+        case actionConstants.REGISTER_SUCCESS_POSTSAGA:
+        case actionConstants.LOGIN_SUCCESS_POSTSAGA:
             return {
                 isAuthenticated: true,
                 id: action.payload.userId,
@@ -19,8 +20,8 @@ export default function userReducer(state = initialState, action) {
                 email: action.payload.userEmail,
                 token: action.payload.userToken,
             };
-        case actionConstants.REGISTER_FAILURE:
-        case actionConstants.LOGIN_FAILURE:
+        case actionConstants.REGISTER_FAILURE_POSTSAGA:
+        case actionConstants.LOGIN_FAILURE_POSTSAGA:
             return {
                 isAuthenticated: false,
                 id: 0,

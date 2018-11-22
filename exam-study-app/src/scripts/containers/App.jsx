@@ -5,14 +5,16 @@ import Home from './Home';
 import NotFound from '../components/NotFound';
 import Help from '../components/Help';
 import Register from '../containers/Register';
-import Login from '../containers/Login'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Login from '../containers/Login';
+import history from '../../history';
+
+import {Router, Route, Switch } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
         <div className="App">
-            <Router>
+            <Router history={history}>
                 <div className="route-container"> 
                     <NavAppBar />
                     <Switch>
