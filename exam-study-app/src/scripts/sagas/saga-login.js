@@ -1,6 +1,5 @@
 ﻿import { apiLogin } from '../api-calls/api-login';
 import { actionConstants } from '../constants/index';
-import { push } from 'react-router-redux';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
 
@@ -13,11 +12,11 @@ export function* loginUser({ payload }) {
     }
 }
 
-export function* loginSuccess(){
+export function* loginSuccess({ payload }){
     try{
-    yield call (history.push('/'))
-    //yield put(push('/hi'));
-    yield put({type: actionConstants.LOGIN_SUCCESS_POST_SAGA, payload:null});
+    yield call (history.push,'/');
+    yield put({type: actionConstants.LOGIN_SUCCESS_POST_SAGA, payload: payload});
+    yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload:true})
     }catch(err){
         console.log(err)
     }

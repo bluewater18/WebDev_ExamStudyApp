@@ -7,20 +7,18 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeLoginEmail, changeLoginPassword, submitLogin } from '../actions/action-login-form-change';
-import { debug } from 'util';
 import {withRouter} from 'react-router-dom';
+import BasicNotifier from '../components/BasicNotifier';
 
 class Login extends React.Component {
+
+
     render() {
-
-        const { issuccess, issussHasbeen  } = this.props;
-
-        if (this.props.user.isAuthenticated) {
-            //issussHasbeen()
-        }
-
+        
         return (
+            
             <div className="Help">
+                
                 <Background />
                 <Card className="Help-Card">
                     <CardContent>
@@ -54,7 +52,7 @@ class Login extends React.Component {
                     </CardContent>
                     <CardActions style={{ display: "inline-block", }}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => this.props.submitLogin(this.props.login)} style={{ paddingTop: "15px", paddingBottom: "15px", width: "80%" }}>
+                            <Button onClick={() => {this.props.submitLogin(this.props.login)}} style={{ paddingTop: "15px", paddingBottom: "15px", width: "80%" }}>
                             Log In
                         </Button>
                         </div>
@@ -65,6 +63,9 @@ class Login extends React.Component {
                         </Link>
                     </CardActions>
                 </Card>
+
+                <BasicNotifier message="yello" />
+                
 
             </div>
         )
@@ -80,15 +81,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-    const { history } = ownProps;
-
-
-
     return bindActionCreators({
-        issussHasbeen: issussHasbeen => {
-            console.log("Sending home");
-            history.push('/');
-        },
         changeLoginEmail: changeLoginEmail,
         changeLoginPassword: changeLoginPassword,
         submitLogin: submitLogin,

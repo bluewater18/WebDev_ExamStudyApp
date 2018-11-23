@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using ExamStudy.Business;
 
 namespace ExamStudy.API.Controllers
 {
@@ -25,8 +26,14 @@ namespace ExamStudy.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]User user)
         {
-            User returnableUser = _userManager.LoginUser(user);
-            return Ok(returnableUser);
+            try
+            {
+                User returnableUser = _userManager.LoginUser(user);
+                return Ok(returnableUser);
+            } catch(InvalidAuthorizationException iae)
+            {
+                return StatusCode(401, "{'reason':'Invalid Credentials'}");
+            }
         }
     }
 }

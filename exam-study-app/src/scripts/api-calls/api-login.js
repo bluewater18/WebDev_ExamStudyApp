@@ -2,7 +2,7 @@
 import { API_BASE_PATH } from '../constants/index';
 
 async function apiLogin(user) {
-    return new Promise((resolve) => { 
+    return new Promise((resolve, reject) => { 
         const fetch = createFetch(
             base(API_BASE_PATH),
             method('POST'),
@@ -10,11 +10,15 @@ async function apiLogin(user) {
             body(JSON.stringify(user), 'application/json'),
         )
         fetch('/login').then((response) => {
-            response.json().then((data) => {
-                resolve(data);
-            });
+            if(response.status >= 200 && response.status< 300)
+                response.json().then((data) => {
+                        resolve(data);       
+                });
+            else
+                throw response;
         }).catch((err) => {
             console.log(err)
+            reject(err)
         })
     })
 }

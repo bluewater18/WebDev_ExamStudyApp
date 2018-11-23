@@ -4,6 +4,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import React from 'react';
 import PropTypes from 'prop-types';
 import toggleLeftDrawer from '../actions/action-toggle-left-drawer';
+import logout from '../actions/action-logout';
 import NavDrawer from './NavDrawer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -55,7 +56,7 @@ class NavAppBar extends React.Component {
     };
 
     linkHelpRender() {
-        if (true) {
+        if (!this.props.user.isAuthenticated) {
             return (
                 <div className="title-links" style={{ display: "inherit" }}>
                     <Link to="/login">
@@ -74,7 +75,18 @@ class NavAppBar extends React.Component {
                     </Link>
                 </div>
             );
-        };
+        } else {
+            return(
+                <div className="title-links" style={{ display: "inherit" }}>
+                    <Button onClick={()=>{this.props.logout()}} className="nav-app-bar-title-button">
+                        <Typography variant="title" className="nav-app-bar-title-link" >
+                            Log Out
+                        </Typography>
+                    </Button>           
+                </div>
+            )
+
+        }
     }
 }
 
@@ -91,7 +103,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLeftDrawer: toggleLeftDrawer }, dispatch);
+    return bindActionCreators({ 
+        toggleLeftDrawer: toggleLeftDrawer,
+        logout:logout
+        }, dispatch);
 }
 
 const styled = withStyles(styles)(NavAppBar);

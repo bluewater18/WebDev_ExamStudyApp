@@ -38,9 +38,10 @@ namespace ExamStudy.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod()
-                );
+            builder.WithOrigins("http://localhost:3000", "http://192.168.1.77:3000").AllowAnyHeader().AllowAnyMethod()
+            );
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -11,8 +11,8 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
-        case actionConstants.REGISTER_SUCCESS_POSTSAGA:
-        case actionConstants.LOGIN_SUCCESS_POSTSAGA:
+        case actionConstants.REGISTER_SUCCESS_POST_SAGA:
+        case actionConstants.LOGIN_SUCCESS_POST_SAGA:
             return {
                 isAuthenticated: true,
                 id: action.payload.userId,
@@ -22,6 +22,7 @@ export default function userReducer(state = initialState, action) {
             };
         case actionConstants.REGISTER_FAILURE_POSTSAGA:
         case actionConstants.LOGIN_FAILURE_POSTSAGA:
+        case actionConstants.LOGOUT_USER:
             return {
                 isAuthenticated: false,
                 id: 0,

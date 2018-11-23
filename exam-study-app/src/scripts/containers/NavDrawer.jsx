@@ -61,7 +61,7 @@ class NavDrawer extends React.Component {
                 <div style={{ height:"49px"}}>
                     <div style={{ float: "left" }}>
                         <Typography variant="title" style={{ marginLeft: "25px", marginTop: "17px", fontSize: "medium" }}> 
-                            John Smith
+                            {this.props.user.name}
                         </Typography>
                     </div>
                     <div style={{ float:"right"}}>
@@ -103,7 +103,8 @@ NavDrawer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        ui: state.ui
+        ui: state.ui,
+        user: state.user
     };
 }
 
