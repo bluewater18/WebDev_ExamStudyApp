@@ -24,6 +24,9 @@ const styles = {
     fullList: {
         width: 'auto',
     },
+    listItemText:{
+        fontSize: 'medium',
+    }
 };
 
 class NavDrawer extends React.Component {
@@ -33,24 +36,35 @@ class NavDrawer extends React.Component {
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    <Link key="menu-demo" to="/demo">
-                        <ListItem button key={"yelloBtn"}>
+                    <Link key="menu-daily-goals" to="/daily-goals">
+                        <ListItem style={{fontSize:"medium !important"}} button key={"daily-goals-btn"}>
                             <ListItemIcon><InboxIcon /></ListItemIcon>
-                            <ListItemText primary={"yello"} />
+                            <ListItemText primary={<span className="menu-list-item-text">Daily Goals</span>} />
+                        </ListItem>
+                    </Link>
+                    <Link key="menu-my-calendar" to="/my-calendar">
+                        <ListItem button key={"my-calendar-button"}>
+                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemText primary={<span className="menu-list-item-text">My Calendar</span>} />
+                        </ListItem>
+                    </Link>
+                    <Link key="menu-study-timer" to="/study-timer">
+                        <ListItem button key={"study-timer-button"}>
+                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemText primary={<span className="menu-list-item-text">Study Timer</span>} />
                         </ListItem>
                     </Link>
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <Link key={"menu-home" + index} to = "/" >
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                    <Link key="My Groups" to="/my-groups">
+                        <ListItem button key={"my-groups-btn"}>
+                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemText primary={ <span className="menu-list-item-text"> My Groups</span>} />
                         </ListItem>
-                        </Link>
-                    ))}
+                    </Link>
                 </List>
+                <Divider />
             </div>
         );
 
