@@ -5,9 +5,12 @@ import Background from '../components/Background';
 class Home extends React.Component {
     render() {
         return (
-            <div className="Home">
+            <div className="home">
                 <Background/>
-                <h1>Exam Study</h1>
+                <div className="home-title">
+                    <h1>Exam Study</h1>
+                </div>
+                
                 
             </div>
             )

@@ -9,3 +9,23 @@
     left:0;
     z-index:-5;
 }
+
+.home {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: calc( 100vh - 60px );
+}
+
+.home-title {
+    text-align: center;
+    align-items: center;
+    min-width: 200px;
+    width:500px;
+    max-width: 95vw;
+}
+
+.home-title h1 {
+    font-family: $font-family-primary;
+    font-size: 5rem;
+}

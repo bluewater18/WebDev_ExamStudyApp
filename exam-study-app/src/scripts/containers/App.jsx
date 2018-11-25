@@ -9,7 +9,7 @@ import Login from '../containers/Login';
 import history from '../../history';
 
 import {Router, Route, Switch } from "react-router-dom";
-import MyGroups from './MyGroupHelper';
+import MyGroups from './MyGroups';
 
 class App extends Component {
   render() {

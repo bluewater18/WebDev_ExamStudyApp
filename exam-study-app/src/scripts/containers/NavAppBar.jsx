@@ -35,10 +35,7 @@ class NavAppBar extends React.Component {
             <div >
                 <AppBar style={{ position: "fixed !important", boxShadow: "none", backgroundColor: "transparent", display:"inline" }} color="primary">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
-                            onClick={() => { this.props.toggleLeftDrawer(true) }}>
-                            <MenuIcon color="secondary" fontSize="large" />
-                        </IconButton>
+                        {this.linkMenuRenderer(classes)}
                         <div className="nav-app-bar-title-spacer" style={{ flex: "1" }}/>
                         {this.linkHelpRender()}
                         
@@ -54,6 +51,17 @@ class NavAppBar extends React.Component {
             </div>
         );
     };
+
+    linkMenuRenderer(classes) {
+        if(this.props.user.isAuthenticated) {
+            return(                        
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
+                onClick={() => { this.props.toggleLeftDrawer(true) }}>
+                    <MenuIcon color="secondary" fontSize="large" />
+                </IconButton>
+            )
+        }
+    }
 
     linkHelpRender() {
         if (!this.props.user.isAuthenticated) {
