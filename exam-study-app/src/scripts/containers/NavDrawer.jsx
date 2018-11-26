@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import {IMAGE_PATH} from '../constants';
 
 import { Link } from 'react-router-dom'
 const styles = {
@@ -70,7 +71,7 @@ class NavDrawer extends React.Component {
 
         const userSection = (
             <div className="nav-drawer-user" >
-                <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=350" alt="user profile" width="150" height="150" className="nav-drawer-user-img" />
+                <img src={IMAGE_PATH+this.props.user.imagePath} alt="user profile" width="150" height="150" className="nav-drawer-user-img" />
                 <br />
                 <div style={{ height:"49px"}}>
                     <div style={{ float: "left" }}>

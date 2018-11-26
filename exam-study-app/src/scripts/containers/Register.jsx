@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card, CardContent } from '@material-ui/core';
-import { changeRegisterName, changeRegisterEmail, changeRegisterPassword, registerComplete, changeRegisterStepper } from '../actions/action-register-form-change';
+import { changeRegisterName, changeRegisterEmail, changeRegisterPassword, changeRegisterPhoto, registerComplete, changeRegisterStepper } from '../actions/action-register-form-change';
 
 class Register extends React.Component {
 
@@ -33,12 +33,14 @@ class Register extends React.Component {
     getSteps() {
         return [<h2>Required Fields</h2>, <h2>Image (WIP)</h2>, <h2>Submit</h2>];
     }
-    getStepContent(step) {
+
+
+    getStepContent(step, a) {
         switch (step) {
             case 0:
                 return this.renderStep1();
             case 1:
-                return this.renderStep2();
+                return this.renderStep2(a);
             case 2:
                 return this.renderStep3()
             default:
@@ -82,8 +84,17 @@ class Register extends React.Component {
         )
     }
 
-    renderStep2() {
-        return (<h4> Image selector to go here </h4>);
+    renderStep2(a) {
+        return (
+            <div>
+                Please Select A File:
+                <input type="file"
+                        accept="image/png, image/jpeg, image/gif, image/bmp, image/jpg"
+                        //onChange={evt => this.props.changeRegisterPhoto(evt.target.files[0])}//a(evt.target.files[0])}
+                        onChange={evt => a(evt.target.files[0])}
+                />
+            </div>
+        );
     }
 
     renderStep3() {
@@ -95,6 +106,19 @@ class Register extends React.Component {
     }
 
     render() {
+        let fileReader;
+        const handleFileRead= (e) => {
+            const content = fileReader.result;
+            //console.log(content);
+            this.props.changeRegisterPhoto(content);
+        };
+
+        const handleFileChosen = (file) => {
+            fileReader = new FileReader();
+            fileReader.onloadend = handleFileRead;
+            fileReader.readAsText(file);
+            
+        }
         const steps = this.getSteps();
         return (
             <div className="register">
@@ -108,7 +132,7 @@ class Register extends React.Component {
                                     <Step key={label}>
                                         <StepLabel>{label}</StepLabel>
                                         <StepContent>
-                                            {this.getStepContent(index)}
+                                            {this.getStepContent(index, handleFileChosen)}
                                             <div className="register-actionsContainer">
                                                 <div>
                                                     <Button
@@ -154,6 +178,7 @@ function mapDispatchToProps(dispatch) {
         changeRegisterName: changeRegisterName,
         changeRegisterEmail: changeRegisterEmail,
         changeRegisterPassword: changeRegisterPassword,
+        changeRegisterPhoto: changeRegisterPhoto,
         registerComplete: registerComplete,
     }, dispatch);
 }

@@ -1,4 +1,4 @@
-﻿import { apiRegister } from '../api-calls/api-register';
+﻿import { apiRegister, apiUpdatePhoto } from '../api-calls/api-register';
 import { actionConstants } from '../constants/index'
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
@@ -6,7 +6,17 @@ import history from '../../history';
 export function* registerUser({ payload }) {
     try {
         let user = yield call(apiRegister, payload);
+        try{
+            let id = user.userId;
+            console.log(id);
+            console.log(payload)
+            let photo = payload.userPhoto;
+            console.log(photo)
+            let userPhotoPath = yield call(apiUpdatePhoto, photo, id);
+            user.userImageName = userPhotoPath.userPhotoPath;
+        }catch(err){console.log(err)}
         yield put({ type: actionConstants.REGISTER_SUCCESS, payload: user });
+
     } catch (err) {
         yield put({ type: actionConstants.REGISTER_FAILURE })
     }

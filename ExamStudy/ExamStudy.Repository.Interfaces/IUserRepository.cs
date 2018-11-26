@@ -14,5 +14,7 @@ namespace ExamStudy.Repository.Interfaces
         User GetUserByEmail(string email);
         User GetUserByToken(string token);
         bool UpdateOrCreateUserToken(UserToken userToken);
+        bool UpdateUserPhoto(int id, string photoPath);
+        string GetUserPhotoPath(int userId);
     }
 }

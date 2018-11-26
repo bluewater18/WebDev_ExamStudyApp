@@ -1,4 +1,6 @@
-﻿DROP TABLE IF EXISTS UserTokens;
+﻿DROP TABLE IF EXISTS GroupMembers;
+DROP TABLE IF EXISTS Groups;
+DROP TABLE IF EXISTS UserTokens;
 DROP TABLE IF EXISTS Users;
 Drop PROCEDURE IF EXISTS AddUser;
 Drop PROCEDURE IF EXISTS DeleteUser;
@@ -8,12 +10,15 @@ Drop PROCEDURE IF EXISTS AddUserToken;
 Drop PROCEDURE IF EXISTS GetUserByToken;
 Drop PROCEDURE IF EXISTS UpdateUserToken;
 Drop PROCEDURE IF EXISTS GetUserByEmail;
+drop PROCEDURE IF EXISTS UpdateUserPhoto;
+Drop PROCEDURE IF EXISTS GetUserPhotoPath;
 
 CREATE TABLE IF NOT EXISTS Users(
 	UserId INT AUTO_INCREMENT,
 	UserName VARCHAR(50),
 	UserEmail VARCHAR(50) UNIQUE,
 	UserPassword VARCHAR(256),
+	UserImageName VARCHAR(64),
 	PRIMARY KEY (UserId)
 );
 
@@ -21,7 +26,9 @@ CREATE TABLE IF NOT EXISTS UserTokens(
 UserId INT NOT NULL,
 UserToken VARCHAR(128) NOT NULL,
 KEY (UserToken),
-CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE);
+CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
+);
+
 
 
 DELIMITER $$
@@ -41,9 +48,31 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE `UpdateUserPhoto`(
+	IN p_UserId INT,
+	IN p_UserImageName VARCHAR(64)
+)
+BEGIN
+	UPDATE Users
+	SET
+		UserImageName = p_UserImageName
+	WHERE
+		UserId = p_UserId;
+END $$
+DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE `GetUserPhotoPath`(
+	IN p_UserId INT
+)
+BEGIN
+	SELECT UserImageName FROM Users
+	WHERE UserId = p_UserId;
+END $$
+DELIMITER ;
 
+DELIMITER $$
 CREATE PROCEDURE `DeleteUser`(
 	IN p_UserId varchar(50)
 )

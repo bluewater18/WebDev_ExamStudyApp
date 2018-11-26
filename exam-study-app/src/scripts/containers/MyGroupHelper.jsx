@@ -41,7 +41,7 @@ class MyGroupHelper extends React.Component {
         return(
             <div>
                 <h2>Cosc 367</h2>
-                <h4>Created By Matt Jones</h4>
+                <h4>Created By: Matt Jones</h4>
                 <h4>--</h4>
                 <h3>Exam Prep</h3>
             </div>

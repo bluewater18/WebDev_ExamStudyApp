@@ -4,6 +4,7 @@ const initialState = {
     UserName: '',
     UserEmail: '',
     UserPassword: '',
+    UserPhoto: null,
 };
 
 export default function registerReducer(state = initialState, action) {
@@ -19,6 +20,10 @@ export default function registerReducer(state = initialState, action) {
         case actionConstants.REGISTER_PASSWORD_UPDATE:
             return Object.assign({}, state, {
                 UserPassword: action.payload
+            })
+        case actionConstants.REGISTER_IMAGE_UPDATE:
+            return Object.assign({}, state, {
+                userPhoto: action.payload
             })
         default:
             return state;

@@ -20,6 +20,16 @@ const changeRegisterPassword = (newPass) => {
     }
 }
 
+const changeRegisterPhoto = (newPhoto) => {
+
+        return {
+            type: actionConstants.REGISTER_IMAGE_UPDATE,
+            payload: newPhoto
+        }
+    
+    
+}
+
 const registerComplete = (userDetails) => {
     return {
         type: actionConstants.REGISTER_COMPLETE,
@@ -33,4 +43,4 @@ const changeRegisterStepper = (nextStepperState) => {
         payload: nextStepperState
     }
 }
-export { changeRegisterName, changeRegisterEmail, changeRegisterPassword, registerComplete, changeRegisterStepper};
+export { changeRegisterName, changeRegisterEmail, changeRegisterPassword, changeRegisterPhoto, registerComplete, changeRegisterStepper};

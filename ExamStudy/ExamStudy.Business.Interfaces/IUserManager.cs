@@ -12,5 +12,7 @@ namespace ExamStudy.Business.Interfaces
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();
         User GetUserById(int userId);
+        string UpdateUserPhoto(int id, string photoPath);
+        string GetUserPhotoPath(int userId);
     }
 }

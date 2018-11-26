@@ -29,6 +29,17 @@ namespace ExamStudy.Business
             return user;
         }
 
+        public string UpdateUserPhoto(int id, string photoPath)
+        {
+            _userRepository.UpdateUserPhoto(id, photoPath);
+            return GetUserPhotoPath(id);
+        }
+
+        public string GetUserPhotoPath(int userId)
+        {
+            return _userRepository.GetUserPhotoPath(userId);
+        }
+
         public bool DeleteUser(int userId)
         {
             return _userRepository.DeleteUser(userId);

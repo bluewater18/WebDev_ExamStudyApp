@@ -28,6 +28,24 @@ namespace ExamStudy.Repository
             }
         }
 
+        public bool UpdateUserPhoto(int id, string photoPath)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", id);
+            parameters.Add("p_UserImageName", photoPath);
+
+            SqlMapper.Execute(conn, "UpdateUserPhoto", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+        public string GetUserPhotoPath(int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
+
+            return SqlMapper.Query<string>(conn, "GetUserPhotoPath", param: parameters, commandType: StoredProcedure).FirstOrDefault();
+        }
+
         public bool DeleteUser(int userId)
         {
             DynamicParameters parameters = new DynamicParameters();

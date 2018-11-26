@@ -1,5 +1,7 @@
 ﻿//constants/index
-const API_BASE_PATH = 'http://localhost:52940/api'
+const SERVER_PATH = 'http://localhost:52940';
+const API_BASE_PATH = SERVER_PATH + '/api';
+const IMAGE_PATH = SERVER_PATH + '/images/';
 
 const actionConstants = {
     //API RETURNS
@@ -22,6 +24,7 @@ const actionConstants = {
     REGISTER_NAME_UPDATE: "REGISTER_NAME_UPDATE",
     REGISTER_EMAIL_UPDATE: "REGISTER_EMAIL_UPDATE",
     REGISTER_PASSWORD_UPDATE: "REGISTER_PASSWORD_UPDATE",
+    REGISTER_IMAGE_UPDATE: "REGISTER_IMAGE_UPDATE",
     REGISTER_STEPPER_CHANGE: "REGISTER_STEPPER_CHANGE",
     REGISTER_COMPLETE: "REGISTER_COMPLETE",
 
@@ -33,4 +36,4 @@ const actionConstants = {
     LOGOUT_USER:"LOGOUT_USER",
 };
 
-export { actionConstants, API_BASE_PATH };
+export { actionConstants, API_BASE_PATH, IMAGE_PATH };

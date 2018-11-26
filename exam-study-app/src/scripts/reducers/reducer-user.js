@@ -7,6 +7,7 @@ const initialState = {
     name: null,
     email: null,
     token: null,
+    imagePath:null,
 };
 
 export default function userReducer(state = initialState, action) {
@@ -19,6 +20,7 @@ export default function userReducer(state = initialState, action) {
                 name: action.payload.userName,
                 email: action.payload.userEmail,
                 token: action.payload.userToken,
+                imagePath: action.payload.userImageName,
             };
         case actionConstants.REGISTER_FAILURE_POSTSAGA:
         case actionConstants.LOGIN_FAILURE_POSTSAGA:
@@ -29,6 +31,7 @@ export default function userReducer(state = initialState, action) {
                 name: null,
                 email: null,
                 token: null,
+                imagePath: null,
             }
         default:
             return state;

@@ -9,5 +9,6 @@ namespace ExamStudy.Entities
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
         public string UserToken { get; set; }
+        public string UserImageName { get; set; }
     }
 }
