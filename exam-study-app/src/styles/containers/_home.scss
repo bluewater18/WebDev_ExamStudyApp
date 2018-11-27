@@ -1,0 +1,31 @@
+﻿$bgPath: $media-path + "ExamStudyHero.jpg";
+.Hero-Background {
+    background: url($bgPath) no-repeat center;
+    background-size: cover;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:-5;
+}
+
+.home {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: calc( 100vh - 60px );
+}
+
+.home-title {
+    text-align: center;
+    align-items: center;
+    min-width: 200px;
+    width:500px;
+    max-width: 95vw;
+}
+
+.home-title h1 {
+    font-family: $font-family-primary;
+    font-size: 5rem;
+}
