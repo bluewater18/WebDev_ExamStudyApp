@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS Groups;
 DROP TABLE IF EXISTS UserTokens;
 DROP TABLE IF EXISTS Users;
+
 Drop PROCEDURE IF EXISTS AddUser;
 Drop PROCEDURE IF EXISTS DeleteUser;
 Drop PROCEDURE IF EXISTS GetAllUsers;
@@ -136,7 +137,7 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE `UpdateUserToken`(
+CREATE PROCEDURE `UpdateUserToken`( 
 	IN p_UserId int,
 	IN p_UserToken varchar(128)
 )
