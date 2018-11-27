@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../styles/main.scss';
-import Background from '../components/Background';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,10 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
 import WorkIcon from '@material-ui/icons/Work';
-import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { IconButton, Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
 
 class MyGroupHelper extends React.Component {

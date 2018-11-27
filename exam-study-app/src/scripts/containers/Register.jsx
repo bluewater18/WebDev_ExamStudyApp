@@ -90,8 +90,8 @@ class Register extends React.Component {
                 Please Select A File:
                 <input type="file"
                         accept="image/png, image/jpeg, image/gif, image/bmp, image/jpg"
-                        //onChange={evt => this.props.changeRegisterPhoto(evt.target.files[0])}//a(evt.target.files[0])}
-                        onChange={evt => a(evt.target.files[0])}
+                        onChange={evt => this.props.changeRegisterPhoto(evt.target.files[0])}
+                        //onChange={evt => a(evt.target.files[0])}
                 />
             </div>
         );
@@ -117,8 +117,8 @@ class Register extends React.Component {
             fileReader = new FileReader();
             fileReader.onloadend = handleFileRead;
             fileReader.readAsText(file);
-            
-        }
+        };
+
         const steps = this.getSteps();
         return (
             <div className="register">

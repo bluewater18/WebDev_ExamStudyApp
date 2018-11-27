@@ -30,21 +30,20 @@ namespace ExamStudy.API.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> PostUserPhoto(int id, [FromBody] IFormFile img, string type)
+        public async Task<IActionResult> PostUserPhoto(int id, IFormFile image, string pathType)
         {
             //Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%% " + type);
             //Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%% " + img);
-            
 
-            if(type.Equals("user", StringComparison.InvariantCultureIgnoreCase))
+            //return Ok();
+            if (pathType.Equals("user", StringComparison.InvariantCultureIgnoreCase))
             {
-
-                var path = await _imageHandler.UploadImage(img);
+                var path = await _imageHandler.UploadImage(image);
                 _userManager.UpdateUserPhoto(id, path);
                 return Created(path, new JObject(new JProperty("UserPhotoPath", path)));
-                //return Ok();
+                //
             }
-            //else if (type.Equals("group", StringComparison.InvariantCultureIgnoreCase))
+            //else if (pathType.Equals("group", StringComparison.InvariantCultureIgnoreCase))
             //{
             //    var path = await _imageHandler.UploadImage(img);
             //    _groupManager.UpdateGroupPhoto(id, path);

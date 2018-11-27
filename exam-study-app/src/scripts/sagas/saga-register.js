@@ -8,12 +8,9 @@ export function* registerUser({ payload }) {
         let user = yield call(apiRegister, payload);
         try{
             let id = user.userId;
-            console.log(id);
-            console.log(payload)
             let photo = payload.userPhoto;
-            console.log(photo)
-            let userPhotoPath = yield call(apiUpdatePhoto, photo, id);
-            user.userImageName = userPhotoPath.userPhotoPath;
+            let apiPhoto = yield call(apiUpdatePhoto, photo, id);
+            user.userImageName = apiPhoto.UserPhotoPath;
         }catch(err){console.log(err)}
         yield put({ type: actionConstants.REGISTER_SUCCESS, payload: user });
 
