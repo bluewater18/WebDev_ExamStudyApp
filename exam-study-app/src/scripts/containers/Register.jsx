@@ -31,16 +31,16 @@ class Register extends React.Component {
     };
 
     getSteps() {
-        return [<h2>Required Fields</h2>, <h2>Image (WIP)</h2>, <h2>Submit</h2>];
+        return [<h2>Required Fields</h2>, <h2>Profile Picture</h2>, <h2>Submit</h2>];
     }
 
 
-    getStepContent(step, a) {
+    getStepContent(step) {
         switch (step) {
             case 0:
                 return this.renderStep1();
             case 1:
-                return this.renderStep2(a);
+                return this.renderStep2();
             case 2:
                 return this.renderStep3()
             default:
@@ -84,15 +84,25 @@ class Register extends React.Component {
         )
     }
 
-    renderStep2(a) {
+    renderStep2() {
         return (
             <div>
-                Please Select A File:
-                <input type="file"
+                {/* <input type="file"
                         accept="image/png, image/jpeg, image/gif, image/bmp, image/jpg"
                         onChange={evt => this.props.changeRegisterPhoto(evt.target.files[0])}
-                        //onChange={evt => a(evt.target.files[0])}
-                />
+                /> */}
+                    <input
+                        accept="image/*"
+                        style={{display:"none"}}
+                        id="contained-button-file"
+                        type="file"
+                        onChange={evt => this.props.changeRegisterPhoto(evt.target.files[0])}
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" component="span" style={{margin:"theme.spacing.unit"}}>
+                            {(this.props.register.UserPhoto === null?"Upload A File":"Upload A Different File")}
+                        </Button>
+                    </label>
             </div>
         );
     }
@@ -106,19 +116,6 @@ class Register extends React.Component {
     }
 
     render() {
-        let fileReader;
-        const handleFileRead= (e) => {
-            const content = fileReader.result;
-            //console.log(content);
-            this.props.changeRegisterPhoto(content);
-        };
-
-        const handleFileChosen = (file) => {
-            fileReader = new FileReader();
-            fileReader.onloadend = handleFileRead;
-            fileReader.readAsText(file);
-        };
-
         const steps = this.getSteps();
         return (
             <div className="register">
@@ -132,7 +129,7 @@ class Register extends React.Component {
                                     <Step key={label}>
                                         <StepLabel>{label}</StepLabel>
                                         <StepContent>
-                                            {this.getStepContent(index, handleFileChosen)}
+                                            {this.getStepContent(index)}
                                             <div className="register-actionsContainer">
                                                 <div>
                                                     <Button

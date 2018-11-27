@@ -32,7 +32,6 @@ CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE 
 
 
 DELIMITER $$
-
 CREATE PROCEDURE `AddUser`(
     IN p_UserName varchar(50),
     IN p_UserEmail varchar(50),
@@ -43,10 +42,12 @@ BEGIN
     SET 
     	UserName = p_UserName,
     	UserEmail = p_UserEmail,
-    	UserPassword = p_UserPassword;
-	SELECT UserId from Users WHERE UserEmail = p_UserEmail;
+    	UserPassword = p_UserPassword,
+		UserImageName = 'default_user.png';
+	SELECT * from Users WHERE UserEmail = p_UserEmail;
 END $$
 DELIMITER ;
+
 
 DELIMITER $$
 CREATE PROCEDURE `UpdateUserPhoto`(
@@ -62,6 +63,7 @@ BEGIN
 END $$
 DELIMITER ;
 
+
 DELIMITER $$
 CREATE PROCEDURE `GetUserPhotoPath`(
 	IN p_UserId INT
@@ -71,6 +73,7 @@ BEGIN
 	WHERE UserId = p_UserId;
 END $$
 DELIMITER ;
+
 
 DELIMITER $$
 CREATE PROCEDURE `DeleteUser`(
@@ -93,7 +96,6 @@ DELIMITER ;
 
 
 DELIMITER $$
-
 CREATE PROCEDURE `GetUserById`(
 	IN p_UserId int
 )
@@ -103,7 +105,6 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-
 CREATE PROCEDURE `GetUserByEmail`(
 	IN p_Email varchar(50)
 )
@@ -113,7 +114,6 @@ END $$
 DELIMITER;
 
 DELIMITER $$
-
 CREATE PROCEDURE `AddUserToken`(
 	IN p_UserId int,
 	IN p_UserToken varchar(128)
@@ -127,7 +127,6 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-
 CREATE PROCEDURE `GetUserByToken`(
 	IN p_UserToken varchar(128)
 )

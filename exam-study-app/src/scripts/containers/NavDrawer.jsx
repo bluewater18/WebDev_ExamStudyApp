@@ -7,7 +7,6 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import toggleLeftDrawer from '../actions/action-toggle-left-drawer';
 import { connect } from 'react-redux';
@@ -15,6 +14,10 @@ import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import {IMAGE_PATH} from '../constants';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import AdjustIcon from '@material-ui/icons/Adjust';
+import GroupIcon from '@material-ui/icons/Group';
 
 import { Link } from 'react-router-dom'
 const styles = {
@@ -38,19 +41,19 @@ class NavDrawer extends React.Component {
                 <List>
                     <Link key="menu-daily-goals" to="/daily-goals">
                         <ListItem style={{fontSize:"medium !important"}} button key={"daily-goals-btn"}>
-                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemIcon><AdjustIcon /></ListItemIcon>
                             <ListItemText primary={<span className="menu-list-item-text">Daily Goals</span>} />
                         </ListItem>
                     </Link>
                     <Link key="menu-my-calendar" to="/my-calendar">
                         <ListItem button key={"my-calendar-button"}>
-                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemIcon><CalendarTodayIcon /></ListItemIcon>
                             <ListItemText primary={<span className="menu-list-item-text">My Calendar</span>} />
                         </ListItem>
                     </Link>
                     <Link key="menu-study-timer" to="/study-timer">
                         <ListItem button key={"study-timer-button"}>
-                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemIcon><HourglassEmptyIcon /></ListItemIcon>
                             <ListItemText primary={<span className="menu-list-item-text">Study Timer</span>} />
                         </ListItem>
                     </Link>
@@ -59,7 +62,7 @@ class NavDrawer extends React.Component {
                 <List>
                     <Link key="My Groups" to="/my-groups">
                         <ListItem button key={"my-groups-btn"}>
-                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemIcon><GroupIcon /></ListItemIcon>
                             <ListItemText primary={ <span className="menu-list-item-text"> My Groups</span>} />
                         </ListItem>
                     </Link>
@@ -97,9 +100,6 @@ class NavDrawer extends React.Component {
                         onClick={() => { this.props.toggleLeftDrawer(false) }}
                         onKeyDown={() => { this.props.toggleLeftDrawer(false) }}
                     >
-                        {/*<div className="listHead" style={{ padding: "20px" }}>
-                            <h1> Exam Study </h1>
-                        </div>*/}
                         {userSection}
                         <Divider />
                         {sideList}

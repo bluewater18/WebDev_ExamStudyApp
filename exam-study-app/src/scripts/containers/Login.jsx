@@ -1,33 +1,33 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import Background from '../components/Background';
-import { Card, CardActions, CardContent, Typography, Button, TextField } from '@material-ui/core';
+import { Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeLoginEmail, changeLoginPassword, submitLogin } from '../actions/action-login-form-change';
 import {withRouter} from 'react-router-dom';
-import BasicNotifier from '../components/BasicNotifier';
+//import BasicNotifier from '../components/BasicNotifier';
 
 class Login extends React.Component {
-
-
     render() {
-        
         return (
-            
             <div className="Help">
                 
                 <Background />
-                <Card className="Help-Card">
-                    <CardContent>
-                        <AccountCircleIcon fontSize="large" />
-                        <Typography variant="h4" component="h2" className="Help-Card-Title">
-                            Log In
-                        </Typography>
-                        <hr />
 
+                <Card className="Help-Card">
+                    <CardContent className={"login-card-content"}>
+                        <AccountCircleIcon fontSize="large" />
+                        <h1 className="login-card-title">
+                            Log In
+                        </h1>
+                    </CardContent>
+
+                    <hr />
+                    
+                    <CardContent className={"login-card-content"} style={{paddingBottom: "0" }}>
                         <TextField
                             required
                             value={this.props.login.UserEmail}
@@ -47,26 +47,24 @@ class Login extends React.Component {
                             type="password"
                             margin="normal"
                         />
-
-
                     </CardContent>
-                    <CardActions style={{ display: "inline-block", }}>
+
+                    <CardActions className={"login-card-actions"} style={{ display: "inline-block"}}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => {this.props.submitLogin(this.props.login)}} style={{ paddingTop: "15px", paddingBottom: "15px", width: "80%" }}>
-                            Log In
-                        </Button>
+                            <Button onClick={() => {this.props.submitLogin(this.props.login)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                                Log In
+                            </Button>
                         </div>
-                    <Link to="/register">
-                        <Button style={{ justifySelf: "right", fontSize: "xsmall", padding: "5px", minHeight:"0" }} >
+                        <Link to="/register">
+                            <Button style={{ justifySelf: "right", fontSize: "xsmall", padding: "5px", minHeight:"0", marginBottom:"5px",}} >
                                 Don't have an account? Register Here
                             </Button>
                         </Link>
                     </CardActions>
                 </Card>
 
-                <BasicNotifier message="yello" />
-                
-
+                {/*<BasicNotifier message="yello" />*/}
+            
             </div>
         )
     }

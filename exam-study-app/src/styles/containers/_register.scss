@@ -43,12 +43,29 @@
     max-width: 100% !important;
     min-width:200px !important;
     font-size: small !important;
+    margin: 0 0 10px 6px !important;
 }
 
-.MuiInputBase-root-209 {
-    position: initial !important;
+// .MuiInputBase-root-209 {
+//     position: initial !important;
+// }
+
+// .MuiInputBase-input-426 {
+//     font-size:small !important;
+// }
+
+.login-card-actions button span {
+    font-size: 1.2rem;
 }
 
-.MuiInputBase-input-426 {
-    font-size:small !important;
+.login-card-content {
+    padding-bottom: 0 !important;
+}
+
+.register-textfield label {
+    font-size: 1.5rem;
+}
+
+.register-textfield input {
+    font-size: 1.5rem;
 }

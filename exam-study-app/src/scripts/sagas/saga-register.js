@@ -8,11 +8,13 @@ export function* registerUser({ payload }) {
         let user = yield call(apiRegister, payload);
         try{
             let id = user.userId;
-            let photo = payload.userPhoto;
+            let photo = payload.UserPhoto;
             let apiPhoto = yield call(apiUpdatePhoto, photo, id);
             user.userImageName = apiPhoto.UserPhotoPath;
         }catch(err){console.log(err)}
         yield put({ type: actionConstants.REGISTER_SUCCESS, payload: user });
+        yield put({type:actionConstants.REGISTER_STEPPER_RESET})
+        yield put({type:actionConstants.REGISTER_STEPPER_RESET_FIELDS})
 
     } catch (err) {
         yield put({ type: actionConstants.REGISTER_FAILURE })

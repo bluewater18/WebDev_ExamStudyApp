@@ -30,7 +30,7 @@ namespace ExamStudy.API.Controllers
             {
                 User returnableUser = _userManager.LoginUser(user);
                 return Ok(returnableUser);
-            } catch(InvalidAuthorizationException iae)
+            } catch(InvalidAuthorizationException)
             {
                 return StatusCode(401, "{'reason':'Invalid Credentials'}");
             }

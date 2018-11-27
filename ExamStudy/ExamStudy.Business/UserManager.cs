@@ -22,11 +22,11 @@ namespace ExamStudy.Business
 
             _validator.ValidateUserRegister(user);//validate
             user.UserPassword = PasswordSecurity.PasswordStorage.CreateHash(user.UserPassword);//hash password
-            user.UserToken = GenerateToken();
-            user.UserId = _userRepository.AddUser(user);//add user to db with id returned
-            _userRepository.UpdateOrCreateUserToken(new UserToken(user.UserId, user.UserToken));//sets the new token for the user
-            user.UserPassword = null;
-            return user;
+            User userDb = _userRepository.AddUser(user);//add user to db with id returned
+            userDb.UserToken = GenerateToken();
+            _userRepository.UpdateOrCreateUserToken(new UserToken(userDb.UserId, userDb.UserToken));//sets the new token for the user
+            userDb.UserPassword = null;
+            return userDb;
         }
 
         public string UpdateUserPhoto(int id, string photoPath)

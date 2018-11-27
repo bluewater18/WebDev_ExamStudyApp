@@ -23,8 +23,11 @@ export default function registerReducer(state = initialState, action) {
             })
         case actionConstants.REGISTER_IMAGE_UPDATE:
             return Object.assign({}, state, {
-                userPhoto: action.payload
+                UserPhoto: action.payload
             })
+        case actionConstants.REGISTER_STEPPER_RESET_FIELDS:
+            return initialState;
+            
         default:
             return state;
 

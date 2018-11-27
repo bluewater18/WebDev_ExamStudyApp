@@ -11,7 +11,7 @@ namespace ExamStudy.Repository
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public int AddUser(User user)
+        public User AddUser(User user)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace ExamStudy.Repository
                 parameters.Add("p_UserEmail", user.UserEmail);
                 parameters.Add("p_UserPassword", user.UserPassword);
 
-                int result = SqlMapper.Query<int>(conn, "AddUser", param: parameters, commandType: StoredProcedure).FirstOrDefault();
+                User result = SqlMapper.Query<User>(conn, "AddUser", param: parameters, commandType: StoredProcedure).FirstOrDefault();
                 return result;
             } catch (Exception ex)
             {

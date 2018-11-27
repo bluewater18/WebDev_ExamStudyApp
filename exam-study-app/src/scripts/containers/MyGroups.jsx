@@ -10,7 +10,7 @@ class MyGroups extends React.Component {
                 <Background/>
                 <div className="my-groups-header">
                     <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=350" alt="user profile" width="150" height="150" />
-                    <h1>My Groups</h1>
+                    <h1 style={{fontSize:"xx-large"}}>My Groups</h1>
                 </div>
                 <div className="my-groups-content">
                     <MyGroupHelper/>

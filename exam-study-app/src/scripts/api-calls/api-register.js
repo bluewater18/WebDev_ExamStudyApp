@@ -21,19 +21,8 @@ async function apiRegister(user) {
 
 async function apiUpdatePhoto(photo, id) {
     return new Promise((resolve, reject)=> {
-        // const data = new URLSearchParams();
         var formData = new FormData();
-        //formData.append('pathType', "user");
         formData.append('image', photo);
-        // for(let a in formData){
-        //     data.append(a,formaData[a]);
-        // }
-        
-        // const fetch = createFetch(
-        //     base(API_BASE_PATH),
-        //     method('POST'),
-        //     body(data),
-        // )
         const options = {
             method: 'POST',
             body: formData,

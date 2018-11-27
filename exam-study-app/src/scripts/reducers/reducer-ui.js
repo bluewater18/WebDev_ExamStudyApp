@@ -15,6 +15,10 @@ export default function uiReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 registerStepperState: action.payload //send the current steeper state with the action
             });
+        case actionConstants.REGISTER_STEPPER_RESET:
+            return Object.assign({},state,{
+                registerStepperState:0
+            })
         default:
             return state;
         
