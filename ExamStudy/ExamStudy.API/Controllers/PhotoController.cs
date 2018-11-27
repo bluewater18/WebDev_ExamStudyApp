@@ -39,12 +39,12 @@ namespace ExamStudy.API.Controllers
                 return Created(path, new JObject(new JProperty("UserPhotoPath", path)));
                
             }
-            //else if (pathType.Equals("group", StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    var path = await _imageHandler.UploadImage(img);
-            //    _groupManager.UpdateGroupPhoto(id, path);
-            //    return Created(path, null);
-            //}
+            else if (pathType.Equals("group", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var path = await _imageHandler.UploadImage(img);
+                _groupManager.UpdateGroupPhoto(id, path);
+                return Created(path, null);
+            }
 
             return NotFound("Invalid type");
 
