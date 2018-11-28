@@ -9,7 +9,7 @@ import { changeEditName, changeEditEmail, changeEditPassword, changeEditPhoto, e
 import {withRouter} from 'react-router-dom';
 //import BasicNotifier from '../components/BasicNotifier';
 
-class Login extends React.Component {
+class EditUser extends React.Component {
     render() {
         return (
             <div className="Help">
@@ -98,4 +98,4 @@ function mapDispatchToProps(dispatch, ownProps) {
     }, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditUser));

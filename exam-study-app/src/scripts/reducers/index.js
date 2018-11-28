@@ -5,6 +5,7 @@ import uiReducer from './reducer-ui';
 import registerReducer from './reducer-register';
 import loginReducer from './reducer-login';
 import editUserReducer from './reducer-edit-user';
+import createGroupReducer from './reducer-create-group';
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,8 @@ const rootReducer = combineReducers({
     register: registerReducer,
     login: loginReducer,
     editUser: editUserReducer,
+    createGroup: createGroupReducer,
+    
 });
 
 export default rootReducer;
