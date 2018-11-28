@@ -22,6 +22,13 @@ export default function userReducer(state = initialState, action) {
                 token: action.payload.userToken,
                 imagePath: action.payload.userImageName,
             };
+        case actionConstants.EDIT_USER_SUCCESS:
+            return Object.assign({}, state ,{
+                name: action.payload.userName,
+                email: action.payload.userEmail,
+                imagePath: action.payload.userImageName,
+            });
+            
         case actionConstants.REGISTER_FAILURE_POSTSAGA:
         case actionConstants.LOGIN_FAILURE_POSTSAGA:
         case actionConstants.LOGOUT_USER:

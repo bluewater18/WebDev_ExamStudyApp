@@ -1,5 +1,6 @@
-﻿import { apiRegister, apiUpdatePhoto } from '../api-calls/api-register';
-import { actionConstants } from '../constants/index'
+﻿import { apiRegister } from '../api-calls/api-register';
+import { apiUpdatePhoto } from '../api-calls/api-edit-user';
+import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
 

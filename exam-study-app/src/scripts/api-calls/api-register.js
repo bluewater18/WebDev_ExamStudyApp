@@ -19,25 +19,4 @@ async function apiRegister(user) {
     })
 }
 
-async function apiUpdatePhoto(photo, id) {
-    return new Promise((resolve, reject)=> {
-        var formData = new FormData();
-        formData.append('image', photo);
-        const options = {
-            method: 'POST',
-            body: formData,
-        }
-
-        fetch(API_BASE_PATH+'/photos/'+id + '?pathType=user', options).then((response) => {
-            if(response.status === 201)
-                response.json().then((data) => {
-                        resolve(data);       
-                });
-            else
-                reject(response);
-        })
-
-    })
-}
-
-export { apiRegister, apiUpdatePhoto };
+export { apiRegister };

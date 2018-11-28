@@ -68,7 +68,6 @@ namespace ExamStudy.Repository
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("p_UserID", userId);
                 User user = SqlMapper.Query<User>(conn, "GetUserById", param: parameters, commandType: StoredProcedure).FirstOrDefault();
-                user.UserPassword = "";
                 return user;
             } catch (Exception ex)
             {
@@ -83,21 +82,15 @@ namespace ExamStudy.Repository
             return SqlMapper.Query<User>(conn, "GetUserByEmail", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
 
-        public bool UpdateUser(User user)
+        public User UpdateUser(User user)
         {
-            try
-            {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("p_UserId", user.UserId);
-                parameters.Add("p_UserName", user.UserName);
-                parameters.Add("p_UserEmail", user.UserEmail);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", user.UserId);
+            parameters.Add("p_UserName", user.UserName);
+            parameters.Add("p_UserEmail", user.UserEmail);
+            parameters.Add("p_UserPassword", user.UserPassword);
 
-                SqlMapper.Execute(conn, "UpdateUser", param: parameters, commandType: StoredProcedure);
-                return true;
-            } catch (Exception ex)
-            {
-                throw ex;
-            }
+            return SqlMapper.Query<User>(conn, "UpdateUser", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
 
         //user token methods

@@ -33,6 +33,13 @@ namespace ExamStudy.API.Controllers
             return _userManager.GetUserById(id);
         }
 
+        [HttpPatch("{id}")]
+        public IActionResult Edit(int id, [FromBody] User user)
+        {
+            User returnableUser = _userManager.UpdateUser(user);
+            return Created("hidden", returnableUser);
+        }
+
         // POST api/user
         [HttpPost]
         public IActionResult Post([FromBody] User user)

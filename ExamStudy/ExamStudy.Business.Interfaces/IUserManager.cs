@@ -8,7 +8,7 @@ namespace ExamStudy.Business.Interfaces
     {
         User RegisterUser(User user);
         User LoginUser(User user);
-        bool UpdateUser(User user);
+        User UpdateUser(User user);
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();
         User GetUserById(int userId);

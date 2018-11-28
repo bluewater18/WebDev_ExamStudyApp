@@ -3,6 +3,7 @@
 const initialState = {
     leftDrawerOpen: false,
     registerStepperState: 0,
+    editUserModalOpen: false,
 };
 
 export default function uiReducer(state = initialState, action) {

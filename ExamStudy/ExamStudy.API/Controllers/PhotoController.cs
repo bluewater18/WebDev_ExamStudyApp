@@ -16,11 +16,13 @@ namespace ExamStudy.API.Controllers
     {
         IImageHandler _imageHandler;
         IUserManager _userManager;
+        IGroupManager _groupManager;
 
-        public PhotoController(IImageHandler imageHandler, IUserManager userManager)
+        public PhotoController(IImageHandler imageHandler, IUserManager userManager, IGroupManager groupManager)
         {
             _imageHandler = imageHandler;
             _userManager = userManager;
+            _groupManager = groupManager;
         }
 
         [HttpGet("/user/{id}")]
@@ -41,7 +43,7 @@ namespace ExamStudy.API.Controllers
             }
             else if (pathType.Equals("group", StringComparison.InvariantCultureIgnoreCase))
             {
-                var path = await _imageHandler.UploadImage(img);
+                var path = await _imageHandler.UploadImage(image);
                 _groupManager.UpdateGroupPhoto(id, path);
                 return Created(path, null);
             }

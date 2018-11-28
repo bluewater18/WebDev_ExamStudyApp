@@ -10,6 +10,7 @@ import history from '../../history';
 
 import {Router, Route, Switch } from "react-router-dom";
 import MyGroups from './MyGroups';
+import EditUser from './EditUser';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
                         <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
                         <Route path="/my-groups" component={MyGroups} />
+                        <Route path="/user/edit" component={EditUser} />
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>

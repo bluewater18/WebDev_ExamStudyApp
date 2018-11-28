@@ -4,6 +4,7 @@ const toggleLeftDrawer = (drawerState) => {
         type: actionConstants.LEFT_DRAWER_TOGGLE,
         payload: drawerState
     }
+
 }
 
 export default toggleLeftDrawer;

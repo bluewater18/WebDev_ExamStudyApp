@@ -31,8 +31,17 @@ namespace ExamStudy.Business
 
         public string UpdateUserPhoto(int id, string photoPath)
         {
+            DeleteOldPhoto(GetUserPhotoPath(id));
             _userRepository.UpdateUserPhoto(id, photoPath);
             return GetUserPhotoPath(id);
+        }
+
+        private void DeleteOldPhoto(string photoPath)
+        {
+            if (photoPath.ToLower().Contains("default"))
+                return;
+            System.IO.File.Delete(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot\\images", photoPath));
+
         }
 
         public string GetUserPhotoPath(int userId)
@@ -52,12 +61,31 @@ namespace ExamStudy.Business
 
         public User GetUserById(int userId)
         {
-            return _userRepository.GetUserById(userId);
+            User user = _userRepository.GetUserById(userId);
+            user.UserPassword = "";
+            return user;
         }
 
-        public bool UpdateUser(User user)
+        public User UpdateUser(User user)
         {
-            return _userRepository.UpdateUser(user);
+            User oldUser = _userRepository.GetUserById(user.UserId);
+
+            if (_validator.IsNullOrEmpty(user.UserPassword))
+                user.UserPassword = oldUser.UserPassword;
+            else
+                user.UserPassword = PasswordSecurity.PasswordStorage.CreateHash(user.UserPassword);//hash password
+
+            if (_validator.IsNullOrEmpty(user.UserEmail))
+                user.UserEmail = oldUser.UserEmail;
+
+            if (_validator.IsNullOrEmpty(user.UserName))
+                user.UserName = oldUser.UserName;
+
+            _validator.ValidateUserRegister(user);
+
+            User dbUser =  _userRepository.UpdateUser(user);
+            dbUser.UserPassword = null;
+            return dbUser;
         }
 
         public User LoginUser(User user)

@@ -43,5 +43,10 @@ namespace ExamStudy.Business
                 return true;
             return false;
         }
+
+        public bool IsNullOrEmpty(string str)
+        {
+            return str == null || str == ""; 
+        }
     }
 }

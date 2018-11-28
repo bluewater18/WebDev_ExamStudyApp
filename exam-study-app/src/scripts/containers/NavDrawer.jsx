@@ -33,7 +33,6 @@ const styles = {
 };
 
 class NavDrawer extends React.Component {
-
     render() {
         const { classes } = this.props;
         const sideList = (
@@ -82,9 +81,11 @@ class NavDrawer extends React.Component {
                         </Typography>
                     </div>
                     <div style={{ float:"right"}}>
+                    <Link to="/user/edit">
                         <IconButton className="nav-drawer-user-settings" color="inherit" aria-label="Settings">
                             <SettingsIcon color="secondary" />
                          </IconButton>
+                    </Link>
                     </div>
                 </div>
             </div>
@@ -123,7 +124,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLeftDrawer: toggleLeftDrawer }, dispatch);
+    return bindActionCreators({ 
+        toggleLeftDrawer: toggleLeftDrawer,
+      }, dispatch);
 }
 
 const styled = withStyles(styles)(NavDrawer)
