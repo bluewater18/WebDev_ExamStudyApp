@@ -36,10 +36,10 @@ const createGroupPhoto = (photo) => {
     }  
 }
 
-const createGroupComplete = (group) => {
+const createGroupComplete = (group, userId) => {
     return {
         type: actionConstants.CREATE_GROUP_COMPLETE,
-        payload: group
+        payload: {group: group, userId: userId}
     }
 }
 

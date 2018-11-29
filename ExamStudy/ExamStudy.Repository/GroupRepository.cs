@@ -16,6 +16,7 @@ namespace ExamStudy.Repository
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("p_GroupName", group.GroupName);
             parameters.Add("p_GroupType", group.GroupType);
+            parameters.Add("p_GroupDesc", group.GroupDescription);
             parameters.Add("p_GroupOwnerId", group.GroupOwnerId);
 
             return SqlMapper.Query<Group>(conn, "AddGroup", param: parameters, commandType: StoredProcedure).FirstOrDefault();

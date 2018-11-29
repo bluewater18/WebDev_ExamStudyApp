@@ -24,7 +24,8 @@ namespace ExamStudy.Business
 
         public Group CreateGroup(Group group)
         {
-            throw new NotImplementedException();
+            Group res = _groupRepository.AddGroup(group);
+            return res;
         }
 
         public bool DeleteGroup(int groupId)
@@ -34,12 +35,12 @@ namespace ExamStudy.Business
 
         public IList<Group> GetAllGroups()
         {
-            throw new NotImplementedException();
+            return _groupRepository.GetAllGroups();
         }
 
         public Group GetGroupById(int groupId)
         {
-            throw new NotImplementedException();
+            return _groupRepository.GetGroupById(groupId);
         }
 
         public string GetGroupPhotoPath(int groupId)
@@ -57,9 +58,9 @@ namespace ExamStudy.Business
             throw new NotImplementedException();
         }
 
-        public string UpdateGroupPhoto(int id, string photoPath)
+        public bool UpdateGroupPhoto(int id, string photoPath)
         {
-            throw new NotImplementedException();
+            return _groupRepository.UpdateGroupPhoto(id, photoPath);
         }
     }
 }

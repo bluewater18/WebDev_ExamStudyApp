@@ -12,6 +12,7 @@ import {Router, Route, Switch } from "react-router-dom";
 import MyGroups from './MyGroups';
 import EditUser from './EditUser';
 import CreateGroup from './CreateGroup';
+import GroupHome from './GroupHome';
 
 class App extends Component {
   render() {
@@ -27,7 +28,9 @@ class App extends Component {
                         <Route path="/login" component={Login} />
                         <Route path="/my-groups" component={MyGroups} />
                         <Route path="/user/edit" component={EditUser} />
-                        <Route path="/group/create" component = {CreateGroup} />
+                        <Route path="/groups/create" component={CreateGroup} />
+                        <Route path="/group/:groupId" component={GroupHome} />
+                        {/* <Route path="/group/:groupId/edit" component={GroupEdit} /> */}
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>

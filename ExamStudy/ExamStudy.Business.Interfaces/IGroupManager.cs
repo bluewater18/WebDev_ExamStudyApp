@@ -11,7 +11,7 @@ namespace ExamStudy.Business.Interfaces
         bool DeleteGroup(int groupId);
         IList<Group> GetAllGroups();
         Group GetGroupById(int groupId);
-        string UpdateGroupPhoto(int id, string photoPath);
+        bool UpdateGroupPhoto(int id, string photoPath);
         string GetGroupPhotoPath(int groupId);
         bool AddUserToGroup(int groupId, int userId, string status);
         bool RemoveUserFromGroup(int groupId, int userId);

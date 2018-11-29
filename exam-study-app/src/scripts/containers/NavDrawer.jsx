@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SettingsIcon from '@material-ui/icons/Settings';
+import AddIcon from '@material-ui/icons/Add';
 import toggleLeftDrawer from '../actions/action-toggle-left-drawer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -67,6 +68,15 @@ class NavDrawer extends React.Component {
                     </Link>
                 </List>
                 <Divider />
+                <List>
+                    <Link key="Create Group" to="/groups/create">
+                        <ListItem button key={"create-groups-btn"}>
+                            <ListItemIcon><AddIcon /></ListItemIcon>
+                            <ListItemText primary={ <span className="menu-list-item-text"> Create Group</span>} />
+                        </ListItem>
+                    </Link>
+                </List>
+
             </div>
         );
 

@@ -12,7 +12,7 @@ const persistConfig = {
     key: 'root',
     storage: storage,
     stateReconciler: autoMergeLevel2,
-    blacklist: ['ui', 'register', 'register'],
+    blacklist: ['ui', 'register', 'register', 'createGroup', 'activeGroup'],
 }
 const pReducer = persistReducer(persistConfig, rootReducer)
 

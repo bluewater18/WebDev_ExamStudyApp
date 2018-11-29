@@ -7,6 +7,7 @@ DROP PROCEDURE IF EXISTS AddGroup;
 DROP PROCEDURE IF EXISTS UpdateGroupImage;
 DROP PROCEDURE IF EXISTS AddUserToGroup;
 DROP PROCEDURE IF EXISTS GetGroupPhotoPath;
+DROP PROCEDURE IF EXISTS GetAllGroups;
 DROP PROCEDURE IF EXISTS DeleteGroup;
 DROP PROCEDURE IF EXISTS GetGroupById;
 DROP PROCEDURE IF EXISTS UpdateGroup;
@@ -15,6 +16,7 @@ DROP PROCEDURE IF EXISTS GetAllUsersInGroup;
 CREATE TABLE IF NOT EXISTS Groups(
 	GroupId INT AUTO_INCREMENT,
 	GroupName VARCHAR(50) UNIQUE,
+	GroupDescription VARCHAR(256),
 	GroupType VARCHAR(16),
 	GroupOwnerId INT,
 	GroupImageName VARCHAR(64),
@@ -42,6 +44,7 @@ DELIMITER $$
 CREATE PROCEDURE `AddGroup`(
 	IN p_GroupName VARCHAR(50),
 	IN p_GroupType VARCHAR(16),
+	IN p_GroupDesc VARCHAR(256),
 	IN p_GroupOwnerId INT
 )
 BEGIN
@@ -50,6 +53,8 @@ BEGIN
 	SET
 		GroupName = p_GroupName,
 		GroupType = p_GroupType,
+		GroupDescription = p_GroupDesc,
+		GroupImageName = 'default_group.png',
 		GroupOwnerId = p_GroupOwnerId;
 	SELECT GroupId INTO tempId FROM Groups WHERE GroupName = p_GroupName 
 		AND GroupType = p_GroupType
@@ -85,7 +90,7 @@ CREATE PROCEDURE `AddUserToGroup`(
 	IN p_MemberType VARCHAR(1)
 )
 BEGIN
-	INSERT INTO GroupMembers(
+	INSERT INTO GroupMembers
 	SET
 		GroupId = p_GroupId,
 		UserId = p_UserId,
@@ -133,7 +138,6 @@ CREATE PROCEDURE `UpdateGroup`(
 BEGIN
 	UPDATE Groups
 	SET
-	SET
 		GroupName = p_GroupName,
 		GroupType = p_GroupType,
 		GroupOwnerId = p_GroupOwnerId
@@ -143,7 +147,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE IF `GetAllUsersInGroup`(
+CREATE PROCEDURE `GetAllUsersInGroup`(
 	IN p_GroupId INT
 )
 BEGIN

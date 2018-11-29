@@ -1,34 +1,35 @@
 ﻿import { actionConstants } from '../constants/index';
 
 const initialState = {
-    GroupName: '',
-    GroupDescription: '',
-    GroupType: '',
-    GroupOwner: null,
-    GroupPhoto: null,
+    groupName: '',
+    groupDescription: '',
+    groupType: '',
+    groupOwnerId: null,
+    groupPhoto: null,
+    groupPhotoPath: '',
 };
 
 export default function createGroupReducer(state = initialState, action) {
     switch (action.type) {
         case actionConstants.CREATE_GROUP_NAME:
             return Object.assign({}, state, {
-                GroupName: action.payload
+                groupName: action.payload
             });
         case actionConstants.CREATE_GROUP_DESCRIPTION:
             return Object.assign({}, state, {
-                GroupDescription: action.payload
+                groupDescription: action.payload
             });
         case actionConstants.CREATE_GROUP_TYPE:
             return Object.assign({}, state, {
-                GroupType: action.payload
+                groupType: action.payload
             })
             case actionConstants.CREATE_GROUP_OWNER:
             return Object.assign({}, state, {
-                GroupOwner: action.payload
+                groupOwner: action.payload
             })        
             case actionConstants.CREATE_GROUP_IMAGE:
             return Object.assign({}, state, {
-                GroupPhoto: action.payload
+                groupPhoto: action.payload
             })
         case actionConstants.CREATE_GROUP_RESET_FIELDS:
             return initialState;

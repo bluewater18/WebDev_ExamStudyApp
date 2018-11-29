@@ -45,7 +45,7 @@ namespace ExamStudy.API.Controllers
             {
                 var path = await _imageHandler.UploadImage(image);
                 _groupManager.UpdateGroupPhoto(id, path);
-                return Created(path, null);
+                return Created(path, new JObject(new JProperty("GroupPhotoPath", path)));
             }
 
             return NotFound("Invalid type");
