@@ -6,17 +6,21 @@ import {IMAGE_PATH} from '../constants';
 import { bindActionCreators } from 'redux';
 import { getUserGroups, getAllGroups } from '../actions/action-get-group';
 import { connect } from 'react-redux';
-
+import {Link} from 'react-router-dom';
 class MyGroups extends React.Component {
     componentDidMount() {
         this.props.getAllGroups()
     }
     
     render() {
+        
         const groups = this.props.userGroups.groups;
-        const elements = groups.map((group) => 
-            <li key={group.groupId}>{group.groupName}</li>
-        )
+        const elements = groups.map((group) =>
+            <Link key={group.groupId} to={"/group/"+group.groupId} style={{all:"unset"}}>
+                <MyGroupHelper group={group} />
+            </Link>   
+            )       
+
         return (
             <div className="my-groups">
                 <Background/>
@@ -25,15 +29,9 @@ class MyGroups extends React.Component {
                     <h1 style={{fontSize:"xx-large"}}>My Groups</h1>
                 </div>
                 <div className="my-groups-content">
-                    <MyGroupHelper/>
-                    <MyGroupHelper/>
-                    <MyGroupHelper/>
-                    <MyGroupHelper/>
-                    <MyGroupHelper/>
-                    <MyGroupHelper/>
-                    <ul>
-                        {elements}
-                    </ul>
+
+                {elements}
+                    
                     
                 </div>
                 

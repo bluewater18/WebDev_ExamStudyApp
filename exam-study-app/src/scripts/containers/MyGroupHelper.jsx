@@ -10,16 +10,21 @@ import WorkIcon from '@material-ui/icons/Work';
 import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { IconButton } from '@material-ui/core';
+import { createGroupComplete } from '../actions/action-create-group';
+import PropTypes from 'prop-types';
+import {IMAGE_PATH} from '../constants/index';
 
 
 class MyGroupHelper extends React.Component {
+
     render() {
+        console.log(this.props.group)
         return (
             <Card className="my-group-helper-container">
                 <CardActionArea className="my-group-helper-header">
                     <CardMedia 
                         className="my-group-helper-media"
-                        image="https://images.pexels.com/photos/450059/pexels-photo-450059.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                        image={IMAGE_PATH + this.props.group.groupImageName}
                         title="Group Image"
                     />
                     <CardContent className="my-group-helper-content">
@@ -38,10 +43,10 @@ class MyGroupHelper extends React.Component {
     cardContentRenderer(){
         return(
             <div>
-                <h2>Cosc 367</h2>
-                <h4>Created By: Matt Jones</h4>
+                <h2>{this.props.group.groupName}</h2>
+                <h4>Created By: {this.props.group.groupOwnerId}</h4>
                 <h4>--</h4>
-                <h3>Exam Prep</h3>
+                <h3>{this.props.group.groupType}</h3>
             </div>
         )
     }
@@ -67,6 +72,9 @@ class MyGroupHelper extends React.Component {
             </div>
         )
     }
+}
+MyGroupHelper.proptypes = {
+    group: PropTypes.object.isRequired,
 }
 
 export default MyGroupHelper;
