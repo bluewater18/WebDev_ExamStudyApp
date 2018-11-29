@@ -30,6 +30,7 @@ namespace ExamStudy.API.Controllers
 
         // GET api/group/5
         [HttpGet("{id}")]
+        [ActionName("index")]
         public Group Get(int id)
         {
             return _groupManager.GetGroupById(id);
@@ -62,6 +63,12 @@ namespace ExamStudy.API.Controllers
         public void Delete(int id)
         {
             _groupManager.DeleteGroup(id);
-        }                
+        }
+        
+        [HttpGet("members/{id}")]
+        public IActionResult GetMembers (int id) {
+            
+            return new ObjectResult(_groupManager.GetGroupMembers(id));
+        }
     }
 }

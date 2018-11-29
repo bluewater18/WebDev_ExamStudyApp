@@ -85,8 +85,26 @@ async function apiGetUserGroups(userId) {
             base(API_BASE_PATH),
             method("GET"),
         )
-        fetchGetUserGroups('/groups')
+        fetchGetUserGroups('/group')
     })
 }
 
-export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups};
+async function apiGetMembersFromGroup( groupId) { 
+    return new Promise((resolve, reject) => {
+        const fetchGetMembersFromGroup = createFetch(
+            base(API_BASE_PATH),
+            method("GET")
+        )
+        fetchGetMembersFromGroup('/group/members/'+groupId).then((res) =>{
+            if(res.status === 200)
+                res.json().then((data) =>
+                    resolve(data))
+            else 
+                reject(res)
+        }).catch((err) =>
+            reject(err)
+        )
+    })
+}
+
+export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup};

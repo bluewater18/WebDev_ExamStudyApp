@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS GroupMembers(
 );
 
 CREATE VIEW GroupMembersDetailed AS
-	SELECT U.UserName as UserName, U.UserId as UserId, G.GroupId as GroupId, G.MemberType as MemberType
+	SELECT U.UserName as UserName, U.UserImageName as UserImageName, U.UserId as UserId, G.GroupId as GroupId, G.MemberType as MemberType
 	FROM Users U
 	INNER JOIN GroupMembers G
 	ON (U.UserId = G.UserId);
@@ -151,7 +151,7 @@ CREATE PROCEDURE `GetAllUsersInGroup`(
 	IN p_GroupId INT
 )
 BEGIN
-	SELECT UserId, UserName, MemberType FROM GroupMembersDetailed
+	SELECT UserId, UserName, UserImageName, MemberType FROM GroupMembersDetailed
 	WHERE GroupId = p_GroupId;
 END $$
 DELIMITER ;

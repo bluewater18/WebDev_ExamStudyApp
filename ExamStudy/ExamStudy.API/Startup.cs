@@ -56,7 +56,14 @@ namespace ExamStudy.API
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id:int}",
+                    defaults: new { contoller = "home", action = "index" }
+                    );
+            });
         }
     }
 }

@@ -83,5 +83,12 @@ namespace ExamStudy.Repository
             SqlMapper.Execute(conn, "AddUserToGroup", param: parameters, commandType: StoredProcedure);
             return true;
         }
+
+        public IList<GroupMemberVM> GetGroupMembers(int groupId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_GroupId", groupId);
+            return SqlMapper.Query<GroupMemberVM>(conn, "GetAllUsersInGroup", param: parameters, commandType: StoredProcedure).ToList();
+        }
     }
 }

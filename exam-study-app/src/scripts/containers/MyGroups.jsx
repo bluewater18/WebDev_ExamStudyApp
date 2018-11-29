@@ -29,13 +29,8 @@ class MyGroups extends React.Component {
                     <h1 style={{fontSize:"xx-large"}}>My Groups</h1>
                 </div>
                 <div className="my-groups-content">
-
-                {elements}
-                    
-                    
-                </div>
-                
-                
+                    {elements}
+                </div>     
             </div>
             )
     }

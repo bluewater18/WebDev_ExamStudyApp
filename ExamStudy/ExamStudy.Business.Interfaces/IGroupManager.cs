@@ -15,5 +15,6 @@ namespace ExamStudy.Business.Interfaces
         string GetGroupPhotoPath(int groupId);
         bool AddUserToGroup(int groupId, int userId, string status);
         bool RemoveUserFromGroup(int groupId, int userId);
+        IList<GroupMemberVM> GetGroupMembers(int id);
     }
 }

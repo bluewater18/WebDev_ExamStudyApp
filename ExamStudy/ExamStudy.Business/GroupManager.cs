@@ -62,5 +62,10 @@ namespace ExamStudy.Business
         {
             return _groupRepository.UpdateGroupPhoto(id, photoPath);
         }
+
+        public IList<GroupMemberVM> GetGroupMembers(int id)
+        {
+            return _groupRepository.GetGroupMembers(id);
+        }
     }
 }

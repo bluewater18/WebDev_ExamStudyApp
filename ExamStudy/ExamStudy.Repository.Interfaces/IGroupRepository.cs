@@ -13,5 +13,6 @@ namespace ExamStudy.Repository.Interfaces
         Group GetGroupById(int groupId);
         bool UpdateGroupPhoto(int id, string photoPath);
         IList<User> GetAllUsersInGroup(int groupId);
+        IList<GroupMemberVM> GetGroupMembers(int groupId);
     }
 }
