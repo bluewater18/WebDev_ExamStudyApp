@@ -17,7 +17,7 @@ class GroupHome extends React.Component {
     render() {
         const members = this.props.activeGroup.groupMembers;
         const memberList = members.map((user) =>
-            <ListItem key={user.userId}>
+            <ListItem key={user.userId} style={{padding:"0", margin:"0", borderBottom:"1px solid #E0E0E0"}}>
                 <GroupMemberListItem groupMember={user}/>
             </ListItem>
         )
@@ -86,9 +86,9 @@ class GroupHome extends React.Component {
                     <h1>Members</h1>
                 </CardContent>
                 <Divider />
-                <CardContent className="group-home-content" style={{maxHeight:"inherit", minHeight:"fit-content"}}>
+                <CardContent className="group-home-content-list" style={{maxHeight:"inherit", minHeight:"fit-content"}}>
 
-                    <List style={{maxHeight:"400px", overflow:"auto"}}>
+                    <List style={{maxHeight:"400px", overflow:"auto", padding:"0"}}>
                         {memberList}
                     </List>
                 </CardContent>

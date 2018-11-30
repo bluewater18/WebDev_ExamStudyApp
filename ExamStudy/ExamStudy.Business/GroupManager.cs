@@ -73,7 +73,6 @@ namespace ExamStudy.Business
         public bool AddUserToGroupByCode(string code, int userId)
         {
             int groupId = _groupRepository.GetGroupByCode(code);
-
             return _groupRepository.AddUserToGroup(userId, groupId, "MEMBER");
                
         }

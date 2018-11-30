@@ -3,6 +3,7 @@ import '../../styles/main.scss';
 
 import PropTypes from 'prop-types';
 import {IMAGE_PATH} from '../constants/index';
+import {Divider} from '@material-ui/core';
 
 class GroupMemberListItem extends React.Component {
     render() {

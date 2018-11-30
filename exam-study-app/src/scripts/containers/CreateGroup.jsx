@@ -26,7 +26,7 @@ class CreateGroup extends React.Component {
 
                     <hr />
                     
-                    <CardContent className={"edit-user-card-content"} style={{paddingBottom: "0", display:"flex", flexDirection:"column", flexWrap:"wrap" }}>
+                    <CardContent className={"edit-user-card-content"} style={{paddingBottom: "0", paddingTop: "5px", display:"flex", flexDirection:"column", flexWrap:"wrap" }}>
                         <TextField
                             value={this.props.createGroup.groupName}
                             onChange={evt => this.props.createGroupName(evt.target.value)}
@@ -45,7 +45,7 @@ class CreateGroup extends React.Component {
                             margin="normal"
                         />
                         
-                        <InputLabel htmlFor="group-type-placeholder">
+                        <InputLabel htmlFor="group-type-placeholder" style={{textAlign:"left", fontSize:"1.3rem", paddingTop:"10px"}}>
                             Group Type:
                         </InputLabel>
                         <Select
@@ -59,7 +59,7 @@ class CreateGroup extends React.Component {
                             <MenuItem value={"StudyGroup"}>Study Group</MenuItem>
                         </Select>
 
-                        <InputLabel shrink htmlFor="create-group-photo-file">
+                        <InputLabel htmlFor="create-group-photo-file" style={{textAlign:"left", fontSize:"1.3rem", padding:"15px 0 5px 0"}}>
                             Group Image:
                         </InputLabel>
                         <input
@@ -79,7 +79,7 @@ class CreateGroup extends React.Component {
 
                     <CardActions className={"edit-user-card-actions"} style={{ display: "inline-block"}}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => {this.props.createGroupComplete(this.props.createGroup, this.props.user.id)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                            <Button onClick={() => {this.props.createGroupComplete(this.props.createGroup, this.props.user.id)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%", fontSize:"1.4rem" }}>
                                 Submit
                             </Button>
                         </div>

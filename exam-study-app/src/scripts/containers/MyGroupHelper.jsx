@@ -58,9 +58,9 @@ class MyGroupHelper extends React.Component {
                     <WorkIcon fontSize="small"/>
                 </div>
                 <div>
-                <IconButton>
+                {/* <IconButton>
                     <SettingsIcon fontSize="small"/>
-                </IconButton>
+                </IconButton> */}
                 </div>
                 <div >
                     <IconButton>

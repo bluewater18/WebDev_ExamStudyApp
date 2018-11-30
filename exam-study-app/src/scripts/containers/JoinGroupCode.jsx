@@ -37,7 +37,7 @@ class JoinGroupWithCode extends React.Component {
 
                     <hr />
                     
-                    <CardContent className={"login-card-content"} style={{paddingBottom: "0" }}>
+                    <CardContent className={"login-card-content"} style={{paddingBottom: "0", paddingTop: "5px" }}>
                         <TextField
                             required
                             value={this.state.code}

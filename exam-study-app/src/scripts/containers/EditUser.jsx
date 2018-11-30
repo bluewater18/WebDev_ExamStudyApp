@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/main.scss';
 import Background from '../components/Background';
-import { Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import { Card, CardActions, CardContent, Button, TextField, InputLabel } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,7 +26,7 @@ class EditUser extends React.Component {
 
                     <hr />
                     
-                    <CardContent className={"edit-user-card-content"} style={{paddingBottom: "0", display:"flex", flexDirection:"column" }}>
+                    <CardContent className={"edit-user-card-content"} style={{paddingBottom: "0", paddingTop: "5px", display:"flex", flexDirection:"column" }}>
                         <TextField
                             value={this.props.editUser.UserName}
                             onChange={evt => this.props.changeEditName(evt.target.value)}
@@ -52,7 +52,9 @@ class EditUser extends React.Component {
                             type="password"
                             margin="normal"
                         />
-
+                        <InputLabel htmlFor="edit-user-photo-file" style={{textAlign:"left", fontSize:"1.3rem", padding:"15px 0 5px 7px"}}>
+                            New Profile Photo:
+                        </InputLabel>
                         <input
                             accept="image/*"
                             style={{display:"none"}}
@@ -70,7 +72,7 @@ class EditUser extends React.Component {
 
                     <CardActions className={"edit-user-card-actions"} style={{ display: "inline-block"}}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => {this.props.editComplete(this.props.editUser, this.props.user.id, this.props.editUser.UserPhoto)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                            <Button onClick={() => {this.props.editComplete(this.props.editUser, this.props.user.id, this.props.editUser.UserPhoto)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%", fontSize:"1.4rem" }}>
                                 Submit
                             </Button>
                         </div>
