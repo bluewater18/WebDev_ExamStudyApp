@@ -1,4 +1,4 @@
-﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups } from '../api-calls/api-groups';
+﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiJoinGroupWithCode } from '../api-calls/api-groups';
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
@@ -15,6 +15,7 @@ export function* createGroup({payload}) {
         }
         yield put({ type: actionConstants.CREATE_GROUP_SUCCESS, payload: createdGroup });
         yield put({type:actionConstants.CREATE_GROUP_RESET_FIELDS})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type:'success', message:createdGroup.groupName+ ' Created Successfully! '}})
 
     } catch (err) {
         console.log(err)
@@ -56,12 +57,34 @@ export function* getUserGroups(userId) {
     }
 }
 
+export function* getMembers({payload}){
+    try{
+        let members = yield call(apiGetMembersFromGroup, payload)
+        yield put({type: actionConstants.GET_GROUP_MEMBERS_SUCCESS, payload: members})
+    } catch (err) {
+        console.log(err);
+        yield put({type: actionConstants.GET_GROUP_MEMBERS_FAILURE})
+    }
+}
+
+export function* joinWithCode({payload}) {
+    try{
+        yield call(apiJoinGroupWithCode, payload)
+        yield put({type:actionConstants.JOIN_GROUP_WITH_CODE_SUCCESS})
+    } catch(err) {
+        console.log(err);
+        yield put({type: actionConstants.JOIN_GROUP_WITH_CODE_FAILURE})
+    }
+}
+
 export default function* root() {
     yield all([
         takeLatest(actionConstants.CREATE_GROUP_COMPLETE, createGroup),
         takeLatest(actionConstants.CREATE_GROUP_SUCCESS, createGroupSuccess),
         takeLatest(actionConstants.GET_GROUP, getGroup),
         takeLatest(actionConstants.GET_ALL_GROUPS, getAllGroups),
-        takeLatest(actionConstants.GET_USER_GROUPS, getUserGroups)
+        takeLatest(actionConstants.GET_USER_GROUPS, getUserGroups),
+        takeLatest(actionConstants.GET_GROUP_MEMBERS, getMembers),
+        takeLatest(actionConstants.JOIN_GROUP_WITH_CODE, joinWithCode),
     ]);
 }

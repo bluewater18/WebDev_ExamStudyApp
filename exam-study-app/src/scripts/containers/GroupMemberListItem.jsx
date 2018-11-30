@@ -9,7 +9,7 @@ class GroupMemberListItem extends React.Component {
         return (
             <div className="group-member-list-item">
                 <div className="group-member-list-item-div-img">
-                    <img src={IMAGE_PATH+"default_user.png"}/>
+                    <img src={IMAGE_PATH+this.props.groupMember.userImageName}/>
                 </div>
                 <div className="group-member-list-item-div-name">
                     {this.props.groupMember.userName}

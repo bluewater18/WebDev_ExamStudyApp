@@ -7,12 +7,13 @@ const initialState = {
     groupType: '',
     groupOwnerId: null,
     groupPhotoPath: '',
+    groupCode: '',
+    groupMembers: [],
 };
 
 export default function activeGroupReducer(state = initialState, action) {
     switch (action.type) {
         case actionConstants.GET_GROUP_SUCCESS:
-            console.log(action.payload)
             return Object.assign({}, state, {
                 groupId: action.payload.groupId,
                 groupName: action.payload.groupName,
@@ -20,6 +21,11 @@ export default function activeGroupReducer(state = initialState, action) {
                 groupType: action.payload.groupType,
                 groupOwnerId: action.payload.groupOwnerId,
                 groupPhotoPath: action.payload.groupImageName,
+                groupCode: action.payload.groupCode,
+            })
+        case actionConstants.GET_GROUP_MEMBERS_SUCCESS:
+            return Object.assign({}, state , {
+                groupMembers: action.payload
             })
         default:
             return state;

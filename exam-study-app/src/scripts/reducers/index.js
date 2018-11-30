@@ -7,7 +7,8 @@ import loginReducer from './reducer-login';
 import editUserReducer from './reducer-edit-user';
 import createGroupReducer from './reducer-create-group';
 import activeGroupReducer from './reducer-active-group';
-import userGroups from './reducer-user-groups';
+import userGroupsReducer from './reducer-user-groups';
+import notifierReducer from './reducer-notifier'
 
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     editUser: editUserReducer,
     createGroup: createGroupReducer,
     activeGroup: activeGroupReducer,
-    userGroups: userGroups,
+    userGroups: userGroupsReducer,
+    notifier: notifierReducer
     
 });
 

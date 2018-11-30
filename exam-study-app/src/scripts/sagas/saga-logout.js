@@ -4,6 +4,7 @@ import history from '../../history';
 
 export function* logout() {
     yield put({ type: actionConstants.LOGOUT_USER, payload: null });
+    yield put({type:actionConstants.SHOW_NOTIFIER, payload:{type: "info", message:"Logged Out Successfully."}})
     yield call(history.push,'/');
 }
 

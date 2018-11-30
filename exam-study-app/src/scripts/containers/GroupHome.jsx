@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/main.scss';
 import Background from '../components/Background';
-import {getGroup} from '../actions/action-get-group';
+import {getGroup, getGroupMembers} from '../actions/action-get-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { IMAGE_PATH } from '../constants/index';
@@ -12,8 +12,15 @@ class GroupHome extends React.Component {
     componentDidMount() {
         const { groupId } = this.props.match.params;
         this.props.getGroup(groupId);
+        this.props.getGroupMembers(groupId);
     }
     render() {
+        const members = this.props.activeGroup.groupMembers;
+        const memberList = members.map((user) =>
+            <ListItem key={user.userId}>
+                <GroupMemberListItem groupMember={user}/>
+            </ListItem>
+        )
         
         return (
             
@@ -31,7 +38,7 @@ class GroupHome extends React.Component {
                         {this.resourceCardRenderer()}
                     </div>
                     <div>
-                        {this.memberCardRenderer()}
+                        {this.memberCardRenderer(memberList)}
                     </div>
                 </div>
 
@@ -51,6 +58,8 @@ class GroupHome extends React.Component {
                     <h3> Created By: {this.props.activeGroup.groupOwnerId}</h3>
                     <h3> Group Type: {this.props.activeGroup.groupType}</h3>
                     <h3> Member Count: Not Implemented</h3>
+                    <hr/>
+                    <h3> Group Code: {this.props.activeGroup.groupCode}</h3>
                 </CardContent>
             </Card>
         )
@@ -70,7 +79,7 @@ class GroupHome extends React.Component {
         )
     }
 
-    memberCardRenderer() {
+    memberCardRenderer(memberList) {
         return (
             <Card className="group-home-container" style={{height:"400px"}}>
                 <CardContent className="group-home-content-header">
@@ -80,28 +89,7 @@ class GroupHome extends React.Component {
                 <CardContent className="group-home-content" style={{maxHeight:"inherit", minHeight:"fit-content"}}>
 
                     <List style={{maxHeight:"400px", overflow:"auto"}}>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-                        <ListItem>
-                            <GroupMemberListItem groupMember={{userName:"test", memberType:"test"}}/>
-                        </ListItem>
-
+                        {memberList}
                     </List>
                 </CardContent>
             </Card>
@@ -118,7 +106,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getGroup:getGroup
+        getGroup:getGroup,
+        getGroupMembers: getGroupMembers,
     }, dispatch)
 }
 

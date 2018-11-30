@@ -12,6 +12,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { closeNotifier } from '../actions/action-notifier';
+import { bindActionCreators } from 'redux';
 
 
 const variantIcon = {
@@ -89,31 +92,17 @@ MySnackBarContent.propTypes = {
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackBarContent)
 
 class BasicNotifier extends React.Component {
-
-    state = {
-        open: true,
-    };
-
-    handleOpen = () => {
-        this.setState({
-            open:true
-        })
-    }
-
-    handleClose = (evt, reason) => {
-        if (reason === 'clickaway')
-            return
-        this.setState({
-            open:false,
-        });
+    handleClose = () => {
+        this.props.closeNotifier();
     };
 
     getSnackBarContent = () => {
         return(
             <MySnackbarContentWrapper
-            onClose={this.handleClose}
-            variant="success"
-            message="This is a success message!"
+            //onClose={this.handleClose}
+            onClose={() => this.props.closeNotifier()}
+            variant={this.props.notifier.type}
+            message={this.props.notifier.message}
           />
         )
     }
@@ -123,9 +112,9 @@ class BasicNotifier extends React.Component {
         return(
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal :'center'}}
-                autoHideDuration={3000}
+                autoHideDuration={2000}
                 onClose={this.handleClose}
-                open={this.state.open}
+                open={this.props.notifier.show}
             >
 
                 {this.getSnackBarContent()}
@@ -136,4 +125,15 @@ class BasicNotifier extends React.Component {
     }
 }
 
-export default BasicNotifier;
+function mapStateToProps(state) {
+    return {
+        notifier: state.notifier,
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        closeNotifier: closeNotifier,
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BasicNotifier);

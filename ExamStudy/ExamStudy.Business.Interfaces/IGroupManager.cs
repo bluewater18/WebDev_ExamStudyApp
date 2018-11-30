@@ -16,5 +16,6 @@ namespace ExamStudy.Business.Interfaces
         bool AddUserToGroup(int groupId, int userId, string status);
         bool RemoveUserFromGroup(int groupId, int userId);
         IList<GroupMemberVM> GetGroupMembers(int id);
+        bool AddUserToGroupByCode(string code, int userId);
     }
 }

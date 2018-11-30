@@ -6,15 +6,19 @@ DROP TABLE IF EXISTS Groups;
 DROP PROCEDURE IF EXISTS AddGroup;
 DROP PROCEDURE IF EXISTS UpdateGroupImage;
 DROP PROCEDURE IF EXISTS AddUserToGroup;
+DROP PROCEDURE IF EXISTS UpdateUserRoleInGroup;
+DROP PROCEDURE IF EXISTS RemoveUserFromGroup;
 DROP PROCEDURE IF EXISTS GetGroupPhotoPath;
 DROP PROCEDURE IF EXISTS GetAllGroups;
 DROP PROCEDURE IF EXISTS DeleteGroup;
 DROP PROCEDURE IF EXISTS GetGroupById;
 DROP PROCEDURE IF EXISTS UpdateGroup;
 DROP PROCEDURE IF EXISTS GetAllUsersInGroup;
+DROP PROCEDURE IF EXISTS GetGroupByCode;
 
 CREATE TABLE IF NOT EXISTS Groups(
 	GroupId INT AUTO_INCREMENT,
+	GroupCode VARCHAR(16) UNIQUE,
 	GroupName VARCHAR(50) UNIQUE,
 	GroupDescription VARCHAR(256),
 	GroupType VARCHAR(16),
@@ -45,6 +49,7 @@ CREATE PROCEDURE `AddGroup`(
 	IN p_GroupName VARCHAR(50),
 	IN p_GroupType VARCHAR(16),
 	IN p_GroupDesc VARCHAR(256),
+	IN p_GroupCode VARCHAR(16),
 	IN p_GroupOwnerId INT
 )
 BEGIN
@@ -53,6 +58,7 @@ BEGIN
 	SET
 		GroupName = p_GroupName,
 		GroupType = p_GroupType,
+		GroupCode = p_GroupCode,
 		GroupDescription = p_GroupDesc,
 		GroupImageName = 'default_group.png',
 		GroupOwnerId = p_GroupOwnerId;
@@ -87,7 +93,7 @@ DELIMITER $$
 CREATE PROCEDURE `AddUserToGroup`(
 	IN p_GroupId INT,
 	IN p_UserId INT,
-	IN p_MemberType VARCHAR(1)
+	IN p_MemberType VARCHAR(16)
 )
 BEGIN
 	INSERT INTO GroupMembers
@@ -95,6 +101,34 @@ BEGIN
 		GroupId = p_GroupId,
 		UserId = p_UserId,
 		MemberType = p_MemberType;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `UpdateUserRoleInGroup`(
+	IN p_GroupId INT,
+	IN p_UserId INT,
+	IN p_MemberType VARCHAR(16)
+)
+BEGIN
+	UPDATE GroupMembers
+	SET
+		MemberType = p_MemberType
+	WHERE
+		GroupId = p_GroupId AND
+		UserId = p_UserId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `RemoveUserFromGroup`(
+	IN p_GroupId INT,
+	IN p_UserId INT
+)
+BEGIN
+	DELETE FROM GroupMembers WHERE
+	GroupId = p_GroupId AND
+	UserId = p_UserId;
 END $$
 DELIMITER ;
 
@@ -153,6 +187,16 @@ CREATE PROCEDURE `GetAllUsersInGroup`(
 BEGIN
 	SELECT UserId, UserName, UserImageName, MemberType FROM GroupMembersDetailed
 	WHERE GroupId = p_GroupId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `GetGroupByCode`(
+	IN p_GroupCode VARCHAR(16)
+)
+BEGIN
+	SELECT GroupId FROM Groups
+	WHERE p_GroupCode = GroupCode;
 END $$
 DELIMITER ;
 

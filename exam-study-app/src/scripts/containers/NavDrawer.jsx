@@ -75,6 +75,12 @@ class NavDrawer extends React.Component {
                             <ListItemText primary={ <span className="menu-list-item-text"> Create Group</span>} />
                         </ListItem>
                     </Link>
+                    <Link key="Join Group With Code" to="/groups/join-code">
+                        <ListItem button key={"join-groups-btn"}>
+                            <ListItemIcon><AddIcon /></ListItemIcon>
+                            <ListItemText primary={ <span className="menu-list-item-text"> Join Group With Code</span>} />
+                        </ListItem>
+                    </Link>
                 </List>
 
             </div>

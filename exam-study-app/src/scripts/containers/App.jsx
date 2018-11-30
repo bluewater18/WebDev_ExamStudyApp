@@ -13,6 +13,8 @@ import MyGroups from './MyGroups';
 import EditUser from './EditUser';
 import CreateGroup from './CreateGroup';
 import GroupHome from './GroupHome';
+import JoinGroupCode from './JoinGroupCode';
+import BasicNotifier from '../components/BasicNotifier';
 
 class App extends Component {
   render() {
@@ -30,12 +32,14 @@ class App extends Component {
                         <Route path="/user/edit" component={EditUser} />
                         <Route path="/groups/create" component={CreateGroup} />
                         <Route path="/group/:groupId" component={GroupHome} />
+                        <Route path="/groups/join-code" component={JoinGroupCode} />
                         {/* <Route path="/group/:groupId/edit" component={GroupEdit} /> */}
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>
             </Router>
+            <BasicNotifier/>
         </div>
     );
   }

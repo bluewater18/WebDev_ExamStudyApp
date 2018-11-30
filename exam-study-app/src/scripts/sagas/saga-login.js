@@ -8,7 +8,8 @@ export function* loginUser({ payload }) {
         let user = yield call(apiLogin, payload);
         yield put({ type: actionConstants.LOGIN_SUCCESS, payload: user });
     } catch (err) {
-        yield put({ type: actionConstants.LOGIN_FAILURE, paylod: null });
+        yield put({ type: actionConstants.LOGIN_FAILURE, payload: null });
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Could Not Log In"}})
     }
 }
 
@@ -16,6 +17,8 @@ export function* loginSuccess({ payload }){
     try{
     yield call (history.push,'/');
     yield put({type: actionConstants.LOGIN_SUCCESS_POST_SAGA, payload: payload});
+    yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Successfully Logged In as "+payload.userName}})
+
     yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload:true})
     }catch(err){
         console.log(err)

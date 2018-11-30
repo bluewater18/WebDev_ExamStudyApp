@@ -18,6 +18,7 @@ namespace ExamStudy.Repository
             parameters.Add("p_GroupType", group.GroupType);
             parameters.Add("p_GroupDesc", group.GroupDescription);
             parameters.Add("p_GroupOwnerId", group.GroupOwnerId);
+            parameters.Add("p_GroupCode", group.GroupCode);
 
             return SqlMapper.Query<Group>(conn, "AddGroup", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
@@ -73,6 +74,13 @@ namespace ExamStudy.Repository
             return SqlMapper.Query<User>(conn, "GetAllUsersInGroup", param: parameters, commandType: StoredProcedure).ToList();
         }
 
+        public IList<GroupMemberVM> GetGroupMembers(int groupId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_GroupId", groupId);
+            return SqlMapper.Query<GroupMemberVM>(conn, "GetAllUsersInGroup", param: parameters, commandType: StoredProcedure).ToList();
+        }
+
         public bool AddUserToGroup(int userId, int groupId, string memberType)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -84,11 +92,34 @@ namespace ExamStudy.Repository
             return true;
         }
 
-        public IList<GroupMemberVM> GetGroupMembers(int groupId)
+        public bool RemoveUserFromGroup(int groupId, int userId)
         {
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
+            parameters.Add("p_groupId", groupId);
+
+            SqlMapper.Execute(conn, "RemoveUserFromGroup", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+        public bool UpdateUserRoleInGroup(int groupId, int userId, string role)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
             parameters.Add("p_GroupId", groupId);
-            return SqlMapper.Query<GroupMemberVM>(conn, "GetAllUsersInGroup", param: parameters, commandType: StoredProcedure).ToList();
+            parameters.Add("p_MemberType", role);
+
+            SqlMapper.Execute(conn, "UpdateUserRoleInGroup", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+
+        public int GetGroupByCode(string code)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_GroupCode", code);
+
+            return SqlMapper.Query<int>(conn, "GetGroupByCode", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
     }
 }

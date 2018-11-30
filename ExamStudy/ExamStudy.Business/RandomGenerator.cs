@@ -37,5 +37,19 @@ namespace ExamStudy.Business
             builder.Append("==");
             return builder.ToString();
         }
+
+        public string RandomGroupCode()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(RandomString(1, false));
+            builder.Append(RandomNumber(0, 9));
+            builder.Append(RandomString(1, false));
+            builder.Append("-");
+            builder.Append(RandomNumber(0, 9));
+            builder.Append(RandomString(1, false));
+            builder.Append(RandomNumber(0, 9));
+            return builder.ToString();
+
+        }
     }
 }

@@ -70,5 +70,24 @@ namespace ExamStudy.API.Controllers
             
             return new ObjectResult(_groupManager.GetGroupMembers(id));
         }
+
+        [HttpPost("members")]
+        public IActionResult AddUserToGroup (int groupId, int userId, string type)
+        {
+            if(_groupManager.AddUserToGroup(groupId, userId, type)){
+                return Ok();
+            }
+            return new ObjectResult("User Not Added")
+            { StatusCode = 500 };
+        }
+
+        [HttpPut("member/join")]
+        public IActionResult AddUserToGroupByCode (string code, int userId)
+        {
+            if (_groupManager.AddUserToGroupByCode(code, userId))
+                return Ok();
+            return new ObjectResult("Issue joining Group")
+            { StatusCode = 500 };
+        }
     }
 }

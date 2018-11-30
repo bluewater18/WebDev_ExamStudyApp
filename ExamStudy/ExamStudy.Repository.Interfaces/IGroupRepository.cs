@@ -14,5 +14,9 @@ namespace ExamStudy.Repository.Interfaces
         bool UpdateGroupPhoto(int id, string photoPath);
         IList<User> GetAllUsersInGroup(int groupId);
         IList<GroupMemberVM> GetGroupMembers(int groupId);
+        bool AddUserToGroup(int groupId, int userId, string role);
+        bool RemoveUserFromGroup(int groupId, int userId);
+        bool UpdateUserRoleInGroup(int groupId, int userId, string role);
+        int GetGroupByCode(string code);
     }
 }

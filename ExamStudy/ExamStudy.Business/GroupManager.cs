@@ -19,11 +19,12 @@ namespace ExamStudy.Business
 
         public bool AddUserToGroup(int groupId, int userId, string status)
         {
-            throw new NotImplementedException();
+            return _groupRepository.AddUserToGroup(groupId, userId, status);
         }
 
         public Group CreateGroup(Group group)
         {
+            group.GroupCode = new RandomGenerator().RandomGroupCode();
             Group res = _groupRepository.AddGroup(group);
             return res;
         }
@@ -50,7 +51,7 @@ namespace ExamStudy.Business
 
         public bool RemoveUserFromGroup(int groupId, int userId)
         {
-            throw new NotImplementedException();
+            return _groupRepository.RemoveUserFromGroup(groupId, userId);
         }
 
         public bool UpdateGroup(Group group)
@@ -66,6 +67,15 @@ namespace ExamStudy.Business
         public IList<GroupMemberVM> GetGroupMembers(int id)
         {
             return _groupRepository.GetGroupMembers(id);
+        }
+
+
+        public bool AddUserToGroupByCode(string code, int userId)
+        {
+            int groupId = _groupRepository.GetGroupByCode(code);
+
+            return _groupRepository.AddUserToGroup(userId, groupId, "MEMBER");
+               
         }
     }
 }
