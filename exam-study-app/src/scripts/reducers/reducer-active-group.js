@@ -9,6 +9,7 @@ const initialState = {
     groupPhotoPath: '',
     groupCode: '',
     groupMembers: [],
+    users:[],
 };
 
 export default function activeGroupReducer(state = initialState, action) {
@@ -26,6 +27,10 @@ export default function activeGroupReducer(state = initialState, action) {
         case actionConstants.GET_GROUP_MEMBERS_SUCCESS:
             return Object.assign({}, state , {
                 groupMembers: action.payload
+            })
+        case actionConstants.GET_ALL_USERS_SUCCESS:
+            return Object.assign({}, state, {
+                users: action.payload
             })
         default:
             return state;

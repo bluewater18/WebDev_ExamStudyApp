@@ -5,6 +5,7 @@
     padding: 0 !important;
     // justify-content: center;
     align-items: center !important;
+    width: inherit
 }
 
 
@@ -22,8 +23,30 @@
 
 .group-member-list-item-div-name {
     flex: 3 !important;
+    font-size: 1.5rem;
 }
 
 .group-member-list-item-div-role {
     flex: 2 !important;
+}
+
+
+
+.user-list-item-div-img {
+    align-items: center;
+    flex: 1 !important;
+    margin-bottom:0 !important;
+    padding-left: 5px;
+}
+.user-list-item-div-img img{
+    border-radius: 60%;
+    height:20px;
+    width:20px;
+    object-fit:cover;
+}
+
+.user-list-item-button {
+    flex:2 !important;
+    font-size: 1.2rem;
+    text-align: left !important;
 }

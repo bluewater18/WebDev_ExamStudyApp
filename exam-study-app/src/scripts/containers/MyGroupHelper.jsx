@@ -5,12 +5,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-
 import WorkIcon from '@material-ui/icons/Work';
 import GroupIcon from '@material-ui/icons/Group';
-import SettingsIcon from '@material-ui/icons/Settings';
 import { IconButton } from '@material-ui/core';
-import { createGroupComplete } from '../actions/action-create-group';
 import PropTypes from 'prop-types';
 import {IMAGE_PATH} from '../constants/index';
 

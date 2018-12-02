@@ -5,22 +5,39 @@ import {getGroup, getGroupMembers} from '../actions/action-get-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { IMAGE_PATH } from '../constants/index';
-import {Card, CardContent, Divider, ListItem, List} from '@material-ui/core';
+import {Card, CardContent, Divider, ListItem, List, Button, Popover} from '@material-ui/core';
 import GroupMemberListItem from './GroupMemberListItem';
+import UserListItem from './UserListItem';
+import {getAllUsers, addUserToGroup} from '../actions/action-users';
 
 class GroupHome extends React.Component {
+    state = {
+        anchorEl: null,
+      };
+
+      addUserToGroupWrapper = (userId) => {
+        this.props.addUserToGroup(userId, this.props.activeGroup.groupId)
+      }
+    
+      handleClick = event => {
+        this.setState({
+          anchorEl: event.currentTarget,
+        });
+      };
+    
+      handleClose = () => {
+        this.setState({
+          anchorEl: null,
+        });
+      };
     componentDidMount() {
         const { groupId } = this.props.match.params;
         this.props.getGroup(groupId);
         this.props.getGroupMembers(groupId);
     }
     render() {
-        const members = this.props.activeGroup.groupMembers;
-        const memberList = members.map((user) =>
-            <ListItem key={user.userId} style={{padding:"0", margin:"0", borderBottom:"1px solid #E0E0E0"}}>
-                <GroupMemberListItem groupMember={user}/>
-            </ListItem>
-        )
+
+
         
         return (
             
@@ -38,7 +55,7 @@ class GroupHome extends React.Component {
                         {this.resourceCardRenderer()}
                     </div>
                     <div>
-                        {this.memberCardRenderer(memberList)}
+                        {this.memberCardRenderer()}
                     </div>
                 </div>
 
@@ -60,6 +77,10 @@ class GroupHome extends React.Component {
                     <h3> Member Count: Not Implemented</h3>
                     <hr/>
                     <h3> Group Code: {this.props.activeGroup.groupCode}</h3>
+                    <hr/>
+                    <Button variant="contained" color="secondary" style={{margin:"5px", fontSize:"1.2rem"}}>
+                        Leave Group
+                    </Button>
                 </CardContent>
             </Card>
         )
@@ -79,15 +100,72 @@ class GroupHome extends React.Component {
         )
     }
 
-    memberCardRenderer(memberList) {
+    memberCardRenderer() {
+        const { anchorEl } = this.state;
+        const open = Boolean(anchorEl);
+
+        const members = this.props.activeGroup.groupMembers;
+        const memberList = members.map((user) =>
+            <ListItem key={user.userId} style={{padding:"0", margin:"0", borderBottom:"1px solid #E0E0E0"}}>
+                <GroupMemberListItem groupMember={user}/>
+            </ListItem>
+        )
+
+        const users = this.props.activeGroup.users;
+        const usersFiltered = users.filter(function(element){
+            for(let i=0; i<members.length; i++){
+                if(element.userId === members[i].userId)
+                    return false
+            }
+            return true;
+        })
+        const userList = usersFiltered.map((user) =>
+            <ListItem key={user.userId} style={{padding:"0", margin:"0", borderBottom:"1px solid #E0E0E0"}}>
+                <UserListItem user={user} addUser={this.addUserToGroupWrapper}/>
+            </ListItem>
+        )
         return (
             <Card className="group-home-container" style={{height:"400px"}}>
-                <CardContent className="group-home-content-header">
-                    <h1>Members</h1>
+                <CardContent className="group-home-content-header-members">
+                    <div/>
+                    <div><h1>Members</h1></div>
+                    <div>
+                        <Button
+                            aria-owns={open ? 'simple-popper' : undefined}
+                            aria-haspopup="true"
+                            variant="contained"
+                            onClick={(evt)=> {this.handleClick(evt); this.props.getAllUsers();}}
+                        >
+                            Add User
+                        </Button>
+                        <Popover
+                            id="simple-popper"
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={this.handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            >
+                            <div className="group-home-content-popover">
+                                <h2 style={{textAlign:"center"}}>Add Users</h2>
+                                <hr/>
+                                <div>
+                                    <List>
+                                        {userList}
+                                    </List>
+                                </div>
+                            </div>
+                        </Popover>
+                    </div>
                 </CardContent>
                 <Divider />
                 <CardContent className="group-home-content-list" style={{maxHeight:"inherit", minHeight:"fit-content"}}>
-
                     <List style={{maxHeight:"400px", overflow:"auto", padding:"0"}}>
                         {memberList}
                     </List>
@@ -108,6 +186,9 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getGroup:getGroup,
         getGroupMembers: getGroupMembers,
+        getAllUsers: getAllUsers,
+        addUserToGroup: addUserToGroup,
+
     }, dispatch)
 }
 
