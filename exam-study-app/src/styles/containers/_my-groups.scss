@@ -138,6 +138,14 @@
 
 }
 
+.group-home-content-popover-list {
+    height: fit-content !important;
+    max-height: 500px;
+}
+.group-home-content-popover-list List{
+    overflow: auto;
+}
+
 
 
 .group-home-content-header-members div {

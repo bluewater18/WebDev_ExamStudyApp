@@ -9,8 +9,15 @@ const getAllUsers = () => {
 const addUserToGroup = (user, group) => {
     return {
         type:actionConstants.ADD_USER_TO_GROUP,
-        payload: {userId:user, groupId:group}
+        payload: {user:user, groupId:group}
     }
 }
 
-export { getAllUsers, addUserToGroup };
+const leaveGroup = (user, groupId) => {
+    return {
+        type: actionConstants.LEAVE_GROUP,
+        payload: {user:user, groupId: groupId}
+    }
+}
+
+export { getAllUsers, addUserToGroup, leaveGroup };

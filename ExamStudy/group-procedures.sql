@@ -1,4 +1,6 @@
 ﻿DROP VIEW IF EXISTS GroupMembersDetailed;
+DROP VIEW IF EXISTS GroupDetailed;
+DROP VIEW IF EXISTS GroupMemberCounts;
 
 DROP TABLE IF EXISTS GroupMembers;
 DROP TABLE IF EXISTS Groups;
@@ -43,6 +45,15 @@ CREATE VIEW GroupMembersDetailed AS
 	FROM Users U
 	INNER JOIN GroupMembers G
 	ON (U.UserId = G.UserId);
+
+CREATE VIEW GroupMemberCounts AS
+	SELECT GroupId, COUNT(UserId) AS MemberCount FROM GroupMembers GROUP BY GroupId;
+
+CREATE VIEW GroupDetailed AS
+	SELECT G.GroupId, G.GroupCode, G.GroupName, G.GroupDescription, G.GroupType, G.GroupOwnerId, U.UserName as GroupOwnerName, G.GroupImageName, M.MemberCount AS GroupMemberCount
+	FROM Groups G
+	INNER JOIN Users U ON (U.UserId = G.GroupOwnerId)
+	INNER JOIN GroupMemberCounts M ON (M.GroupId = G.GroupId);
 
 DELIMITER $$
 CREATE PROCEDURE `AddGroup`(
@@ -120,6 +131,7 @@ BEGIN
 END $$
 DELIMITER ;
 
+
 DELIMITER $$
 CREATE PROCEDURE `RemoveUserFromGroup`(
 	IN p_GroupId INT,
@@ -155,7 +167,7 @@ CREATE PROCEDURE `GetGroupById`(
 	IN p_GroupId INT
 )
 BEGIN
-	SELECT * FROM Groups
+	SELECT * FROM GroupDetailed
 	WHERE GroupId = p_GroupId;
 END $$
 DELIMITER ;

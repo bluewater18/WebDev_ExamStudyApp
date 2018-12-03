@@ -6,8 +6,10 @@ const initialState = {
     groupDescription: '',
     groupType: '',
     groupOwnerId: null,
+    groupOwnerName: '',
     groupPhotoPath: '',
     groupCode: '',
+    groupMemberCount: null,
     groupMembers: [],
     users:[],
 };
@@ -21,8 +23,10 @@ export default function activeGroupReducer(state = initialState, action) {
                 groupDescription: action.payload.groupDescription,
                 groupType: action.payload.groupType,
                 groupOwnerId: action.payload.groupOwnerId,
+                groupOwnerName: action.payload.groupOwnerName,
                 groupPhotoPath: action.payload.groupImageName,
                 groupCode: action.payload.groupCode,
+                groupMemberCount: action.payload.groupMemberCount,
             })
         case actionConstants.GET_GROUP_MEMBERS_SUCCESS:
             return Object.assign({}, state , {
@@ -31,6 +35,16 @@ export default function activeGroupReducer(state = initialState, action) {
         case actionConstants.GET_ALL_USERS_SUCCESS:
             return Object.assign({}, state, {
                 users: action.payload
+            })
+        case actionConstants.ADD_USER_TO_GROUP_SUCCESS:
+            return Object.assign({}, state, {
+                groupMembers: state.groupMembers.concat([action.payload])
+            })
+        case actionConstants.LEAVE_GROUP_SUCCESS:
+            return Object.assign({}, state, {
+                groupMembers: state.groupMembers.filter(function(ele){
+                    return ele.userId !== action.payload.id
+                })
             })
         default:
             return state;

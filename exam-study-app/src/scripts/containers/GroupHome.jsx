@@ -8,7 +8,7 @@ import { IMAGE_PATH } from '../constants/index';
 import {Card, CardContent, Divider, ListItem, List, Button, Popover} from '@material-ui/core';
 import GroupMemberListItem from './GroupMemberListItem';
 import UserListItem from './UserListItem';
-import {getAllUsers, addUserToGroup} from '../actions/action-users';
+import {getAllUsers, addUserToGroup, leaveGroup} from '../actions/action-users';
 
 class GroupHome extends React.Component {
     state = {
@@ -72,13 +72,13 @@ class GroupHome extends React.Component {
                     <Divider />
                     <CardContent className="group-home-content" style={{textAlign:"left"}}>
                     <h3> Description: {this.props.activeGroup.groupDescription}</h3>
-                    <h3> Created By: {this.props.activeGroup.groupOwnerId}</h3>
+                    <h3> Created By: {this.props.activeGroup.groupOwnerName}</h3>
                     <h3> Group Type: {this.props.activeGroup.groupType}</h3>
-                    <h3> Member Count: Not Implemented</h3>
+                    <h3> Member Count: {this.props.activeGroup.groupMemberCount}</h3>
                     <hr/>
                     <h3> Group Code: {this.props.activeGroup.groupCode}</h3>
                     <hr/>
-                    <Button variant="contained" color="secondary" style={{margin:"5px", fontSize:"1.2rem"}}>
+                    <Button variant="contained" color="secondary" style={{margin:"5px", fontSize:"1.2rem"}} onClick={()=> this.props.leaveGroup(this.props.user, this.props.activeGroup.groupId)}>
                         Leave Group
                     </Button>
                 </CardContent>
@@ -125,11 +125,11 @@ class GroupHome extends React.Component {
             </ListItem>
         )
         return (
-            <Card className="group-home-container" style={{height:"400px"}}>
+            <Card className="group-home-container" >
                 <CardContent className="group-home-content-header-members">
                     <div/>
                     <div><h1>Members</h1></div>
-                    <div>
+                    <div style={{height:"fit-content", maxHeight:"50vh", overflow:"auto"}}>
                         <Button
                             aria-owns={open ? 'simple-popper' : undefined}
                             aria-haspopup="true"
@@ -155,7 +155,7 @@ class GroupHome extends React.Component {
                             <div className="group-home-content-popover">
                                 <h2 style={{textAlign:"center"}}>Add Users</h2>
                                 <hr/>
-                                <div>
+                                <div className="group-home-content-popover-list">
                                     <List>
                                         {userList}
                                     </List>
@@ -166,7 +166,7 @@ class GroupHome extends React.Component {
                 </CardContent>
                 <Divider />
                 <CardContent className="group-home-content-list" style={{maxHeight:"inherit", minHeight:"fit-content"}}>
-                    <List style={{maxHeight:"400px", overflow:"auto", padding:"0"}}>
+                    <List style={{maxHeight:"inherit", height:"inherit", overflow:"auto", padding:"0"}}>
                         {memberList}
                     </List>
                 </CardContent>
@@ -178,6 +178,7 @@ class GroupHome extends React.Component {
 function mapStateToProps(state) {
     return {
         activeGroup: state.activeGroup,
+        user: state.user,
 
     }
 }
@@ -188,7 +189,7 @@ function mapDispatchToProps(dispatch) {
         getGroupMembers: getGroupMembers,
         getAllUsers: getAllUsers,
         addUserToGroup: addUserToGroup,
-
+        leaveGroup: leaveGroup
     }, dispatch)
 }
 

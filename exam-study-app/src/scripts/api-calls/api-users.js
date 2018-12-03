@@ -25,7 +25,7 @@ async function apiAddUserToGroup(userId, groupId) {
             base(API_BASE_PATH),
             method("POST"),
         )
-        fetchAddUserToGroup('/group/members?groupId=' + groupId +'&userId=' + userId +'&type=MEMBER').then((res) => {
+        fetchAddUserToGroup('/group/members/join?groupId=' + groupId +'&userId=' + userId +'&type=MEMBER').then((res) => {
             if(res.status === 200)
                 resolve()
             else
@@ -34,13 +34,13 @@ async function apiAddUserToGroup(userId, groupId) {
     })  
 }
 
-async function apiLeaveGroup(userId, groupId) {
+async function apiLeaveGroup(groupId, userId) {
     return new Promise((resolve, reject) => {
         const fetchLeaveGroup = createFetch(
             base(API_BASE_PATH),
             method("POST"),
         )
-        fetchLeaveGroup('').then((res) => {
+        fetchLeaveGroup('/group/members/leave?groupId='+groupId+'&userId='+userId).then((res) => {
             if (res.status === 200)
                 resolve()
             else

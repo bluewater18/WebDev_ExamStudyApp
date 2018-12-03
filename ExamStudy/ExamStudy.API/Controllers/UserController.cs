@@ -23,7 +23,12 @@ namespace ExamStudy.API.Controllers
        [HttpGet]
        public IEnumerable<User> Get()
         {
-            return _userManager.GetAllUsers();
+            IList<User> users =  _userManager.GetAllUsers();
+            foreach(User u in users)
+            {
+                u.UserPassword = null;
+            }
+            return users;
         }
 
         // GET api/user/5

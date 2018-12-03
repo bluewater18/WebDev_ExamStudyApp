@@ -71,7 +71,7 @@ namespace ExamStudy.API.Controllers
             return new ObjectResult(_groupManager.GetGroupMembers(id));
         }
 
-        [HttpPost("members")]
+        [HttpPost("members/join")]
         public IActionResult AddUserToGroup (int groupId, int userId, string type)
         {
             if(_groupManager.AddUserToGroup(groupId, userId, type)){
@@ -79,6 +79,14 @@ namespace ExamStudy.API.Controllers
             }
             return new ObjectResult("User Not Added")
             { StatusCode = 500 };
+        }
+
+        [HttpPost("members/leave")]
+        public IActionResult LeaveGroup (int groupId, int userId)
+        {
+            if (_groupManager.RemoveUserFromGroup(groupId, userId))
+                return Ok();
+            return new ObjectResult("Issue removing user from group") { StatusCode = 500 };
         }
 
         [HttpPut("member/join")]
