@@ -179,6 +179,7 @@ function mapStateToProps(state) {
     return {
         activeGroup: state.activeGroup,
         user: state.user,
+        editGroup: state.editGroup,
 
     }
 }

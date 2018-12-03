@@ -28,6 +28,12 @@ namespace ExamStudy.API.Controllers
             return _groupManager.GetAllGroups();
         }
 
+        [HttpGet("joined")]
+        public IActionResult GetUsersGroups(int userId)
+        {
+            return new ObjectResult(_groupManager.GetUsersGroups(userId)) { StatusCode = 200 };
+        }
+
         // GET api/group/5
         [HttpGet("{id}")]
         [ActionName("index")]

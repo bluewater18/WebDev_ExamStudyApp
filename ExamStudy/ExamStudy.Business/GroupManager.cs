@@ -76,5 +76,10 @@ namespace ExamStudy.Business
             return _groupRepository.AddUserToGroup(userId, groupId, "MEMBER");
                
         }
+
+        public IList<Group> GetUsersGroups(int userId)
+        {
+            return _groupRepository.GetUsersGroups(userId);
+        }
     }
 }

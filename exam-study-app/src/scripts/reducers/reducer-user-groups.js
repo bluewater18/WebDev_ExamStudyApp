@@ -4,11 +4,10 @@ const initialState = {
 groups: []
 };
 
-export default function activeGroupReducer(state = initialState, action) {
+export default function userGroupsReducer(state = initialState, action) {
     
     switch (action.type) {
-        case actionConstants.GET_ALL_GROUPS_SUCCESS:
-            console.log(action.payload)
+        case actionConstants.GET_USER_GROUPS_SUCCESS:
             return {groups: action.payload}
         default:
             return state;

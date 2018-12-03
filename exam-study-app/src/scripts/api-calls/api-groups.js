@@ -79,13 +79,21 @@ async function apiGetAllGroups() {
     })
 }
 
-async function apiGetUserGroups(userId) {
+async function apiGetUserGroups({payload}) {
     return new Promise((resolve, reject) => {
         const fetchGetUserGroups = createFetch(
             base(API_BASE_PATH),
             method("GET"),
         )
-        fetchGetUserGroups('/group')
+        fetchGetUserGroups('/group/joined?userId='+payload).then((res) =>{
+            if(res.status === 200)
+                res.json().then((data) =>
+                resolve(data))
+            else
+                reject(res)
+            }).catch((err) => {
+                reject(err)
+            })
     })
 }
 
@@ -107,6 +115,7 @@ async function apiGetMembersFromGroup( groupId) {
     })
 }
 
+//FIX ME: hard coded id
 async function apiJoinGroupWithCode(code) {
     return new Promise((resolve, reject) => {
         const fetchJoinGroupWithCode = createFetch(

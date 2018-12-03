@@ -9,8 +9,10 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 class MyGroups extends React.Component {
     componentDidMount() {
-        this.props.getAllGroups()
+        //this.props.getAllGroups()
+        this.props.getUserGroups(this.props.user.id)
     }
+
     
     render() {
         

@@ -121,5 +121,13 @@ namespace ExamStudy.Repository
 
             return SqlMapper.Query<int>(conn, "GetGroupByCode", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
+
+        public IList<Group> GetUsersGroups(int userId)
+        {
+            Console.WriteLine("!@#$%^&* -- userId");
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_userId", userId);
+            return SqlMapper.Query<Group>(conn, "GetUsersGroups", param: parameters, commandType: StoredProcedure).ToList();
+        }
     }
 }

@@ -18,5 +18,6 @@ namespace ExamStudy.Repository.Interfaces
         bool RemoveUserFromGroup(int groupId, int userId);
         bool UpdateUserRoleInGroup(int groupId, int userId, string role);
         int GetGroupByCode(string code);
+        IList<Group> GetUsersGroups(int userId);
     }
 }
