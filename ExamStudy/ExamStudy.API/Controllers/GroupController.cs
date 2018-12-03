@@ -98,8 +98,14 @@ namespace ExamStudy.API.Controllers
         [HttpPut("member/join")]
         public IActionResult AddUserToGroupByCode (string code, int userId)
         {
-            if (_groupManager.AddUserToGroupByCode(code, userId))
-                return Ok();
+            int groupId = _groupManager.AddUserToGroupByCode(code, userId);
+            if(groupId > 0)
+            {
+                Group g = new Group();
+                g.GroupId = groupId;
+                return new ObjectResult(g) { StatusCode = 200 };
+            }
+                
             return new ObjectResult("Issue joining Group")
             { StatusCode = 500 };
         }

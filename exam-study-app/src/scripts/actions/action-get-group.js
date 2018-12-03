@@ -27,14 +27,5 @@ const getGroupMembers = (groupId) => {
     }
 }
 
-const joinGroupWithCode = (code) => {
-    return {
-        type: actionConstants.JOIN_GROUP_WITH_CODE,
-        payload: code
-    }
-}
 
-
-
-
-export { getGroup, getAllGroups, getUserGroups, getGroupMembers, joinGroupWithCode};
+export { getGroup, getAllGroups, getUserGroups, getGroupMembers};

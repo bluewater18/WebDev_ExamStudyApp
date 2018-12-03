@@ -5,7 +5,7 @@ import { Card, CardActions, CardContent, Button, TextField } from '@material-ui/
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { joinGroupWithCode } from '../actions/action-get-group';
+import { joinGroupWithCode } from '../actions/action-users';
 
 
 class JoinGroupWithCode extends React.Component {
@@ -51,7 +51,7 @@ class JoinGroupWithCode extends React.Component {
 
                     <CardActions className={"login-card-actions"} style={{ display: "inline-block"}}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => {this.props.joinGroupWithCode(this.state.code)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                            <Button onClick={() => {this.props.joinGroupWithCode(this.state.code, this.props.user.id)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
                                 Join!
                             </Button>
                         </div>
@@ -65,6 +65,7 @@ class JoinGroupWithCode extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        user: state.user,
     }
 }
 

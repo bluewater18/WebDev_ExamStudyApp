@@ -67,16 +67,6 @@ export function* getMembers({payload}){
     }
 }
 
-export function* joinWithCode({payload}) {
-    try{
-        yield call(apiJoinGroupWithCode, payload)
-        yield put({type:actionConstants.JOIN_GROUP_WITH_CODE_SUCCESS})
-    } catch(err) {
-        console.log(err);
-        yield put({type: actionConstants.JOIN_GROUP_WITH_CODE_FAILURE})
-    }
-}
-
 export default function* root() {
     yield all([
         takeLatest(actionConstants.CREATE_GROUP_COMPLETE, createGroup),
@@ -85,6 +75,6 @@ export default function* root() {
         takeLatest(actionConstants.GET_ALL_GROUPS, getAllGroups),
         takeLatest(actionConstants.GET_USER_GROUPS, getUserGroups),
         takeLatest(actionConstants.GET_GROUP_MEMBERS, getMembers),
-        takeLatest(actionConstants.JOIN_GROUP_WITH_CODE, joinWithCode),
+
     ]);
 }

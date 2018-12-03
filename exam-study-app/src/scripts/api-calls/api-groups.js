@@ -115,22 +115,6 @@ async function apiGetMembersFromGroup( groupId) {
     })
 }
 
-//FIX ME: hard coded id
-async function apiJoinGroupWithCode(code) {
-    return new Promise((resolve, reject) => {
-        const fetchJoinGroupWithCode = createFetch(
-            base(API_BASE_PATH),
-            method('PUT')
-        )
-        fetchJoinGroupWithCode('/group/member/join?code='+code +"&userId=8" ).then((res)=>{
-            if(res.status === 200)
-                resolve()
-            else
-                reject()
-        }).catch((err) =>
-            reject(err)
-        )
-    })
-}
 
-export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup, apiJoinGroupWithCode};
+
+export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup};

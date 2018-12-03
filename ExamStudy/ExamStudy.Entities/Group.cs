@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ExamStudy.Entities
 {
@@ -12,5 +13,6 @@ namespace ExamStudy.Entities
         public string GroupOwnerName { get; set; }
         public string GroupImageName { get; set; }
         public string GroupMemberCount { get; set; }
+        public IList<int> GroupAdminIds { get; set; }
     }
 }

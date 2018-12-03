@@ -124,10 +124,16 @@ namespace ExamStudy.Repository
 
         public IList<Group> GetUsersGroups(int userId)
         {
-            Console.WriteLine("!@#$%^&* -- userId");
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("p_userId", userId);
             return SqlMapper.Query<Group>(conn, "GetUsersGroups", param: parameters, commandType: StoredProcedure).ToList();
+        }
+
+        public IList<int> GetAdminMembers(int groupId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_GroupId", groupId);
+            return SqlMapper.Query<int>(conn, "GetAdminMembers", param: parameters, commandType: StoredProcedure).ToList();
         }
     }
 }

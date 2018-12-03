@@ -50,5 +50,24 @@ async function apiLeaveGroup(groupId, userId) {
 }
 
 
+async function apiJoinGroupWithCode(code, userId) {
+    return new Promise((resolve, reject) => {
+        const fetchJoinGroupWithCode = createFetch(
+            base(API_BASE_PATH),
+            method('PUT')
+        )
+        fetchJoinGroupWithCode('/group/member/join?code='+code +"&userId="+ userId ).then((res)=>{
+            if(res.status === 200)
+                res.json().then((data) =>
+                    resolve(data))
+            else
+                reject()
+        }).catch((err) =>
+            reject(err)
+        )
+    })
+}
 
-export {apiGetAllUsers, apiAddUserToGroup, apiLeaveGroup};
+
+
+export {apiGetAllUsers, apiAddUserToGroup, apiLeaveGroup, apiJoinGroupWithCode};

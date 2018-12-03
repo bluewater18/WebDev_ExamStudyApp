@@ -20,4 +20,18 @@ const leaveGroup = (user, groupId) => {
     }
 }
 
-export { getAllUsers, addUserToGroup, leaveGroup };
+const removeUserFromGroup = (user, groupId) => {
+    return {
+        type: actionConstants.REMOVE_USER_FROM_GROUP,
+        payload: {user:user, groupId: groupId}
+    }
+}
+
+const joinGroupWithCode = (code, userId) => {
+    return {
+        type: actionConstants.JOIN_GROUP_WITH_CODE,
+        payload: {code: code, userId: userId}
+    }
+}
+
+export { getAllUsers, addUserToGroup, leaveGroup, removeUserFromGroup, joinGroupWithCode };

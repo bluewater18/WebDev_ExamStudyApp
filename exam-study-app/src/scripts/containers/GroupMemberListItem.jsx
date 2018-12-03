@@ -3,6 +3,8 @@ import '../../styles/main.scss';
 
 import PropTypes from 'prop-types';
 import {IMAGE_PATH} from '../constants/index';
+import { IconButton } from '@material-ui/core';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 class GroupMemberListItem extends React.Component {
     render() {
@@ -17,13 +19,30 @@ class GroupMemberListItem extends React.Component {
                 <div className="group-member-list-item-div-role">
                     {this.props.groupMember.memberType}
                 </div>
+                {this.renderButton()}
+
             </div>
         )
     }
+
+    renderButton() {
+        if(this.props.isAdmin){
+            return(
+                <div className="group-member-list-item-div-button">
+                    <IconButton onClick={() => this.props.removeUser(this.props.groupMember)}>
+                        <RemoveCircleOutlineIcon/>
+                    </IconButton>
+                </div>
+            )
+        }
+    }
 }
+
 
 GroupMemberListItem.proptypes = {
     groupMember: PropTypes.object.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
+    removeUser: PropTypes.func.isRequired,
 }
 
 export default GroupMemberListItem;

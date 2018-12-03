@@ -19,5 +19,6 @@ namespace ExamStudy.Repository.Interfaces
         bool UpdateUserRoleInGroup(int groupId, int userId, string role);
         int GetGroupByCode(string code);
         IList<Group> GetUsersGroups(int userId);
+        IList<int> GetAdminMembers(int groupId);
     }
 }

@@ -41,7 +41,9 @@ namespace ExamStudy.Business
 
         public Group GetGroupById(int groupId)
         {
-            return _groupRepository.GetGroupById(groupId);
+            Group group = _groupRepository.GetGroupById(groupId);
+            group.GroupAdminIds = _groupRepository.GetAdminMembers(groupId);
+            return group;
         }
 
         public string GetGroupPhotoPath(int groupId)
@@ -70,10 +72,15 @@ namespace ExamStudy.Business
         }
 
 
-        public bool AddUserToGroupByCode(string code, int userId)
+        public int AddUserToGroupByCode(string code, int userId)
         {
             int groupId = _groupRepository.GetGroupByCode(code);
-            return _groupRepository.AddUserToGroup(userId, groupId, "MEMBER");
+            if(_groupRepository.AddUserToGroup(userId, groupId, "MEMBER"))
+            {
+                return groupId;
+            }
+            return -1;
+
                
         }
 

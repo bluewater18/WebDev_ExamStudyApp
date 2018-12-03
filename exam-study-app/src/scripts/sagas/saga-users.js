@@ -1,6 +1,6 @@
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
-import {apiGetAllUsers, apiAddUserToGroup, apiLeaveGroup} from '../api-calls/api-users'
+import {apiGetAllUsers, apiAddUserToGroup, apiLeaveGroup, apiJoinGroupWithCode} from '../api-calls/api-users'
 import history from '../../history';
 
 export function* getAllUsers() {
@@ -24,7 +24,8 @@ export function* addUserToGroup({payload}) {
     }
 }
 
-export function* removeUserFromGroup({payload}) {
+
+export function* userLeaveGroup({payload}) {
     try{
         yield call(apiLeaveGroup, payload.groupId, payload.user.id)
         yield put({type: actionConstants.LEAVE_GROUP_SUCCESS, payload: payload.user})
@@ -36,11 +37,33 @@ export function* removeUserFromGroup({payload}) {
         yield put({type: actionConstants.LEAVE_GROUP_FAILURE, payload: null})
     }
 }
+export function* removeUserFromGroup({payload}) {
+    try{
+        yield call(apiLeaveGroup, payload.groupId, payload.user.userId)
+        yield put({type: actionConstants.REMOVE_USER_FROM_GROUP_SUCCESS, payload: payload.user})
+    } catch(err) {
+        console.log(err);
+        yield put({type: actionConstants.REMOVE_USER_FROM_GROUP_FAILURE, payload: null})
+    }
+}
+
+export function* joinWithCode({payload}) {
+    try{
+        let group = yield call(apiJoinGroupWithCode, payload.code, payload.userId)
+        yield put({type:actionConstants.JOIN_GROUP_WITH_CODE_SUCCESS})
+        yield call(history.push, '/group/'+group.groupId)
+    } catch(err) {
+        console.log(err);
+        yield put({type: actionConstants.JOIN_GROUP_WITH_CODE_FAILURE})
+    }
+}
 
 export default function* root() {
     yield all([
         takeLatest(actionConstants.GET_ALL_USERS, getAllUsers),
         takeLatest(actionConstants.ADD_USER_TO_GROUP, addUserToGroup),
-        takeLatest(actionConstants.LEAVE_GROUP, removeUserFromGroup)
+        takeLatest(actionConstants.LEAVE_GROUP, userLeaveGroup),
+        takeLatest(actionConstants.REMOVE_USER_FROM_GROUP, removeUserFromGroup),
+        takeLatest(actionConstants.JOIN_GROUP_WITH_CODE, joinWithCode),
     ]);
 }

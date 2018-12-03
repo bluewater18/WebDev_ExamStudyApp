@@ -8,15 +8,19 @@ import { IMAGE_PATH } from '../constants/index';
 import {Card, CardContent, Divider, ListItem, List, Button, Popover} from '@material-ui/core';
 import GroupMemberListItem from './GroupMemberListItem';
 import UserListItem from './UserListItem';
-import {getAllUsers, addUserToGroup, leaveGroup} from '../actions/action-users';
+import {getAllUsers, addUserToGroup, leaveGroup, removeUserFromGroup} from '../actions/action-users';
 
 class GroupHome extends React.Component {
     state = {
         anchorEl: null,
       };
 
-      addUserToGroupWrapper = (userId) => {
-        this.props.addUserToGroup(userId, this.props.activeGroup.groupId)
+      addUserToGroupWrapper = (user) => {
+        this.props.addUserToGroup(user, this.props.activeGroup.groupId)
+      }
+
+      removeUserFromGroupWrapper = (user) => {
+          this.props.removeUserFromGroup(user, this.props.activeGroup.groupId)
       }
     
       handleClick = event => {
@@ -34,6 +38,14 @@ class GroupHome extends React.Component {
         const { groupId } = this.props.match.params;
         this.props.getGroup(groupId);
         this.props.getGroupMembers(groupId);
+    }
+
+    isAdmin() {
+        for(let i =0; i<this.props.activeGroup.groupAdmins.length; i++){
+            if(this.props.activeGroup.groupAdmins[i] === this.props.user.id)
+                return true;
+        }
+        return false;
     }
     render() {
 
@@ -66,8 +78,12 @@ class GroupHome extends React.Component {
     infoCardRenderer() {
         return(
             <Card className="group-home-container">
-                    <CardContent className="group-home-content-header">
-                    <h1>{this.props.activeGroup.groupName}</h1>
+                    <CardContent className="group-home-content-header-members">
+                    <div/>
+                    <div><h1>{this.props.activeGroup.groupName}</h1></div>
+                    <div>
+                        {this.infoCardRendererButton()}
+                    </div>
                     </CardContent>
                     <Divider />
                     <CardContent className="group-home-content" style={{textAlign:"left"}}>
@@ -84,6 +100,18 @@ class GroupHome extends React.Component {
                 </CardContent>
             </Card>
         )
+    }
+
+    infoCardRendererButton(){
+        if(this.isAdmin())
+            return(
+            <Button
+                variant="contained"
+                onClick={()=> {console.log("editing group")}}
+            >
+                Edit Group
+            </Button>
+            )
     }
 
     resourceCardRenderer() {
@@ -107,7 +135,7 @@ class GroupHome extends React.Component {
         const members = this.props.activeGroup.groupMembers;
         const memberList = members.map((user) =>
             <ListItem key={user.userId} style={{padding:"0", margin:"0", borderBottom:"1px solid #E0E0E0"}}>
-                <GroupMemberListItem groupMember={user}/>
+                <GroupMemberListItem groupMember={user} isAdmin={this.isAdmin()} removeUser={this.removeUserFromGroupWrapper}/>
             </ListItem>
         )
 
@@ -190,7 +218,8 @@ function mapDispatchToProps(dispatch) {
         getGroupMembers: getGroupMembers,
         getAllUsers: getAllUsers,
         addUserToGroup: addUserToGroup,
-        leaveGroup: leaveGroup
+        leaveGroup: leaveGroup,
+        removeUserFromGroup: removeUserFromGroup,
     }, dispatch)
 }
 
