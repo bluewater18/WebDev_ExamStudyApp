@@ -1,9 +1,9 @@
-﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiJoinGroupWithCode } from '../api-calls/api-groups';
+﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiDeleteGroup } from '../api-calls/api-groups';
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
 
-export function* createGroup({payload}) {
+function* createGroup({payload}) {
     try {
         let group = payload.group;
         let photo = payload.group.groupPhoto;
@@ -23,11 +23,11 @@ export function* createGroup({payload}) {
     }
 }
 
-export function* createGroupSuccess({payload}) {
+function* createGroupSuccess({payload}) {
     yield call (history.push,'/group/'+payload.groupId);      
 }
 
-export function* getGroup({payload}) {
+function* getGroup({payload}) {
     try {
         let group = yield call(apiGetGroup, payload);
         yield put({type: actionConstants.GET_GROUP_SUCCESS, payload: group})
@@ -37,7 +37,7 @@ export function* getGroup({payload}) {
     }
 }
 
-export function* getAllGroups() {
+function* getAllGroups() {
     try {
         let groups = yield call(apiGetAllGroups)
         yield put({ type: actionConstants.GET_ALL_GROUPS_SUCCESS, payload:groups})
@@ -47,7 +47,7 @@ export function* getAllGroups() {
     }
 }
 
-export function* getUserGroups(userId) {
+function* getUserGroups(userId) {
     try {
         let groups = yield call(apiGetUserGroups, userId)
         yield put({ type: actionConstants.GET_USER_GROUPS_SUCCESS, payload:groups})
@@ -57,13 +57,25 @@ export function* getUserGroups(userId) {
     }
 }
 
-export function* getMembers({payload}){
+function* getMembers({payload}){
     try{
         let members = yield call(apiGetMembersFromGroup, payload)
         yield put({type: actionConstants.GET_GROUP_MEMBERS_SUCCESS, payload: members})
     } catch (err) {
         console.log(err);
         yield put({type: actionConstants.GET_GROUP_MEMBERS_FAILURE})
+    }
+}
+
+function* deleteGroup({payload}) {
+    try {
+        yield call(apiDeleteGroup, payload.groupId)
+        yield put({type: actionConstants.DELETE_GROUP_SUCCESS})
+        yield call(history.push, '/')
+        yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload: true})
+    } catch (err){
+        console.log(err)
+        yield put({type: actionConstants.DELETE_GROUP_FAILURE})
     }
 }
 
@@ -75,6 +87,7 @@ export default function* root() {
         takeLatest(actionConstants.GET_ALL_GROUPS, getAllGroups),
         takeLatest(actionConstants.GET_USER_GROUPS, getUserGroups),
         takeLatest(actionConstants.GET_GROUP_MEMBERS, getMembers),
+        takeLatest(actionConstants.DELETE_GROUP, deleteGroup)
 
     ]);
 }

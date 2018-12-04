@@ -4,12 +4,11 @@ import Background from '../components/Background';
 import MyGroupHelper from '../containers/MyGroupHelper';
 import {IMAGE_PATH} from '../constants';
 import { bindActionCreators } from 'redux';
-import { getUserGroups, getAllGroups } from '../actions/action-get-group';
+import { getUserGroups } from '../actions/action-get-group';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 class MyGroups extends React.Component {
     componentDidMount() {
-        //this.props.getAllGroups()
         this.props.getUserGroups(this.props.user.id)
     }
 
@@ -48,7 +47,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getUserGroups: getUserGroups,
-        getAllGroups: getAllGroups,
     }, dispatch)
 }
 

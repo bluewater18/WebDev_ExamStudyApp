@@ -31,7 +31,8 @@ namespace ExamStudy.Business
 
         public bool DeleteGroup(int groupId)
         {
-            throw new NotImplementedException();
+            return _groupRepository.DeleteGroup(groupId);
+                
         }
 
         public IList<Group> GetAllGroups()

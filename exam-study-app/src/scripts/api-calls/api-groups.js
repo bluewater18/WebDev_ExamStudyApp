@@ -116,5 +116,22 @@ async function apiGetMembersFromGroup( groupId) {
 }
 
 
+async function apiDeleteGroup(groupId) {
+    return new Promise((resolve, reject) => {
+        const fetchDeleteGroup = createFetch(
+            base(API_BASE_PATH),
+            method("DELETE")
+        )
 
-export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup};
+        fetchDeleteGroup('/group/'+groupId).then((res) => {
+            if(res.status === 200)
+                resolve()
+            else
+                reject(res)
+        }).catch((err) => reject(err))
+    })
+}
+
+
+
+export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup, apiDeleteGroup};

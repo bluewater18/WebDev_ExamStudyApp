@@ -66,9 +66,11 @@ namespace ExamStudy.API.Controllers
 
         // DELETE api/group/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _groupManager.DeleteGroup(id);
+            if (_groupManager.DeleteGroup(id))
+                return Ok();
+            return new ObjectResult("Error Deleting Group") { StatusCode = 500 };
         }
         
         [HttpGet("members/{id}")]

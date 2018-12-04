@@ -27,5 +27,12 @@ const getGroupMembers = (groupId) => {
     }
 }
 
+const deleteGroup = (groupId) => {
+    return {
+        type: actionConstants.DELETE_GROUP,
+        payload: {groupId: groupId}
+    }
+}
 
-export { getGroup, getAllGroups, getUserGroups, getGroupMembers};
+
+export { getGroup, getAllGroups, getUserGroups, getGroupMembers, deleteGroup};

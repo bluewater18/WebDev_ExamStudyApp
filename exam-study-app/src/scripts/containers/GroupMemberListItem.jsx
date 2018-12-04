@@ -26,7 +26,7 @@ class GroupMemberListItem extends React.Component {
     }
 
     renderButton() {
-        if(this.props.isAdmin){
+        if(this.props.isAdmin && this.props.groupMember.memberType !== "OWNER"){
             return(
                 <div className="group-member-list-item-div-button">
                     <IconButton onClick={() => this.props.removeUser(this.props.groupMember)}>
