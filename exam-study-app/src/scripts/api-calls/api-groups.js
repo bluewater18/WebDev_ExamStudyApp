@@ -115,6 +115,25 @@ async function apiGetMembersFromGroup( groupId) {
     })
 }
 
+async function apiEditGroup(group) {
+    return new Promise((resolve, reject) => {
+        const fetchEditGroup = createFetch(
+            base(API_BASE_PATH),
+            method("PUT"),
+            header('Content-Type', 'application/json'),
+            body(JSON.stringify(group), 'application/json'),
+        )
+        fetchEditGroup('/group/'+group.groupId).then((res) => {
+            if(res.status === 200)
+                resolve()
+            else
+                reject(res)
+        }).catch((err) => 
+            reject(err))
+    })
+
+}
+
 
 async function apiDeleteGroup(groupId) {
     return new Promise((resolve, reject) => {
@@ -134,4 +153,4 @@ async function apiDeleteGroup(groupId) {
 
 
 
-export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup, apiDeleteGroup};
+export {apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetAllGroups, apiGetUserGroups, apiGetMembersFromGroup, apiEditGroup, apiDeleteGroup,};

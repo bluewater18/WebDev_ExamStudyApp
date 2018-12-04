@@ -9,6 +9,8 @@ import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, } fr
 import GroupMemberListItem from './GroupMemberListItem';
 import UserListItem from './UserListItem';
 import {getAllUsers, addUserToGroup, leaveGroup, removeUserFromGroup} from '../actions/action-users';
+import {editGroupInit} from '../actions/action-edit-group';
+
 
 class GroupHome extends React.Component {
     state = {
@@ -158,7 +160,7 @@ class GroupHome extends React.Component {
             return(
             <Button
                 variant="contained"
-                onClick={()=> {console.log("editing group")}}
+                onClick={()=>{this.props.editGroupInit(this.props.activeGroup)}}
             >
                 Edit Group
             </Button>
@@ -271,7 +273,8 @@ function mapDispatchToProps(dispatch) {
         addUserToGroup: addUserToGroup,
         leaveGroup: leaveGroup,
         removeUserFromGroup: removeUserFromGroup,
-        deleteGroup: deleteGroup
+        deleteGroup: deleteGroup,
+        editGroupInit: editGroupInit,
     }, dispatch)
 }
 

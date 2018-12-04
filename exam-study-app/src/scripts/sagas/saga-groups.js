@@ -1,4 +1,4 @@
-﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiDeleteGroup } from '../api-calls/api-groups';
+﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiDeleteGroup, apiEditGroup } from '../api-calls/api-groups';
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
@@ -79,6 +79,22 @@ function* deleteGroup({payload}) {
     }
 }
 
+function* editGroup({payload}) {
+    try{
+        yield call(apiEditGroup, payload)
+        yield put({type: actionConstants.EDIT_GROUP_SUCCESS, payload: null})
+        yield call(history.push, "/group/"+payload.groupId)
+    } catch(err){
+        console.log(err)
+        yield put({type:actionConstants.EDIT_GROUP_FAILURE})
+    }
+}
+
+function* editGroupInit({payload}) {
+    yield put({type: actionConstants.EDIT_GROUP_INIT_PS, payload: payload})
+    yield call(history.push, "/group/"+payload.groupId+"/edit")
+}
+
 export default function* root() {
     yield all([
         takeLatest(actionConstants.CREATE_GROUP_COMPLETE, createGroup),
@@ -87,7 +103,9 @@ export default function* root() {
         takeLatest(actionConstants.GET_ALL_GROUPS, getAllGroups),
         takeLatest(actionConstants.GET_USER_GROUPS, getUserGroups),
         takeLatest(actionConstants.GET_GROUP_MEMBERS, getMembers),
-        takeLatest(actionConstants.DELETE_GROUP, deleteGroup)
+        takeLatest(actionConstants.DELETE_GROUP, deleteGroup),
+        takeLatest(actionConstants.EDIT_GROUP_INIT, editGroupInit),
+        takeLatest(actionConstants.EDIT_GROUP_COMPLETE, editGroup),
 
     ]);
 }
