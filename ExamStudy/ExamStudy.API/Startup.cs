@@ -33,9 +33,11 @@ namespace ExamStudy.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IGroupManager, GroupManager>();
+            services.AddTransient<IResourceManager, ResourceManager>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<IResourceRepository, ResourceRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();
