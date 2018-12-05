@@ -15,7 +15,7 @@ export function* editUser({ payload }) {
     
         if(payload.photo!== null && photo !== null && photo !== undefined){
             console.log(photo)
-            let res = yield call(apiUpdatePhoto, photo, payload.userId);
+            let res = yield call(apiUpdatePhoto, photo, payload.userId, 'user');
             user.userImageName = res.UserPhotoPath;
             
         }

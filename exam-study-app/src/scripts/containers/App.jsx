@@ -32,9 +32,10 @@ class App extends Component {
                         <Route path="/my-groups" component={MyGroups} />
                         <Route path="/user/edit" component={EditUser} />
                         <Route path="/groups/create" component={CreateGroup} />
+                        <Route path="/group/:groupId/edit" component={GroupEdit} />
                         <Route path="/group/:groupId" component={GroupHome} />
                         <Route path="/groups/join-code" component={JoinGroupCode} />
-                        <Route path="/group/:groupId/edit" component={GroupEdit} />
+                        
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>

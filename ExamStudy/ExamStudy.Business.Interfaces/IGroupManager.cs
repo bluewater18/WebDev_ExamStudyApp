@@ -7,7 +7,7 @@ namespace ExamStudy.Business.Interfaces
     public interface IGroupManager
     {
         Group CreateGroup(Group group);
-        bool UpdateGroup(Group group);
+        Group UpdateGroup(Group group);
         bool DeleteGroup(int groupId);
         IList<Group> GetAllGroups();
         Group GetGroupById(int groupId);

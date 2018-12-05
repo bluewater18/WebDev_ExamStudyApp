@@ -179,16 +179,15 @@ DELIMITER $$
 CREATE PROCEDURE `UpdateGroup`(
 	IN p_GroupId INT,
 	IN p_GroupName VARCHAR(50),
-	IN p_GroupType VARCHAR(16),
-	IN p_GroupImageName VARCHAR(64),
-	IN p_GroupOwnerId INT
+	IN p_GroupDescription VARCHAR(256),
+	IN p_GroupType VARCHAR(16)
 )
 BEGIN
 	UPDATE Groups
 	SET
 		GroupName = p_GroupName,
 		GroupType = p_GroupType,
-		GroupOwnerId = p_GroupOwnerId
+		GroupDescription = p_GroupDescription
 	WHERE GroupId = p_GroupId;
 END $$
 DELIMITER ;

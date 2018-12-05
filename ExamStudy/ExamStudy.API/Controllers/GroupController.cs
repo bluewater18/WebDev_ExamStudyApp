@@ -59,9 +59,9 @@ namespace ExamStudy.API.Controllers
 
         // PUT api/group/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Group group)
+        public IActionResult Put(int id, [FromBody] Group group)
         {
-            _groupManager.UpdateGroup(group);
+            return new ObjectResult(_groupManager.UpdateGroup(group)) { StatusCode = 200 };
         }
 
         // DELETE api/group/5

@@ -57,9 +57,22 @@ namespace ExamStudy.Business
             return _groupRepository.RemoveUserFromGroup(groupId, userId);
         }
 
-        public bool UpdateGroup(Group group)
+        public Group UpdateGroup(Group group)
         {
-            throw new NotImplementedException();
+            Group oldGroup = _groupRepository.GetGroupById(group.GroupId);
+
+            if (_validator.IsNullOrEmpty(group.GroupName))
+                group.GroupName = oldGroup.GroupName;
+
+            if (_validator.IsNullOrEmpty(group.GroupType))
+                group.GroupType = oldGroup.GroupType;
+
+            if (_validator.IsNullOrEmpty(group.GroupDescription))
+                group.GroupDescription = oldGroup.GroupDescription;
+
+            if (_groupRepository.UpdateGroup(group))
+                return GetGroupById(group.GroupId);
+            return null;
         }
 
         public bool UpdateGroupPhoto(int id, string photoPath)

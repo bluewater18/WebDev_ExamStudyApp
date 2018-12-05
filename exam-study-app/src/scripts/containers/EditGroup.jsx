@@ -6,7 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Select, MenuItem, InputLabel, } from '@material-ui/core';
-import { editGroupName, editGroupDescription, editGroupType, editGroupOwner, editGroupPhoto, editGroupComplete } from '../actions/action-edit-group';
+import { editGroupName, editGroupDescription, editGroupType, editGroupPhoto, editGroupComplete } from '../actions/action-edit-group';
+import { groupTypes } from '../constants';
 
 class EditGroup extends React.Component {
     render() {
@@ -54,8 +55,9 @@ class EditGroup extends React.Component {
                             className={"edit-group-select"}
                         >
                             <MenuItem value={"none"}><em>None</em></MenuItem>
-                            <MenuItem value={"ExamStudy"}>Exam Study</MenuItem>
-                            <MenuItem value={"StudyGroup"}>Study Group</MenuItem>
+                            {Object.keys(groupTypes).map(e =>
+                                <MenuItem key={groupTypes[e]} value={groupTypes[e]}>{groupTypes[e]}</MenuItem>
+                            )}
                         </Select>
 
                         <InputLabel htmlFor="edit-group-photo-file" style={{textAlign:"left", fontSize:"1.3rem", padding:"15px 0 5px 0"}}>

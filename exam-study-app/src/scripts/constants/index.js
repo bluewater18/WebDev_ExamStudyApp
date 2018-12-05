@@ -3,6 +3,12 @@ const SERVER_PATH = 'http://localhost:52940';
 const API_BASE_PATH = SERVER_PATH + '/api';
 const IMAGE_PATH = SERVER_PATH + '/images/';
 
+const groupTypes = {
+    EXAM_STUDY: "Exam Study",
+    STUDY_SESSIONS: "Study Sessions",
+    ASSIGNMENT_HELP: "Assignment Help",
+}
+
 const actionConstants = {
     //API RETURNS
     LOGIN_SUCCESS: "LOG_IN_SUCCESS",
@@ -120,4 +126,4 @@ const actionConstants = {
     CLOSE_NOTIFIER: "CLOSE_NOTIFIER",
 };
 
-export { actionConstants, API_BASE_PATH, IMAGE_PATH };
+export { actionConstants, API_BASE_PATH, IMAGE_PATH, groupTypes };

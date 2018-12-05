@@ -2,6 +2,7 @@
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
+import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 
 function* createGroup({payload}) {
     try {
@@ -81,9 +82,15 @@ function* deleteGroup({payload}) {
 
 function* editGroup({payload}) {
     try{
-        yield call(apiEditGroup, payload)
+        yield call(apiEditGroup, payload.group)
+        try{//update photo
+            if(payload.group.groupPhoto !== null && payload.group.groupPhoto !== undefined )
+                yield call(apiUpdatePhoto, payload.group.groupPhoto, payload.group.groupId, 'group')
+        }catch (err){
+
+        }
         yield put({type: actionConstants.EDIT_GROUP_SUCCESS, payload: null})
-        yield call(history.push, "/group/"+payload.groupId)
+        yield call(history.push, "/group/"+payload.group.groupId)
     } catch(err){
         console.log(err)
         yield put({type:actionConstants.EDIT_GROUP_FAILURE})

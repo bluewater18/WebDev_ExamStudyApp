@@ -19,7 +19,7 @@ async function apiUpdateUser(user) {
     })
 }
 
-async function apiUpdatePhoto(photo, id) {
+async function apiUpdatePhoto(photo, id, type) {
     return new Promise((resolve, reject)=> {
         var formData = new FormData();
         formData.append('image', photo);
@@ -28,7 +28,7 @@ async function apiUpdatePhoto(photo, id) {
             body: formData,
         }
 
-        fetch(API_BASE_PATH+'/photos/'+id + '?pathType=user', options).then((response) => {
+        fetch(API_BASE_PATH+'/photos/'+id + '?pathType='+type, options).then((response) => {
             if(response.status === 201)
                 response.json().then((data) => {
                         resolve(data);       

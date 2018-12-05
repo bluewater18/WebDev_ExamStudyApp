@@ -46,11 +46,11 @@ namespace ExamStudy.Repository
         public bool UpdateGroup(Group group)
         {
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_GroupId", group.GroupId);
             parameters.Add("p_GroupName", group.GroupName);
+            parameters.Add("p_GroupDescription", group.GroupDescription);
             parameters.Add("p_GroupType", group.GroupType);
-            parameters.Add("p_GroupImageName", group.GroupImageName);
-            parameters.Add("p_GroupOwnerId", group.GroupOwnerId);
-
+            
             SqlMapper.Execute(conn, "UpdateGroup", param: parameters, commandType: StoredProcedure);
             return true;
         }

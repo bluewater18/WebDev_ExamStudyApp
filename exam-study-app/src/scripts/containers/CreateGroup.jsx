@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createGroupName, createGroupDescription, createGroupType, createGroupOwner, createGroupPhoto, createGroupComplete } from '../actions/action-create-group';
 import { Select, MenuItem, InputLabel, } from '@material-ui/core';
+import { groupTypes } from '../constants';
 
 class CreateGroup extends React.Component {
     render() {
@@ -53,9 +54,12 @@ class CreateGroup extends React.Component {
                             inputProps={{name:'groupType', id: 'group-type-placeholder'}}
                             className={"create-group-select"}
                         >
-                            <MenuItem value={"none"}><em>None</em></MenuItem>
-                            <MenuItem value={"ExamStudy"}>Exam Study</MenuItem>
-                            <MenuItem value={"StudyGroup"}>Study Group</MenuItem>
+                        <MenuItem value={"none"}><em>None</em></MenuItem>
+                        {Object.keys(groupTypes).map(e =>
+                            <MenuItem key={groupTypes[e]} value={groupTypes[e]}>{groupTypes[e]}</MenuItem>
+                        )}
+                            
+                            
                         </Select>
 
                         <InputLabel htmlFor="create-group-photo-file" style={{textAlign:"left", fontSize:"1.3rem", padding:"15px 0 5px 0"}}>
@@ -85,6 +89,18 @@ class CreateGroup extends React.Component {
                     </CardActions>
                 </Card>
             </div>
+        )
+    }
+
+    getGroupTypes(){
+        let elements = Object.keys(groupTypes).map(e =>
+            <MenuItem value={groupTypes[e]}>{groupTypes[e]}</MenuItem>
+        )
+        return(
+            <div>
+                {elements}
+            </div>
+            
         )
     }
 }
