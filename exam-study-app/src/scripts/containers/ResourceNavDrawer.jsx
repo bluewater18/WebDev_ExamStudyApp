@@ -1,44 +1,38 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import { toggleResourceDrawer } from '../actions/action-ui';
-import { Drawer, List, ListItem } from '@material-ui/core';
+import { Drawer, List, ListItem, Paper, Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ResourceListItem from './ResourceListItem';
 
 class ResourceNavDrawer extends React.Component {
     render() {
+        if(this.props.ui.resourceDrawerOpen)
         return (
             <div>
-                <Drawer 
-                    style={{height:"80%"}} 
+                
+                <Paper
+                    style={{height:"100%", position:"absolute", left:"0", width:"240px"}} 
                     open={this.props.ui.resourceDrawerOpen} 
                     onClose={() => { this.props.toggleResourceDrawer(false) }}
                     variant={"persistent"}
                 >
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        onClick={() => { this.props.toggleResourceDrawer(false) }}
-                        onKeyDown={() => { this.props.toggleResourceDrawer(false) }}
-                    >   
-
+                    <h1>Resources:</h1>
+                    <Divider/>
                         {this.resourceList()}
-                        
-                    </div>
-                </Drawer>
+                </Paper>
 
             </div>
         )
+        return(null)
     }
 
     resourceList() {
         return(
             <List>
                 {/*amp resource to resourceListItems*/}
-                <ListItem>
-                    <ResourceListItem/>
-                </ListItem>
+                <ResourceListItem resource={{resourceName:"test name", resourceTpe: "Q&A"}}/>
             </List>
         )
     }

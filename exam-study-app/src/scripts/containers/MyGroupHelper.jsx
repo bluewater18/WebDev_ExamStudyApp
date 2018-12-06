@@ -15,7 +15,6 @@ import {IMAGE_PATH} from '../constants/index';
 class MyGroupHelper extends React.Component {
 
     render() {
-        console.log(this.props.group)
         return (
             <Card className="my-group-helper-container">
                 <CardActionArea className="my-group-helper-header">
