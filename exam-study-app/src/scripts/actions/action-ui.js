@@ -7,4 +7,11 @@ const toggleLeftDrawer = (drawerState) => {
 
 }
 
-export default toggleLeftDrawer;
+const toggleResourceDrawer = (drawerState) => {
+    return {
+        type: actionConstants.RESOURCE_DRAWER_TOGGLE,
+        payload: drawerState
+    }
+}
+
+export {toggleLeftDrawer, toggleResourceDrawer};

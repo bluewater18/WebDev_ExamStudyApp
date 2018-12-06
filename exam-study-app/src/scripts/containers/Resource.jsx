@@ -1,15 +1,14 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
-import Background from '../components/Background';
 
-class Home extends React.Component {
+class Resource extends React.Component {
     render() {
         return (
             <div className="resource">
-                    <h1>Resource Home</h1>
+                <h1>I am a resource</h1>
             </div>
         )
     }
 }
 
-export default Home;
+export default Resource;

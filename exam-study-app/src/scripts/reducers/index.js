@@ -8,9 +8,10 @@ import editUserReducer from './reducer-edit-user';
 import createGroupReducer from './reducer-create-group';
 import activeGroupReducer from './reducer-active-group';
 import userGroupsReducer from './reducer-user-groups';
-import notifierReducer from './reducer-notifier'
-import editGroupReducer from './reducer-edit-group'
-
+import notifierReducer from './reducer-notifier';
+import editGroupReducer from './reducer-edit-group';
+import resourceListReducer from './reducer-resource-list';
+import activeResourceReducer from './reducer-active-resource';
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -23,6 +24,8 @@ const rootReducer = combineReducers({
     userGroups: userGroupsReducer,
     notifier: notifierReducer,
     editGroup: editGroupReducer,
+    resourceList: resourceListReducer,
+    activeResource: activeResourceReducer,
     
 });
 

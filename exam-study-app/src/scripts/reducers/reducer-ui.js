@@ -3,6 +3,7 @@
 const initialState = {
     leftDrawerOpen: false,
     registerStepperState: 0,
+    resourceDrawerOpen: false,
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -18,7 +19,11 @@ export default function uiReducer(state = initialState, action) {
         case actionConstants.REGISTER_STEPPER_RESET:
             return Object.assign({},state,{
                 registerStepperState:0
-            })
+            });
+        case actionConstants.RESOURCE_DRAWER_TOGGLE:
+            return Object.assign({}, state, {
+                resourceDrawerOpen: action.payload
+            });
         default:
             return state;
         

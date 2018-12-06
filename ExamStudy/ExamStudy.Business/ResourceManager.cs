@@ -17,5 +17,31 @@ namespace ExamStudy.Business
             _validator = new Validator();
         }
 
+        public Resource AddResource(Resource resource)
+        {
+            return _resourceRepository.AddResource(resource);
+        }
+
+        public bool DeleteResource(int resourceId)
+        {
+            return _resourceRepository.DeleteResource(resourceId);
+        }
+
+        public IList<Resource> GetGroupResources(int groupId)
+        {
+            return _resourceRepository.GetResources(groupId);
+        }
+
+        public Resource GetResource(int resourceId)
+        {
+            return _resourceRepository.GetResource(resourceId);
+        }
+
+        public Resource UpdateResource(Resource resource)
+        {
+            if (_resourceRepository.UpdateResource(resource))
+                return _resourceRepository.GetResource(resource.ResourceId);
+            throw new CustomDomainException("ERROR: Failed to update resource " + resource?.ResourceId);
+        }
     }
 }

@@ -13,103 +13,47 @@ namespace ExamStudy.API.Controllers
     [Route("api/[controller]")]
     public class ResourceController : Controller
     {
-        IUserManager _userManager;
-        IGroupManager _groupManager;
-        public ResourceController(IUserManager userManager, IGroupManager groupManager)
+        IResourceManager _resourceManager;
+        public ResourceController( IResourceManager resourceManager)
         {
-            _userManager = userManager;
-            _groupManager = groupManager;
+            _resourceManager = resourceManager;
         }
 
-        // GET api/group
-       [HttpGet]
-       public IEnumerable<Group> Get()
+        [HttpGet()]
+        public IActionResult GetGroupResources(int groupId)
         {
-            return _groupManager.GetAllGroups();
+            return new ObjectResult(_resourceManager.GetGroupResources(groupId)) { StatusCode = 200 };
         }
 
-        [HttpGet("joined")]
-        public IActionResult GetUsersGroups(int userId)
-        {
-            return new ObjectResult(_groupManager.GetUsersGroups(userId)) { StatusCode = 200 };
-        }
-
-        // GET api/group/5
+        // GET api/resource/5
         [HttpGet("{id}")]
         [ActionName("index")]
-        public Group Get(int id)
+        public IActionResult Get(int resourceId)
         {
-            return _groupManager.GetGroupById(id);
+            return new ObjectResult(_resourceManager.GetResource(resourceId)) { StatusCode = 200};
         }
 
-        //[HttpPatch("{id}")]
-        //public IActionResult Edit(int id, [FromBody] Group user)
-        //{
-        //    Group returnableGroup = _userManager.UpdateGroup(group);
-        //    return Created("hidden", returnableGroup);
-        //}
-
-        // POST api/user
+        // POST api/resource
         [HttpPost]
-        public IActionResult Post([FromBody] Group group)
+        public IActionResult Post([FromBody] Resource resource)
         {
-            Group returnableGroup = _groupManager.CreateGroup(group);
-            return Created("hidden",returnableGroup);
+            return new ObjectResult(_resourceManager.AddResource(resource)) { StatusCode = 201 };
         }
 
-        // PUT api/group/5
+        // PUT api/resource/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Group group)
+        public IActionResult Put(int id, [FromBody] Resource resource)
         {
-            return new ObjectResult(_groupManager.UpdateGroup(group)) { StatusCode = 200 };
+            return new ObjectResult(_resourceManager.UpdateResource(resource)) { StatusCode = 200 };
         }
 
-        // DELETE api/group/5
+        // DELETE api/resource/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int resourceId)
         {
-            if (_groupManager.DeleteGroup(id))
+            if (_resourceManager.DeleteResource(resourceId))
                 return Ok();
-            return new ObjectResult("Error Deleting Group") { StatusCode = 500 };
-        }
-        
-        [HttpGet("members/{id}")]
-        public IActionResult GetMembers (int id) {
-            
-            return new ObjectResult(_groupManager.GetGroupMembers(id));
-        }
-
-        [HttpPost("members/join")]
-        public IActionResult AddUserToGroup (int groupId, int userId, string type)
-        {
-            if(_groupManager.AddUserToGroup(groupId, userId, type)){
-                return Ok();
-            }
-            return new ObjectResult("User Not Added")
-            { StatusCode = 500 };
-        }
-
-        [HttpPost("members/leave")]
-        public IActionResult LeaveGroup (int groupId, int userId)
-        {
-            if (_groupManager.RemoveUserFromGroup(groupId, userId))
-                return Ok();
-            return new ObjectResult("Issue removing user from group") { StatusCode = 500 };
-        }
-
-        [HttpPut("member/join")]
-        public IActionResult AddUserToGroupByCode (string code, int userId)
-        {
-            int groupId = _groupManager.AddUserToGroupByCode(code, userId);
-            if(groupId > 0)
-            {
-                Group g = new Group();
-                g.GroupId = groupId;
-                return new ObjectResult(g) { StatusCode = 200 };
-            }
-                
-            return new ObjectResult("Issue joining Group")
-            { StatusCode = 500 };
+            return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
         }
     }
 }

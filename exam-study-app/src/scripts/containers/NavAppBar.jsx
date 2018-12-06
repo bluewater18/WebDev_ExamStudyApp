@@ -3,7 +3,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import React from 'react';
 import PropTypes from 'prop-types';
-import toggleLeftDrawer from '../actions/action-toggle-left-drawer';
+import { toggleLeftDrawer } from '../actions/action-ui';
 import logout from '../actions/action-logout';
 import NavDrawer from './NavDrawer';
 import { connect } from 'react-redux';
