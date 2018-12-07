@@ -6,6 +6,7 @@ import sagaLogout from './saga-logout';
 import sagaEditUser from './saga-edit-user';
 import sagaGroups from './saga-groups';
 import sagaUsers from './saga-users';
+import saagResources from './saga-resources';
 
 export default function* root() {
     yield all([
@@ -15,5 +16,6 @@ export default function* root() {
         fork(sagaEditUser),
         fork(sagaGroups),
         fork(sagaUsers),
+        fork(saagResources),
     ])
 }

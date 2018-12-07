@@ -72,7 +72,7 @@ const styles = theme => ({
 
 class ResourceHome extends React.Component {
     render() {
-        const{classes, theme } = this.props;
+        const{classes } = this.props;
         return (
             <div className="resource-home">
                 <ResourceNavBar />
