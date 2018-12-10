@@ -1,6 +1,5 @@
 import { createFetch, base, method, header, body } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
-import { promises } from 'fs';
 
 async function apiAddQuestion(question) {
     return new Promise((resolve, reject) => {
