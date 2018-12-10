@@ -29,9 +29,9 @@ function* getResource({payload}) {
     }
 }
 
-function* getResourceList() {
+function* getResourceList({payload}) {
     try {
-        let resources = yield call(apiGetResources)
+        let resources = yield call(apiGetResources, payload)
         yield put({ type: actionConstants.GET_RESOURCE_LIST_SUCCESS, payload:resources})
     } catch(err){
         console.log(err);

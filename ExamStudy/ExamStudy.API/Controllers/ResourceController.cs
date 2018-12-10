@@ -14,23 +14,29 @@ namespace ExamStudy.API.Controllers
     public class ResourceController : Controller
     {
         IResourceManager _resourceManager;
-        public ResourceController( IResourceManager resourceManager)
+        IQuestionManager _questionManager;
+        public ResourceController(IResourceManager resourceManager, IQuestionManager questionManager)
         {
             _resourceManager = resourceManager;
+            _questionManager = questionManager;
         }
 
         [HttpGet()]
         public IActionResult GetGroupResources(int groupId)
         {
+            Console.WriteLine("!@#$%^&* Getting GROUP Resources");
             return new ObjectResult(_resourceManager.GetGroupResources(groupId)) { StatusCode = 200 };
         }
 
         // GET api/resource/5
         [HttpGet("{id}")]
         [ActionName("index")]
-        public IActionResult Get(int resourceId)
+        public IActionResult Get(int id)
         {
-            return new ObjectResult(_resourceManager.GetResource(resourceId)) { StatusCode = 200};
+            Console.WriteLine("!@#$%^&* Getting SINGLE Resource");
+            Resource resource = _resourceManager.GetResource(id);
+            resource.ResourceQuestions = _questionManager.GetResourceQuestions(resource.ResourceId);
+            return new ObjectResult(resource) { StatusCode = 200};
         }
 
         // POST api/resource

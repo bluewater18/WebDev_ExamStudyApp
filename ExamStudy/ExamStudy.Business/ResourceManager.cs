@@ -9,11 +9,13 @@ namespace ExamStudy.Business
     public class ResourceManager : IResourceManager
     {
         IResourceRepository _resourceRepository;
+        IQuestionRepository _questionRepository;
         Validator _validator;
 
-        public ResourceManager(IResourceRepository resourceRepository)
+        public ResourceManager(IResourceRepository resourceRepository, IQuestionRepository questionRepository)
         {
             _resourceRepository = resourceRepository;
+            _questionRepository = questionRepository;
             _validator = new Validator();
         }
 
@@ -34,7 +36,9 @@ namespace ExamStudy.Business
 
         public Resource GetResource(int resourceId)
         {
-            return _resourceRepository.GetResource(resourceId);
+            Resource resource = _resourceRepository.GetResource(resourceId);
+            resource.ResourceQuestions = _questionRepository.GetQuestions(resource.ResourceId);
+            return resource;
         }
 
         public Resource UpdateResource(Resource resource)

@@ -31,7 +31,7 @@ async function apiGetResources(groupId) {
         fetchGetResource('/resource?groupId='+groupId).then((res) => {
             if(res.status === 200)
                 res.json().then((data)=>
-                resolve(data))
+                    resolve(data))
             else
                 reject(res)
         }).catch((err) => {
@@ -50,7 +50,8 @@ async function apiGetResource(resourceId) {
 
         fetchGetResource('/resource/'+resourceId).then((res) => {
             if(res.status === 200)
-                resolve()
+                res.json().then((data)=>
+                    resolve(data))
             else
                 reject(res)
         }).catch((err) => 

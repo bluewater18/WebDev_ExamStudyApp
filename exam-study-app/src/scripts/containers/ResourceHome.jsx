@@ -15,72 +15,73 @@ const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
-      display: 'flex',
+        display: 'flex',
     },
     appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
     },
     appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
     },
     menuButton: {
-      marginLeft: 12,
-      marginRight: 20,
+        marginLeft: 12,
+        marginRight: 20,
     },
     hide: {
-      display: 'none',
+        display: 'none',
     },
     drawer: {
-      width: 200,
-      flexShrink: 0,
+        width: 0,
+        flexShrink: 0,
     },
     drawerPaper: {
-      width: drawerWidth,
+        width: drawerWidth,
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+        justifyContent: 'flex-end',
     },
     content: {
-      flexGrow: 1,
-      padding: theme.spacing.unit * 3,
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
+        flexGrow: 1,
+        padding: theme.spacing.unit * 3,
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: 0,
     },
     contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: drawerWidth,
     },
   });
 
 class ResourceHome extends React.Component {
     render() {
+        const { groupId, resourceId } = this.props.match.params;
         const{classes } = this.props;
         return (
             <div className="resource-home">
-                <ResourceNavBar />
+                <ResourceNavBar groupId={groupId}/>
                 <main className={classNames(classes.content, {
                     [classes.contentShift]: this.props.ui.resourceDrawerOpen,
                 })}>
-                    <Resource />
-                        <h1 onClick={() => {this.props.toggleResourceDrawer(true)}}>Resource Home</h1>
+                    <h1 onClick={() => {this.props.toggleResourceDrawer(true)}}>Open Resource List (temporary)</h1>
+                    <Resource resourceId={resourceId}/>  
                 </main>
             </div>
         )
