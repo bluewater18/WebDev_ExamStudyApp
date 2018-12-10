@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import PropTypes from 'prop-types';
-import { Card, CardContent, CardMedia } from '@material-ui/core';
+import { Card, CardMedia } from '@material-ui/core';
 import { IMAGE_PATH } from '../constants';
 
 class AnswerItem extends React.Component {

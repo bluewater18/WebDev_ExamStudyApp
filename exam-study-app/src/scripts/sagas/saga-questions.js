@@ -1,7 +1,6 @@
 ﻿import { apiAddQuestion } from '../api-calls/api-questions';
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
-import history from '../../history';
 
 function* addQuestion({payload}) {
     try {

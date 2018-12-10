@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import { toggleResourceDrawer } from '../actions/action-ui';
-import { Drawer, List, ListItem, Paper, Divider, IconButton } from '@material-ui/core';
+import { List, Paper, Divider, IconButton } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ResourceListItem from './ResourceListItem';

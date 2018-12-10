@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/main.scss';
-import Background from '../components/Background';
-import { Card, CardActions, CardContent, Button, TextField, InputLabel, } from '@material-ui/core';
+import { Card, CardContent, Button, TextField, InputLabel, } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -127,7 +126,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addQuestion, addQuestion
+        addQuestion: addQuestion
     }, dispatch);
 }
 

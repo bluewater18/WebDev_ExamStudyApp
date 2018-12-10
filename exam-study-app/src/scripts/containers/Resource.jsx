@@ -42,7 +42,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ 
-        fetchActiveResource, fetchActiveResource,
+        fetchActiveResource: fetchActiveResource,
         }, dispatch);
 }
 
