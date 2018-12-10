@@ -27,7 +27,7 @@ class ResourceNavDrawer extends React.Component {
                     onClose={() => { this.props.toggleResourceDrawer(false) }}
                     variant={"persistent"}
                 >
-                <div style={{display:"flex"}}>
+                    <div style={{display:"flex"}}>
                     <h1 style={{flex:"3"}}>Resources:</h1>
                     <div style={{flex:"1"}}>
                     <IconButton

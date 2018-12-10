@@ -22,6 +22,7 @@ class QuestionItem extends React.Component {
 
                 </div>
                 {this.renderAnswers()}
+                {this.renderQuestionFooter()}
             </Card>
             
         )
@@ -40,6 +41,15 @@ class QuestionItem extends React.Component {
         )
         }
         return(null);
+    }
+
+    renderQuestionFooter(){
+        if(true)
+        return(
+            <div className="question-footer">
+                show answers
+            </div>
+        )
     }
 }
 

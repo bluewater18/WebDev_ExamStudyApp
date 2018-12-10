@@ -68,9 +68,8 @@ export default function* root() {
     yield all([
         takeLatest(actionConstants.ADD_QUESTION, addQuestion),
         takeLatest(actionConstants.EDIT_QUESTION, editQuestion),
-        takeLatest(actionConstants.deleteQuestion, deleteQuestion),
+        takeLatest(actionConstants.DELETE_QUESTION, deleteQuestion),
         takeLatest(actionConstants.UPVOTE_QUESTION, upvoteQuestion),
-        takeLatest(actionConstants.DOWNVOTE_QUESTION, downvoteQuestion)
-
+        takeLatest(actionConstants.DOWNVOTE_QUESTION, downvoteQuestion),
     ]);
 }

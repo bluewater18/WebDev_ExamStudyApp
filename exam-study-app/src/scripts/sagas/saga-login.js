@@ -3,7 +3,7 @@ import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest } from 'redux-saga/effects';
 import history from '../../history';
 
-export function* loginUser({ payload }) {
+function* loginUser({ payload }) {
     try {
         let user = yield call(apiLogin, payload);
         yield put({ type: actionConstants.LOGIN_SUCCESS, payload: user });
@@ -13,7 +13,7 @@ export function* loginUser({ payload }) {
     }
 }
 
-export function* loginSuccess({ payload }){
+function* loginSuccess({ payload }){
     try{
     yield call (history.push,'/');
     yield put({type: actionConstants.LOGIN_SUCCESS_POST_SAGA, payload: payload});
