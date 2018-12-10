@@ -19,9 +19,11 @@ namespace ExamStudy.Business
             _validator = new Validator();
         }
 
-        public Question AddQuestion(Question question, int resourceId)
+        public Question AddQuestion(Question question)
         {
-            throw new NotImplementedException();
+            if (_validator.IsNullOrEmpty(question.QuestionText) || _validator.IsNullOrEmpty(question.QuestionTitle))
+                throw new InvalidObjectException("Question missing title or text");
+            return _questionRepository.AddQuestion(question);
         }
 
         public bool DeleteQuestion(int questionId)

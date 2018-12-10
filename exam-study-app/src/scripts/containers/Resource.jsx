@@ -2,6 +2,7 @@
 import '../../styles/main.scss';
 import Proptypes from 'prop-types';
 import QuestionItem from './QuestionItem';
+import AddQuestion from './AddQuestion';
 import { fetchActiveResource } from '../actions/action-resources';
 import { bindActionCreators } from'redux';
 import { connect } from 'react-redux';
@@ -20,14 +21,14 @@ class Resource extends React.Component {
         return(
             <div className="resource">
                 {questionElements}
+                <AddQuestion/>
             </div>
         )
         }
         return(null);
     }
 
-    renderQuestions(){ 
-    }
+
 }
 
 Resource.propTypes = {

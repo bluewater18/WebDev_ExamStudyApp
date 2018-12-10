@@ -63,7 +63,6 @@ function* editResource({payload}) {
 }
 
 
-
 export default function* root() {
     yield all([
         takeLatest(actionConstants.GET_RESOURCE_LIST, getResourceList),

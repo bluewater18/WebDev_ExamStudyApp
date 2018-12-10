@@ -46,6 +46,12 @@ namespace ExamStudy.API.Controllers
             return new ObjectResult(_resourceManager.AddResource(resource)) { StatusCode = 201 };
         }
 
+        [HttpPost("{id}/question")]
+        public IActionResult Post(int id, [FromBody] Question question)
+        {
+            return new ObjectResult(_questionManager.AddQuestion(question));
+        }
+
         // PUT api/resource/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Resource resource)

@@ -6,7 +6,7 @@ namespace ExamStudy.Business.Interfaces
 {
     public interface IQuestionManager
     {
-        Question AddQuestion(Question question, int resourceId);
+        Question AddQuestion(Question question);
         IList<Question> GetResourceQuestions(int resourceId);
         Question GetQuestion(int questionId);
         Question UpdateQuestion(Question question);

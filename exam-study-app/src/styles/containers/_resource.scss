@@ -1,5 +1,10 @@
-﻿.resource{
+﻿.resource-home{
+    padding: 5px 24px 0px 24px;
+}
+
+.resource{
     display: flex;
+    flex-direction: column;
     
 }
 
@@ -10,6 +15,7 @@
     width:100%;
     justify-content: stretch;
     margin: auto;
+    margin-bottom: 15px;
 }
 
 .question-question{
