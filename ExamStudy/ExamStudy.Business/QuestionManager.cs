@@ -51,5 +51,10 @@ namespace ExamStudy.Business
         {
             throw new NotImplementedException();
         }
+
+        public bool UpdateQuestionPhoto(int questionId, string path)
+        {
+            return _questionRepository.UpdateQuestionPhoto(questionId, path);
+        }
     }
 }

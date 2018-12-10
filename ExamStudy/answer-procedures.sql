@@ -1,4 +1,6 @@
-﻿DROP TABLE IF EXISTS Answers;
+﻿DROP VIEW IF EXISTS AnswersDetailed;
+
+DROP TABLE IF EXISTS Answers;
 
 DROP PROCEDURE IF EXISTS AddAnswer;
 DROP PROCEDURE IF EXISTS GetAnswers;
@@ -23,6 +25,12 @@ CREATE TABLE IF NOT EXISTS Answers(
 	CONSTRAINT FK_QuestionAnswer FOREIGN KEY (QuestionId) REFERENCES Questions(QuestionId) ON DELETE CASCADE,
 	CONSTRAINT FK_UserAnswer FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 	);
+
+CREATE VIEW AnswersDetailed AS
+	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, A.*
+	FROM Answers A
+	INNER JOIN Users U
+	ON(U.UserId = A.UserId);
 
 
 DELIMITER $$
@@ -58,7 +66,7 @@ CREATE PROCEDURE `GetAnswers`(
 	IN p_QuestionId INT
 )
 BEGIN
-	SELECT * FROM Answers
+	SELECT * FROM AnswersDetailed
 	WHERE QuestionId = p_QuestionId;
 END $$
 DELIMITER ;

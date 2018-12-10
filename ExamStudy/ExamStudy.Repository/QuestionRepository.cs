@@ -62,5 +62,15 @@ namespace ExamStudy.Repository
             SqlMapper.Execute(conn, "UpdateQuestion", param: parameters, commandType: StoredProcedure);
             return true;
         }
+
+        public bool UpdateQuestionPhoto(int questionId, string path)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_QuestionId", questionId);
+            parameters.Add("p_QuestionImageName", path);
+
+            SqlMapper.Execute(conn, "UpdateQuestionImage", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
     }
 }

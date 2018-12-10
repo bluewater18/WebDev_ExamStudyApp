@@ -1,4 +1,6 @@
-﻿DROP TABLE IF EXISTS Answers;
+﻿DROP VIEW IF EXISTS QuestionsDetailed;
+
+DROP TABLE IF EXISTS Answers;
 DROP TABLE IF EXISTS Questions;
 
 DROP PROCEDURE IF EXISTS AddQuestion;
@@ -21,6 +23,12 @@ CREATE TABLE IF NOT EXISTS Questions(
 	CONSTRAINT FK_UserQuestion FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 	);
 
+CREATE VIEW QuestionsDetailed AS
+	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, Q.*
+	FROM Questions Q
+	INNER JOIN Users U
+	ON(U.UserId = Q.UserId);
+
 
 DELIMITER $$
 CREATE PROCEDURE `AddQuestion`(
@@ -38,7 +46,7 @@ BEGIN
 		QuestionType = p_QuestionType,
 		QuestionTitle = p_QuestionTitle,
 		QuestionText = p_QuestionText,
-		QuestionImageName = p_QuestionImageName,
+		QuestionImageName = "default_image.png",
 		ResourceId = p_ResourceId,
 		UserId = p_UserId;
 	SET tempId = LAST_INSERT_ID();
@@ -53,7 +61,7 @@ CREATE PROCEDURE `GetQuestions`(
 	IN p_ResourceId INT
 )
 BEGIN
-	SELECT * FROM Questions
+	SELECT * FROM QuestionsDetailed
 	WHERE ResourceId = p_ResourceId;
 END $$
 DELIMITER ;
@@ -95,6 +103,20 @@ BEGIN
 		QuestionType = p_QuestionType,
 		QuestionTitle = p_QuestionTitle,
 		QuestionText = p_QuestionText,
+		QuestionImageName = p_QuestionImageName
+	WHERE
+		QuestionId = p_QuestionId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `UpdateQuestionImage`(
+	IN p_QuestionId INT,
+	IN p_QuestionImageName VARCHAR(64)
+)
+BEGIN
+	UPDATE Questions
+	SET
 		QuestionImageName = p_QuestionImageName
 	WHERE
 		QuestionId = p_QuestionId;

@@ -20,6 +20,10 @@ export default function activeGroupReducer(state = initialState, action) {
                 resourceType: action.payload.resourceType,
                 resourceQuestions: action.payload.resourceQuestions
             })
+        case actionConstants.ADD_QUESTION_SUCCESS:
+            return Object.assign({}, state,{
+                resourceQuestions: state.resourceQuestions.concat(action.payload)
+            })
         default:
             return state;
     }

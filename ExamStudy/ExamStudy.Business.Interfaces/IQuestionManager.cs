@@ -11,5 +11,6 @@ namespace ExamStudy.Business.Interfaces
         Question GetQuestion(int questionId);
         Question UpdateQuestion(Question question);
         bool DeleteQuestion(int questionId);
+        bool UpdateQuestionPhoto(int questionId, string path);
     }
 }

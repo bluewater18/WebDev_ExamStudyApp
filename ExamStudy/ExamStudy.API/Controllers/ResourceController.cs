@@ -49,7 +49,7 @@ namespace ExamStudy.API.Controllers
         [HttpPost("{id}/question")]
         public IActionResult Post(int id, [FromBody] Question question)
         {
-            return new ObjectResult(_questionManager.AddQuestion(question));
+            return new ObjectResult(_questionManager.AddQuestion(question)) { StatusCode = 201 };
         }
 
         // PUT api/resource/5

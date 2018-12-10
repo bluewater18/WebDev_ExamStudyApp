@@ -1,15 +1,24 @@
-import React from 'react';
-import '../../styles/main.scss';
 import Background from '../components/Background';
-import {getGroup, getGroupMembers, deleteGroup} from '../actions/action-get-group';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { IMAGE_PATH } from '../constants/index';
-import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, } from '@material-ui/core';
 import GroupMemberListItem from './GroupMemberListItem';
 import UserListItem from './UserListItem';
+import ResourceListItem from './ResourceListItem';
+
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { IMAGE_PATH } from '../constants/index';
+import {getGroup, getGroupMembers, deleteGroup} from '../actions/action-get-group';
+import {fetchResourceList} from '../actions/action-resources';
 import {getAllUsers, addUserToGroup, leaveGroup, removeUserFromGroup} from '../actions/action-users';
 import {editGroupInit} from '../actions/action-edit-group';
+
+import '../../styles/main.scss';
+import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, } from '@material-ui/core';
+
+
+
 
 
 class GroupHome extends React.Component {
@@ -41,6 +50,7 @@ class GroupHome extends React.Component {
         const { groupId } = this.props.match.params;
         this.props.getGroup(groupId);
         this.props.getGroupMembers(groupId);
+        this.props.fetchResourceList(groupId);
     }
 
     handleModalOpen = () => {
@@ -78,7 +88,7 @@ class GroupHome extends React.Component {
                         {this.infoCardRenderer()}
                     </div>
                     <div>
-                        {this.resourceCardRenderer()}
+                        {this.resourceCardRenderer(this.props.activeGroup.groupId)}
                     </div>
                     <div>
                         {this.memberCardRenderer()}
@@ -167,7 +177,13 @@ class GroupHome extends React.Component {
             )
     }
 
-    resourceCardRenderer() {
+    resourceCardRenderer(groupId) {
+        const resources = this.props.resourceList.resources;
+        const resourceList = resources.map((resource) =>
+            <Link key={resource.resourceId} to={"/group/"+groupId+"/resource/"+resource.resourceId} style={{all:"unset"}}>
+                <ResourceListItem key={resource.resourceId} resource={resource} />
+            </Link>
+        )
         return (
             <Card className="group-home-container">
                 <CardContent className="group-home-content-header">
@@ -175,7 +191,9 @@ class GroupHome extends React.Component {
                 </CardContent>
                 <Divider />
                 <CardContent className="group-home-content">
-                    <h1>  </h1>
+                    <List>
+                        {resourceList}
+                    </List>
                 </CardContent>
             </Card>
         )
@@ -261,6 +279,7 @@ function mapStateToProps(state) {
         activeGroup: state.activeGroup,
         user: state.user,
         editGroup: state.editGroup,
+        resourceList: state.resourceList,
 
     }
 }
@@ -275,6 +294,7 @@ function mapDispatchToProps(dispatch) {
         removeUserFromGroup: removeUserFromGroup,
         deleteGroup: deleteGroup,
         editGroupInit: editGroupInit,
+        fetchResourceList: fetchResourceList,
     }, dispatch)
 }
 

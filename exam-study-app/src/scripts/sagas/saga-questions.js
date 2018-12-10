@@ -1,4 +1,5 @@
 ﻿import { apiAddQuestion, apiEditQuestion, apiDeleteQuestion, apiUpvoteQuestion, apiDownvoteQuestion } from '../api-calls/api-questions';
+import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 import { actionConstants } from '../constants/index';
 import { call, all, put, takeLatest, } from 'redux-saga/effects';
 
@@ -6,6 +7,8 @@ function* addQuestion({payload}) {
     try {
         let question = payload;
         let createdQuestion = yield call(apiAddQuestion, question);
+        let createdPhoto = yield call(apiUpdatePhoto, question.image, createdQuestion.questionId, "question" )
+        createdQuestion.questionImageName = createdPhoto.QuestionPhotoPath;
         yield put({ type: actionConstants.ADD_QUESTION_SUCCESS, payload: createdQuestion });
         yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'New Question Added Successfully!'}})
         

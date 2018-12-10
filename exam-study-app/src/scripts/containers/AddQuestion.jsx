@@ -41,6 +41,16 @@ class AddQuestion extends React.Component {
         })
     }
 
+    handleAddQuestion(question){
+        this.setState({
+            adding:false,
+            title:"",
+            text:"",
+            image:null,
+        })
+        this.props.addQuestion(question);
+    }
+
     render() {
         return(
             <Card>
@@ -106,7 +116,7 @@ class AddQuestion extends React.Component {
                         </Button>
                     </label>
 
-                    <Button onClick={() => {this.props.addQuestion({questionTitle:this.state.title, questionText:this.state.text, image:this.state.image, userId:this.props.user.id, resourceId: this.props.activeResource.resourceId})}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                    <Button onClick={() => {this.handleAddQuestion({questionTitle:this.state.title, questionText:this.state.text, image:this.state.image, userId:this.props.user.id, resourceId: this.props.activeResource.resourceId})}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
                         Add
                     </Button>
                 </CardContent>

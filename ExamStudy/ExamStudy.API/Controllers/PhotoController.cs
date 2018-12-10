@@ -17,12 +17,14 @@ namespace ExamStudy.API.Controllers
         IImageHandler _imageHandler;
         IUserManager _userManager;
         IGroupManager _groupManager;
+        IQuestionManager _questionManager;
 
-        public PhotoController(IImageHandler imageHandler, IUserManager userManager, IGroupManager groupManager)
+        public PhotoController(IImageHandler imageHandler, IUserManager userManager, IGroupManager groupManager, IQuestionManager questionManager)
         {
             _imageHandler = imageHandler;
             _userManager = userManager;
             _groupManager = groupManager;
+            _questionManager = questionManager;
         }
 
         [HttpGet("/user/{id}")]
@@ -46,6 +48,12 @@ namespace ExamStudy.API.Controllers
                 var path = await _imageHandler.UploadImage(image);
                 _groupManager.UpdateGroupPhoto(id, path);
                 return Created(path, new JObject(new JProperty("GroupPhotoPath", path)));
+            }
+            else if(pathType.Equals("question", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var path = await _imageHandler.UploadImage(image);
+                _questionManager.UpdateQuestionPhoto(id, path);
+                return Created(path, new JObject(new JProperty("QuestionPhotoPath", path)));
             }
 
             return NotFound("Invalid type");
