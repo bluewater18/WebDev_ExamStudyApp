@@ -61,9 +61,9 @@ namespace ExamStudy.API.Controllers
 
         // DELETE api/resource/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int resourceId)
+        public IActionResult Delete(int id)
         {
-            if (_resourceManager.DeleteResource(resourceId))
+            if (_resourceManager.DeleteResource(id))
                 return Ok();
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
         }

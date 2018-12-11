@@ -8,6 +8,41 @@
     
 }
 
+.resource-header{
+    margin-bottom: 15px !important;
+}
+
+.resource-home-drawer-button {
+    position: fixed !important;
+    left: 16px !important;
+    color: $mat-colour-A400 !important;
+}
+
+.resource-list-item{
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+}
+
+.resource-list-item-link{
+    flex:6 !important;
+    width: inherit !important;
+}
+
+.resource-list-item-actions{
+    flex:1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: inherit !important;
+    justify-content: right !important;
+}
+.resource-list-item-actions IconButton{
+    flex:1 !important;
+    padding: 4px !important;
+    width: fit-content !important;
+    text-align: right !important;
+}
+
 .question-item{
     display: flex !important;
     flex-direction: column;

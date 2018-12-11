@@ -17,12 +17,14 @@ namespace ExamStudy.Repository
             parameters.Add("p_ResourceName", resource.ResourceName);
             parameters.Add("p_ResourceType", resource.ResourceType);
             parameters.Add("p_GroupId", resource.GroupId);
+            parameters.Add("p_UserId", resource.UserId);
             
             return SqlMapper.Query<Resource>(conn, "AddResource", param: parameters, commandType: StoredProcedure).FirstOrDefault();
         }
 
         public bool DeleteResource(int resourceId)
         {
+            Console.WriteLine("!@#$%^&*deleting: " + resourceId);
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("p_ResourceId", resourceId);
 
@@ -54,7 +56,7 @@ namespace ExamStudy.Repository
             parameters.Add("p_ResourceType", resource.ResourceType);
             parameters.Add("p_ResourceId", resource.ResourceId);
 
-            SqlMapper.Execute(conn, "AddResource", param: parameters, commandType: StoredProcedure);
+            SqlMapper.Execute(conn, "UpdateResource", param: parameters, commandType: StoredProcedure);
             return true;
         }
     }

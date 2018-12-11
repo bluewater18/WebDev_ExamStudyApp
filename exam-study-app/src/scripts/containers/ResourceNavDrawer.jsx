@@ -22,7 +22,7 @@ class ResourceNavDrawer extends React.Component {
             <div>
                 
                 <Paper
-                    style={{height:"100%", position:"absolute", left:"0", width:"240px"}} 
+                    style={{height:"100%", position:"fixed", left:"0", width:"240px"}} 
                     open={this.props.ui.resourceDrawerOpen} 
                     onClose={() => { this.props.toggleResourceDrawer(false) }}
                     variant={"persistent"}

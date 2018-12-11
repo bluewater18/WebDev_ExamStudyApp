@@ -1,16 +1,16 @@
 ﻿import { apiCreateResource, apiGetResource, apiGetResources, apiEditResource, apiDeleteResource } from '../api-calls/api-resources';
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest } from 'redux-saga/effects';
+import { call, all, put, takeLatest, } from 'redux-saga/effects';
 import history from '../../history';
 
 function* createResource({payload}) {
     try {
-        let resource = payload.resource;
+        let resource = payload;
         resource.userId = payload.userId;
         let createdResource = yield call(apiCreateResource, resource);
         yield put({ type: actionConstants.CREATE_RESOURCE_SUCCESS, payload: createdResource });
-        yield call(history.push,'/group/'+payload.groupId+'/resource/'+createResource.resourceId);
-        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type:'success', message:createResource.resourceName+ ' Created Successfully! '}})
+        yield call(history.push,'/group/'+payload.groupId+'/resource/'+createdResource.resourceId);
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type:'success', message:createdResource.resourceName+ ' Created Successfully! '}})
         
     } catch (err) {
         console.log(err)
@@ -42,9 +42,8 @@ function* getResourceList({payload}) {
 
 function* deleteResource({payload}) {
     try {
-        yield call(apiDeleteResource, payload.resourceId)
-        yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS})
-        yield call(history.push, '/group/'+payload.groupId)
+        yield call(apiDeleteResource, payload)
+        yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS, payload:payload})
     } catch (err){
         console.log(err)
         yield put({type: actionConstants.DELETE_RESOURCE_FAILURE})
@@ -53,14 +52,14 @@ function* deleteResource({payload}) {
 
 function* editResource({payload}) {
     try{
-        yield call(apiEditResource, payload.resource)
-        yield put({type: actionConstants.EDIT_RESOURCE_SUCCESS, payload: null})
-        yield call(history.push, "/group/"+payload.group.groupId)
+        let updatedResource = yield call(apiEditResource, payload)
+        yield put({type: actionConstants.EDIT_RESOURCE_SUCCESS, payload: updatedResource})
     } catch(err){
         console.log(err)
         yield put({type:actionConstants.EDIT_RESOURCE_FAILURE})
     }
 }
+
 
 
 export default function* root() {
@@ -70,6 +69,5 @@ export default function* root() {
         takeLatest(actionConstants.CREATE_RESOURCE_SUBMIT, createResource),
         takeLatest(actionConstants.EDIT_RESOURCE_SUBMIT, editResource),
         takeLatest(actionConstants.DELETE_RESOURCE, deleteResource),
-
     ]);
 }

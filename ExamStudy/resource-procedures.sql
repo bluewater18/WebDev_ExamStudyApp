@@ -15,8 +15,10 @@ CREATE TABLE IF NOT EXISTS Resources(
 	ResourceName VARCHAR(50) UNIQUE,
 	ResourceType VARCHAR(16),
 	GroupId INT,
+	UserId INT,
 	PRIMARY KEY (ResourceId),
-	CONSTRAINT FK_Group FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE
+	CONSTRAINT FK_Resource_Group FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE,
+	CONSTRAINT FK_Resource_User FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 	);
 
 
@@ -24,7 +26,8 @@ DELIMITER $$
 CREATE PROCEDURE `AddResource`(
 	IN p_ResourceName VARCHAR(50),
 	IN p_ResourceType VARCHAR(16),
-	IN p_GroupId INT
+	IN p_GroupId INT,
+	IN p_UserId INT;
 )
 BEGIN
 	DECLARE tempId INT;
@@ -32,7 +35,8 @@ BEGIN
 	SET
 		ResourceName = p_ResourceName,
 		ResourceType = p_ResourceType,
-		GroupId = p_GroupId;
+		GroupId = p_GroupId,
+		UserId = p_UserId;
 	SET tempId = LAST_INSERT_ID();
 	SELECT * FROM Resources
 	WHERE ResourceId = tempId;

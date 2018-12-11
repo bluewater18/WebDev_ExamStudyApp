@@ -24,6 +24,8 @@ export default function activeGroupReducer(state = initialState, action) {
             return Object.assign({}, state,{
                 resourceQuestions: state.resourceQuestions.concat(action.payload)
             })
+        case actionConstants.CLEAR_ACTIVE_RESOURCE:
+            return initialState;
         default:
             return state;
     }

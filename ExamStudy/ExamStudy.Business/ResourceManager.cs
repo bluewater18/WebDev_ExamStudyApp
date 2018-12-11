@@ -43,6 +43,7 @@ namespace ExamStudy.Business
 
         public Resource UpdateResource(Resource resource)
         {
+            resource.ResourceType = "Q&A";
             if (_resourceRepository.UpdateResource(resource))
                 return _resourceRepository.GetResource(resource.ResourceId);
             throw new CustomDomainException("ERROR: Failed to update resource " + resource?.ResourceId);

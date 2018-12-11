@@ -10,9 +10,12 @@ async function apiCreateResource(resource) {
             body(JSON.stringify(resource), 'application/json'),
         );
         fetchCreateResource('/resource').then((res) => {
-            res.json().then((data) => {
-                resolve(data);
-            })
+            if(res.status === 201)
+                res.json().then((data) => {
+                    resolve(data);
+                })
+            else
+                reject(res)
         }).catch((err) => {
         console.log(err);
         reject(err);
@@ -71,7 +74,8 @@ async function apiEditResource(resource) {
         )
         fetchEditResource('/resource/'+resource.resourceId).then((res) => {
             if(res.status === 200)
-                resolve()
+                res.json().then((data)=>
+                    resolve(data))
             else
                 reject(res)
         }).catch((err) => 

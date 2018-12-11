@@ -6,16 +6,15 @@ import ResourceListItem from './ResourceListItem';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { IMAGE_PATH } from '../constants/index';
 import {getGroup, getGroupMembers, deleteGroup} from '../actions/action-get-group';
-import {fetchResourceList} from '../actions/action-resources';
+import {fetchResourceList, addResource} from '../actions/action-resources';
 import {getAllUsers, addUserToGroup, leaveGroup, removeUserFromGroup} from '../actions/action-users';
 import {editGroupInit} from '../actions/action-edit-group';
 
 import '../../styles/main.scss';
-import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, } from '@material-ui/core';
+import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, TextField } from '@material-ui/core';
 
 
 
@@ -24,7 +23,9 @@ import {Card, CardContent, Divider, ListItem, List, Button, Popover, Modal, } fr
 class GroupHome extends React.Component {
     state = {
         anchorEl: null,
+        addResourceAnchor: null,
         modalOpen: false,
+        addResourceName: '',
       };
 
       addUserToGroupWrapper = (user) => {
@@ -46,6 +47,27 @@ class GroupHome extends React.Component {
           anchorEl: null,
         });
       };
+
+      handleAddResource = event => {
+        this.setState({
+            addResourceAnchor: event.currentTarget,
+        }); 
+      }
+      handleAddResourceClose = () => {
+        this.setState({
+          addResourceAnchor: null,
+        });
+      };
+
+      handleAddResourceName = (newName) => {
+          this.setState({
+              addResourceName: newName
+          })
+      };
+      handleAddResourceSubmit = (resource) => {
+          this.props.addResource(resource)
+      }
+
     componentDidMount() {
         const { groupId } = this.props.match.params;
         this.props.getGroup(groupId);
@@ -88,7 +110,7 @@ class GroupHome extends React.Component {
                         {this.infoCardRenderer()}
                     </div>
                     <div>
-                        {this.resourceCardRenderer(this.props.activeGroup.groupId)}
+                        {this.resourceCardRenderer()}
                     </div>
                     <div>
                         {this.memberCardRenderer()}
@@ -177,17 +199,59 @@ class GroupHome extends React.Component {
             )
     }
 
-    resourceCardRenderer(groupId) {
+    resourceCardRenderer() {
+        const { addResourceAnchor } = this.state;
+        const open = Boolean(addResourceAnchor);
+
         const resources = this.props.resourceList.resources;
         const resourceList = resources.map((resource) =>
-            <Link key={resource.resourceId} to={"/group/"+groupId+"/resource/"+resource.resourceId} style={{all:"unset"}}>
-                <ResourceListItem key={resource.resourceId} resource={resource} />
-            </Link>
+            <ResourceListItem key={resource.resourceId} resource={resource} />
         )
         return (
             <Card className="group-home-container">
                 <CardContent className="group-home-content-header">
                     <h1>Resources</h1>
+                    <div style={{height:"fit-content", maxHeight:"50vh", overflow:"auto"}}>
+                        <Button
+                            aria-owns={open ? 'add-resource-popper' : undefined}
+                            aria-haspopup="true"
+                            variant="contained"
+                            onClick={(evt)=> {this.handleAddResource(evt)}}
+                        >
+                            Create Resource
+                        </Button>
+                        <Popover
+                            id="add-resource-popper"
+                            open={open}
+                            anchorEl={addResourceAnchor}
+                            onClose={this.handleAddResourceClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            >
+                            <div className="group-home-content-popover">
+                                <h2 style={{textAlign:"center"}}>Create Resource</h2>
+                                <hr/>
+                                <TextField
+                                    required
+                                    value={this.state.addResourceName}
+                                    onChange={evt => this.handleAddResourceName(evt.target.value)}
+                                    id="add-resource-name"
+                                    label="Resource Name"
+                                    className="register-textfield"
+                                    margin="normal"
+                                />
+                                <Button onClick={() => {this.handleAddResourceSubmit({resourceName:this.state.addResourceName, userId:this.props.user.id, groupId: this.props.activeGroup.groupId})}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                                    Add
+                                </Button>
+                            </div>
+                        </Popover>
+                    </div>
                 </CardContent>
                 <Divider />
                 <CardContent className="group-home-content">
@@ -295,6 +359,7 @@ function mapDispatchToProps(dispatch) {
         deleteGroup: deleteGroup,
         editGroupInit: editGroupInit,
         fetchResourceList: fetchResourceList,
+        addResource: addResource,
     }, dispatch)
 }
 

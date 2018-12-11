@@ -6,6 +6,7 @@ import AddQuestion from './AddQuestion';
 import { fetchActiveResource } from '../actions/action-resources';
 import { bindActionCreators } from'redux';
 import { connect } from 'react-redux';
+import { Card } from '@material-ui/core';
 
 class Resource extends React.Component {
 
@@ -20,6 +21,9 @@ class Resource extends React.Component {
         )
         return(
             <div className="resource">
+                <Card className="resource-header">
+                    <h1>{this.props.activeResource.resourceName}</h1>
+                </Card>
                 {questionElements}
                 <AddQuestion/>
             </div>

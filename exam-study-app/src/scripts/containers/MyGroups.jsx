@@ -6,7 +6,8 @@ import {IMAGE_PATH} from '../constants';
 import { bindActionCreators } from 'redux';
 import { getUserGroups } from '../actions/action-get-group';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 class MyGroups extends React.Component {
     componentDidMount() {
         this.props.getUserGroups(this.props.user.id)

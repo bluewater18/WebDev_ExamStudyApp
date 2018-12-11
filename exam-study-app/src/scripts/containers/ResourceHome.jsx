@@ -5,9 +5,11 @@ import Resource from './Resource';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleResourceDrawer } from '../actions/action-ui';
-import { withStyles } from '@material-ui/core';
+import { withStyles, IconButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import {fetchActiveResource} from '../actions/action-resources';
 
 
 const drawerWidth = 240;
@@ -71,16 +73,25 @@ const styles = theme => ({
   });
 
 class ResourceHome extends React.Component {
+    componentWillReceiveProps(nextProps){
+        if(nextProps.match.params.resourceId !== this.props.match.params.resourceId 
+            || nextProps.match.params.groupId !== this.props.match.params.groupId)
+            this.props.fetchActiveResource(nextProps.match.params.resourceId)
+    }
     render() {
         const { groupId, resourceId } = this.props.match.params;
-        const{classes } = this.props;
+        const{ classes } = this.props;
         return (
             <div className="resource-home">
+                <div className="resource-home-drawer-button">
+                    <IconButton onClick={() => {this.props.toggleResourceDrawer(true)}} color="inherit">
+                        <LibraryBooksIcon color="secondary" stlye={{}}/>
+                    </IconButton>
+                </div>
                 <ResourceNavBar groupId={groupId}/>
                 <main className={classNames(classes.content, {
                     [classes.contentShift]: this.props.ui.resourceDrawerOpen,
                 })}>
-                    <h1 onClick={() => {this.props.toggleResourceDrawer(true)}}>Open Resource List (temporary)</h1>
                     <Resource resourceId={resourceId}/>  
                 </main>
             </div>
@@ -100,6 +111,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ 
         toggleResourceDrawer: toggleResourceDrawer,
+        fetchActiveResource: fetchActiveResource,
         }, dispatch);
 }
 

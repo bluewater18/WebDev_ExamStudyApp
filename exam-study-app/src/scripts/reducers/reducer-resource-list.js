@@ -10,6 +10,17 @@ export default function activeGroupReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 resources: action.payload
             })
+        case actionConstants.EDIT_RESOURCE_SUCCESS:
+            let tempNew = [action.payload]
+            return Object.assign({}, state, {
+                resources: state.resources.map(obj => tempNew.find(o => o.resourceId === obj.resourceId) || obj)
+            })
+        case actionConstants.DELETE_RESOURCE_SUCCESS:
+            return Object.assign({}, state, {
+                resources: state.resources.filter(function( obj ) {
+                    return obj.resourceId !== action.payload
+                })
+            })
         default:
             return state;
     }
