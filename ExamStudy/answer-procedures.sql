@@ -7,13 +7,13 @@ DROP PROCEDURE IF EXISTS GetAnswers;
 DROP PROCEDURE IF EXISTS GetAnswer;
 DROP PROCEDURE IF EXISTS DeleteAnswer;
 DROP PROCEDURE IF EXISTS UpdateAnswer;
+DROP PROCEDURE IF EXISTS UpdateAnswerImage;
 DROP PROCEDURE IF EXISTS AnswerUpvote;
 DROP PROCEDURE IF EXISTS AnswerDownvote;
 
 
 CREATE TABLE IF NOT EXISTS Answers(
 	AnswerId INT AUTO_INCREMENT,
-	AnswerType VARCHAR(16),
 	AnswerTitle VARCHAR(64),
 	AnswerText VARCHAR(512),
 	AnswerImageName VARCHAR(64),
@@ -35,9 +35,8 @@ CREATE VIEW AnswersDetailed AS
 
 DELIMITER $$
 CREATE PROCEDURE `AddAnswer`(
-	IN p_AnswerType VARCHAR(16),
 	IN p_AnswerTitle VARCHAR(64),
-	IN p_AnswerTtext VARCHAR(512),
+	IN p_AnswerText VARCHAR(512),
 	IN p_AnswerImageName VARCHAR(64),
 	IN p_QuestionId INT,
 	IN p_UserId INT
@@ -46,7 +45,6 @@ BEGIN
 	DECLARE tempId INT;
 	INSERT INTO Answers
 	SET
-		AnswerType = p_AnswerType,
 		AnswerTitle = p_AnswerTitle,
 		AnswerText = p_AnswerText,
 		AnswerImageName = p_AnswerImageName,
@@ -96,18 +94,31 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `UpdateAnswer`(
-	IN p_AnswerType VARCHAR(16),
 	IN p_AnswerTitle VARCHAR(64),
-	IN p_AnswerTtext VARCHAR(512),
+	IN p_AnswerText VARCHAR(512),
 	IN p_AnswerImageName VARCHAR(64),
 	IN p_AnswerId INT
 )
 BEGIN
 	UPDATE Answers
 	SET
-		AnswerType = p_AnswerType,
 		AnswerTitle = p_AnswerTitle,
 		AnswerText = p_AnswerText,
+		AnswerImageName = p_AnswerImageName
+	WHERE
+		AnswerId = p_AnswerId;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `UpdateAnswerImage`(
+	IN p_AnswerId INT,
+	IN p_AnswerImageName VARCHAR(64)
+)
+BEGIN
+	UPDATE Answers
+	SET
 		AnswerImageName = p_AnswerImageName
 	WHERE
 		AnswerId = p_AnswerId;

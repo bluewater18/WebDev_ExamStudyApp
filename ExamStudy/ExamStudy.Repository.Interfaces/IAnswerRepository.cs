@@ -11,5 +11,6 @@ namespace ExamStudy.Repository.Interfaces
         Answer GetAnswer(int answerId);
         bool DeleteAnswer(int answerId);
         bool UpdateAnswer(Answer answer);
+        bool UpdateAnswerPhoto(int answerId, string path);
     }
 }

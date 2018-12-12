@@ -15,10 +15,12 @@ namespace ExamStudy.API.Controllers
     {
         IResourceManager _resourceManager;
         IQuestionManager _questionManager;
-        public ResourceController(IResourceManager resourceManager, IQuestionManager questionManager)
+        IAnswerManager _answerManager;
+        public ResourceController(IResourceManager resourceManager, IQuestionManager questionManager, IAnswerManager answerManager)
         {
             _resourceManager = resourceManager;
             _questionManager = questionManager;
+            _answerManager = answerManager;
         }
 
         [HttpGet()]
@@ -46,12 +48,6 @@ namespace ExamStudy.API.Controllers
             return new ObjectResult(_resourceManager.AddResource(resource)) { StatusCode = 201 };
         }
 
-        [HttpPost("{id}/question")]
-        public IActionResult Post(int id, [FromBody] Question question)
-        {
-            return new ObjectResult(_questionManager.AddQuestion(question)) { StatusCode = 201 };
-        }
-
         // PUT api/resource/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Resource resource)
@@ -67,5 +63,51 @@ namespace ExamStudy.API.Controllers
                 return Ok();
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
         }
+
+        [HttpPost("{id}/question")]
+        public IActionResult PostQuestion(int id, [FromBody] Question question)
+        {
+            return new ObjectResult(_questionManager.AddQuestion(question)) { StatusCode = 201 };
+        }
+
+        // PUT api/resource/5
+        [HttpPut("question/{id}")]
+        public IActionResult UpdateQuestion(int id, [FromBody] Question question)
+        {
+            return new ObjectResult(_questionManager.UpdateQuestion(question)) { StatusCode = 200 };
+        }
+
+        // DELETE api/resource/5
+        [HttpDelete("question/{id}")]
+        public IActionResult DeleteQuestion(int id)
+        {
+            if (_questionManager.DeleteQuestion(id))
+                return Ok();
+            return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
+        }
+
+
+        [HttpPost("question/{id}/answer")]
+        public IActionResult PostAnswer(int id, [FromBody] Answer answer)
+        {
+            return new ObjectResult(_answerManager.AddAnswer(answer)) { StatusCode = 201 };
+        }
+
+        // PUT api/resource/5
+        [HttpPut("question/answer/{id}")]
+        public IActionResult UpdateAnswer(int id, [FromBody] Answer answer)
+        {
+            return new ObjectResult(_answerManager.UpdateAnswer(answer)) { StatusCode = 200 };
+        }
+
+        // DELETE api/resource/5
+        [HttpDelete("question/answer/{id}")]
+        public IActionResult DeleteAnswer(int id)
+        {
+            if (_answerManager.DeleteAnswer(id))
+                return Ok();
+            return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
+        }
+
     }
 }

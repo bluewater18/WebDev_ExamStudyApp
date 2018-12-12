@@ -41,6 +41,41 @@ const addQuestion = (question) => {
     }
 }
 
+const editQuestion = (question) => {
+    return {
+        type: actionConstants.EDIT_QUESTION,
+        payload: question
+    }
+}
+
+const deleteQuestion = (questionId) => {
+    return { 
+        type: actionConstants.DELETE_QUESTION,
+        payload: questionId
+    }
+}
+
+const addAnswer = (answer) => {
+    return {
+        type: actionConstants.ADD_ANSWER,
+        payload: answer
+    }
+}
+
+const editAnswer = (answer) => {
+    return {
+        type: actionConstants.EDIT_ANSWER,
+        payload: answer
+    }
+}
+
+const deleteAnswer = (answerId) => {
+    return {
+        type: actionConstants.DELETE_ANSWER,
+        payload: answerId
+    }
+}
+
 const goToResource = (groupId, resourceId) => {
     return{
         type: actionConstants.GO_TO_RESOURCE,
@@ -48,4 +83,4 @@ const goToResource = (groupId, resourceId) => {
     }
 }
 
-export {fetchResourceList, fetchActiveResource, addResource, editResource, deleteResource, addQuestion, goToResource};
+export {fetchResourceList, fetchActiveResource, addResource, editResource, deleteResource, addQuestion, editQuestion, deleteQuestion, addAnswer, editAnswer, deleteAnswer, goToResource};

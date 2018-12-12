@@ -35,6 +35,7 @@ namespace ExamStudy.API
             services.AddTransient<IGroupManager, GroupManager>();
             services.AddTransient<IResourceManager, ResourceManager>();
             services.AddTransient<IQuestionManager, QuestionManager>();
+            services.AddTransient<IAnswerManager, AnswerManager>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();

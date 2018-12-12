@@ -62,7 +62,7 @@
 }
 
 .question-question-img{
-    flex:1;
+    flex:3;
     align-items: center;
 
 }
@@ -81,8 +81,21 @@
 // }
 
 .question-question-text{
-    flex: 4;
+    flex: 12;
     text-align: left;
+}
+.question-question-actions{
+    flex:1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: inherit !important;
+    justify-content: right !important;
+}
+.question-question-actions IconButton{
+    flex:1 !important;
+    padding: 4px !important;
+    width: fit-content !important;
+    text-align: right !important;
 }
 
 

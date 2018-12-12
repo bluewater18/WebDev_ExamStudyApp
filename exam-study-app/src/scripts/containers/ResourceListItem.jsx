@@ -7,7 +7,7 @@ import {connect } from 'react-redux';
 import {goToResource, editResource, deleteResource} from '../actions/action-resources';
 
 import '../../styles/main.scss';
-import { Card, CardContent, ListItem, IconButton, Popover, TextField, Button, Modal } from '@material-ui/core';
+import { Card, ListItem, IconButton, Popover, TextField, Button, Modal } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 

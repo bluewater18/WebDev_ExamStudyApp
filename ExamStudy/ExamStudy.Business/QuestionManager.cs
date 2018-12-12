@@ -28,12 +28,15 @@ namespace ExamStudy.Business
 
         public bool DeleteQuestion(int questionId)
         {
-            throw new NotImplementedException();
+            if (_questionRepository.DeleteQuestion(questionId))
+                return true;
+            throw new CustomDomainException("could not delete question");
+                     
         }
 
         public Question GetQuestion(int questionId)
         {
-            throw new NotImplementedException();
+            return _questionRepository.GetQuestion(questionId);
         }
 
         public IList<Question> GetResourceQuestions(int resourceId)
@@ -49,7 +52,9 @@ namespace ExamStudy.Business
 
         public Question UpdateQuestion(Question question)
         {
-            throw new NotImplementedException();
+            if (_questionRepository.UpdateQuestion(question))
+                return _questionRepository.GetQuestion(question.QuestionId);
+            throw new CustomDomainException("could not update question");
         }
 
         public bool UpdateQuestionPhoto(int questionId, string path)

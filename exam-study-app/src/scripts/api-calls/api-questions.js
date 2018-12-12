@@ -32,9 +32,11 @@ async function apiEditQuestion(question) {
             header('Content-Type', 'application/json'),
             body(JSON.stringify(question), 'application/json'),
         )
-        fetchEditQuestion('/resource/'+question.resourceId+'/qusetion/'+question.questionId).then((res) => {
+        fetchEditQuestion('/resource/question/'+question.questionId).then((res) => {
             if(res.status === 200)
-                resolve()
+                res.json().then((data) => {
+                    resolve(data);
+            })
             else
                 reject(res)
         }).catch((err) => 
@@ -59,37 +61,5 @@ async function apiDeleteQuestion( questionId) {
     })
 }
 
-async function apiUpvoteQuestion(questionId) {
-    return new Promise((resolve, reject) => {
-        const fetchUpvoteQuestion = createFetch(
-            base(API_BASE_PATH),
-            method("POST"),
-        )
-        fetchUpvoteQuestion('/resource/question/upvote/'+questionId).then((res) => {
-            if(res.status === 200)
-                resolve()
-            else
-                reject(res)
-        }).catch((err) => 
-            reject(err))
-    })  
-}
 
-
-async function apiDownvoteQuestion(questionId) {
-    return new Promise((resolve, reject) => {
-        const fetchDownvoteQuestion = createFetch(
-            base(API_BASE_PATH),
-            method("POST"),
-        )
-        fetchDownvoteQuestion('/resource/question/downvote/'+questionId).then((res) => {
-            if(res.status === 200)
-                resolve()
-            else
-                reject(res)
-        }).catch((err) => 
-            reject(err))
-    })  
-}
-
-export {apiAddQuestion, apiEditQuestion, apiDeleteQuestion, apiUpvoteQuestion, apiDownvoteQuestion};
+export {apiAddQuestion, apiEditQuestion, apiDeleteQuestion,};

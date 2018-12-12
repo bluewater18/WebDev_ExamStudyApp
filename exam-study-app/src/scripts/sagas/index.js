@@ -8,6 +8,7 @@ import sagaGroups from './saga-groups';
 import sagaUsers from './saga-users';
 import sagaResources from './saga-resources';
 import sagaQuestions from './saga-questions';
+import sagaAnswers from './saga-answers';
 
 export default function* root() {
     yield all([
@@ -19,5 +20,6 @@ export default function* root() {
         fork(sagaUsers),
         fork(sagaResources),
         fork(sagaQuestions),
+        fork(sagaAnswers),
     ])
 }

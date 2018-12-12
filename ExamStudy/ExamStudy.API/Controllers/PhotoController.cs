@@ -18,20 +18,17 @@ namespace ExamStudy.API.Controllers
         IUserManager _userManager;
         IGroupManager _groupManager;
         IQuestionManager _questionManager;
+        IAnswerManager _answerManager;
 
-        public PhotoController(IImageHandler imageHandler, IUserManager userManager, IGroupManager groupManager, IQuestionManager questionManager)
+        public PhotoController(IImageHandler imageHandler, IUserManager userManager, IGroupManager groupManager, IQuestionManager questionManager, IAnswerManager answerManager)
         {
             _imageHandler = imageHandler;
             _userManager = userManager;
             _groupManager = groupManager;
             _questionManager = questionManager;
+            _answerManager = answerManager;
         }
 
-        [HttpGet("/user/{id}")]
-        public IActionResult GetUserPhoto(int id)
-        {
-            return NotFound();
-        }
 
         [HttpPost("{id}")]
         public async Task<IActionResult> PostUserPhoto(int id, IFormFile image, string pathType)
@@ -54,6 +51,12 @@ namespace ExamStudy.API.Controllers
                 var path = await _imageHandler.UploadImage(image);
                 _questionManager.UpdateQuestionPhoto(id, path);
                 return Created(path, new JObject(new JProperty("QuestionPhotoPath", path)));
+            }
+            else if(pathType.Equals("answer", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var path = await _imageHandler.UploadImage(image);
+                _answerManager.UpdateAnswerPhoto(id, path);
+                return Created(path, new JObject(new JProperty("AnswerPhotoPath", path)));
             }
 
             return NotFound("Invalid type");

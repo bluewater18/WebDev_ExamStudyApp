@@ -14,10 +14,9 @@ namespace ExamStudy.Repository
         public Answer AddAnser(Answer answer)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("p_AnserType", answer.AnswerType);
-            parameters.Add("p_AnserTitle", answer.AnswerTitle);
-            parameters.Add("p_AnserText", answer.AnswerText);
-            parameters.Add("p_AnserImageName", answer.AnswerImageName);
+            parameters.Add("p_AnswerTitle", answer.AnswerTitle);
+            parameters.Add("p_AnswerText", answer.AnswerText);
+            parameters.Add("p_AnswerImageName", answer.AnswerImageName);
             parameters.Add("p_QuestionId", answer.QuestionId);
             parameters.Add("p_UserId", answer.UserId);
 
@@ -52,13 +51,22 @@ namespace ExamStudy.Repository
         public bool UpdateAnswer(Answer answer)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("p_AnserType", answer.AnswerType);
-            parameters.Add("p_AnserTitle", answer.AnswerTitle);
-            parameters.Add("p_AnserText", answer.AnswerText);
-            parameters.Add("p_AnserImageName", answer.AnswerImageName);
+            parameters.Add("p_AnswerTitle", answer.AnswerTitle);
+            parameters.Add("p_AnswerText", answer.AnswerText);
+            parameters.Add("p_AnwserImageName", answer.AnswerImageName);
             parameters.Add("p_AnswerId", answer.AnswerId);
 
             SqlMapper.Execute(conn, "UpdateAnswer", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+        public bool UpdateAnswerPhoto(int answerId, string path)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_AnswerId", answerId);
+            parameters.Add("p_AnswerImageName", path);
+
+            SqlMapper.Execute(conn, "UpdateAnswerImage", param: parameters, commandType: StoredProcedure);
             return true;
         }
     }
