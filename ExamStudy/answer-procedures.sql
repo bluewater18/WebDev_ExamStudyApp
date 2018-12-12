@@ -1,6 +1,8 @@
 ﻿DROP VIEW IF EXISTS AnswersDetailed;
 
+DROP TABLE IF EXISTS Votes
 DROP TABLE IF EXISTS Answers;
+
 
 DROP PROCEDURE IF EXISTS AddAnswer;
 DROP PROCEDURE IF EXISTS GetAnswers;
@@ -17,8 +19,6 @@ CREATE TABLE IF NOT EXISTS Answers(
 	AnswerTitle VARCHAR(64),
 	AnswerText VARCHAR(512),
 	AnswerImageName VARCHAR(64),
-	AnswerUpvotes INT,
-	AnswerDownvotes INT,
 	QuestionId INT,
 	UserId INT,
 	PRIMARY KEY (AnswerId),
@@ -26,11 +26,24 @@ CREATE TABLE IF NOT EXISTS Answers(
 	CONSTRAINT FK_UserAnswer FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 	);
 
+CREATE TABLE IF NOT EXISTS Votes(
+	AnswerId INT,
+	UserId INT,
+	VoteType TINYINT(1),
+	PRIMARY KEY(AnswerId, UserId),
+	CONSTRAINT FK_AnswerVote FOREIGN KEY (AnswerId) REFERENCES Answers(AnswerId) ON DELETE CASCADE,
+	CONSTRAINT FK_UserVote FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
+	);
+
 CREATE VIEW AnswersDetailed AS
-	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, A.*
+	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, A.*, COUNT(VUp.UserId) AS AnswerUpvotes, COUNT(VDown.UserId) AS AnswerDownvotes
 	FROM Answers A
 	INNER JOIN Users U
-	ON(U.UserId = A.UserId);
+	ON(U.UserId = A.UserId)
+	LEFT JOIN Votes VUp
+	ON(A.AnswerId = VUp.AnswerId AND VUp.VoteType = 1)
+	LEFT JOIN Votes VDown
+	ON(A.AnswerId = VDown.AnswerId AND VDown.VoteType = 0);
 
 
 DELIMITER $$
@@ -127,28 +140,30 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `AnswerUpvote`(
-	IN p_AnswerId INT
+	IN p_AnswerId INT,
+	IN p_UserId INT
 )
 BEGIN
-	UPDATE Answers
+	INSERT INTO Votes
 	SET
-		AnswerUpvotes = AnswerUpvotes+1
-	WHERE
-		AnswerId = p_AnswerId;
+		AnswerId = p_AnswerId,
+		UserId = p_UserId,
+		VoteType = 1;
 END $$
 DELIMITER ;
 
 
 DELIMITER $$
 CREATE PROCEDURE `AnswerDownvote`(
-	IN p_AnswerInt INT
+	IN p_AnswerId INT,
+	IN p_UserId INT
 )
 BEGIN
-	UPDATE Answers
+	INSERT INTO Votes
 	SET
-		AnswerDownvotes = AnswerDownvotes+1
-	WHERE
-		AnswerId = p_AnswerId;
+		AnswerId = p_AnswerId,
+		UserId = p_UserId,
+		VoteType = 0;
 END $$
 DELIMITER ;
 

@@ -12,5 +12,7 @@ namespace ExamStudy.Repository.Interfaces
         bool DeleteAnswer(int answerId);
         bool UpdateAnswer(Answer answer);
         bool UpdateAnswerPhoto(int answerId, string path);
+        bool UpvoteAnswer(int answerId, int userId);
+        bool DownvoteAnswer(int answerId, int userId);
     }
 }
