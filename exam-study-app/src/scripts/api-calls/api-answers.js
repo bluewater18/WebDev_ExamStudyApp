@@ -51,7 +51,7 @@ async function apiDeleteAnswer(answerId) {
             base(API_BASE_PATH),
             method("DELETE"),
         )
-        fetchDeleteAnswer('/resource/question/answer'+answerId).then((res) => {
+        fetchDeleteAnswer('/resource/question/answer/'+answerId).then((res) => {
             if(res.status === 200)
                 resolve()
             else 

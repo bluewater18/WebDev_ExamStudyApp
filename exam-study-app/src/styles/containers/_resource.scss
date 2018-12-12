@@ -43,6 +43,19 @@
     text-align: right !important;
 }
 
+.resource-popover{
+    padding: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resource-popover *{
+    flex: 1;
+    text-align: center;
+}
+
 .question-item{
     display: flex !important;
     flex-direction: column;
@@ -150,6 +163,23 @@
 .answer-answer-footer{
     flex:1;
     text-align: right;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.answer-answer-footer-owner-actions{
+    flex:1;
+    text-align: right;
+
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 16px;
+
+}
+
+.answer-answer-footer IconButton{
+    flex:1;
 }
 
 

@@ -101,9 +101,9 @@ class ResourceListItem extends React.Component {
                                 horizontal: 'center',
                             }}
                             >
-                            <div className="group-home-content-popover">
+                            <div className="resource-popover">
                                 <h2 style={{textAlign:"center"}}>Edit Resource</h2>
-                                <hr/>
+                            
                                 <TextField
                                     required
                                     value={this.state.editResourceName}

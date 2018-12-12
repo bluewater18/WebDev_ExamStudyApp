@@ -234,9 +234,8 @@ class GroupHome extends React.Component {
                                 horizontal: 'center',
                             }}
                             >
-                            <div className="group-home-content-popover">
+                            <div className="resource-popover">
                                 <h2 style={{textAlign:"center"}}>Create Resource</h2>
-                                <hr/>
                                 <TextField
                                     required
                                     value={this.state.addResourceName}

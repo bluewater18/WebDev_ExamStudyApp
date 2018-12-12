@@ -156,9 +156,8 @@ class QuestionItem extends React.Component {
                     horizontal: 'center',
                 }}
                 >
-                <div className="group-home-content-popover">
+                <div className="resource-popover">
                     <h2 style={{textAlign:"center"}}>Edit Question</h2>
-                    <hr/>
                     <TextField
                         required
                         value={this.state.title}
@@ -270,14 +269,14 @@ class QuestionItem extends React.Component {
             >
                 <div style={{top:"50%", left:"50%", transform:"translate(-50%, -50%)", position:"absolute", textAlign:"center", background:"white", padding:"1rem"}} className="group-home-delete-modal">
                     <h1 style={{color:"black"}}>
-                        Are you sure you want to delete this Question
+                        Are you sure you want to delete this Answer
                         <br/>
                         This action cannot be undone
                     </h1>
                     <Button variant="contained"  style={{margin:"5px", fontSize:"1.2rem", color:"red"}} onClick={()=> this.handleDeleteQuestion()}>
                             I'm Sure
                     </Button>
-                    <Button style={{margin:"5px", fontSize:"1.2rem", color:"primary"}} onClick={()=> this.de()}>
+                    <Button style={{margin:"5px", fontSize:"1.2rem", color:"primary"}} onClick={()=> this.setDeleteQuestionModal(false)}>
                         Cancel
                     </Button>
                 </div>
