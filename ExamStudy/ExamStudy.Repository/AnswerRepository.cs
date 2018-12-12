@@ -89,5 +89,25 @@ namespace ExamStudy.Repository
             SqlMapper.Execute(conn, "AnswerDownvote", param: parameters, commandType: StoredProcedure);
             return true;
         }
+
+        public bool UpdateUpvoteAnswer(int answerId, int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_AnswerId", answerId);
+            parameters.Add("P_UserId", userId);
+
+            SqlMapper.Execute(conn, "AnswerUpvoteUpdate", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+        public bool UpdateDownvoteAnswer(int answerId, int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_AnswerId", answerId);
+            parameters.Add("P_UserId", userId);
+
+            SqlMapper.Execute(conn, "AnswerDownvoteUpdate", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
     }
 }

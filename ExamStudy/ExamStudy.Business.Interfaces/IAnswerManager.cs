@@ -11,5 +11,7 @@ namespace ExamStudy.Business.Interfaces
         Answer UpdateAnswer(Answer answer);
         bool DeleteAnswer(int answerId);
         bool UpdateAnswerPhoto(int answerId, string path);
+        bool UpvoteAnswer(int answerId, int userId);
+        bool DownvoteAnswer(int answerId, int userId);
     }
 }

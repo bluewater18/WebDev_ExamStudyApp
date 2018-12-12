@@ -109,5 +109,19 @@ namespace ExamStudy.API.Controllers
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
         }
 
+        // PUT api/resource/5
+        [HttpPut("question/answer/{id}/upvote")]
+        public IActionResult UpvoteAnswer(int id, int userId)
+        {
+            return new ObjectResult(_answerManager.UpvoteAnswer(id, userId)) { StatusCode = 200 };
+        }
+
+        // PUT api/resource/5
+        [HttpPut("question/answer/{id}/downvote")]
+        public IActionResult DownvoteAnswer(int id, int userId)
+        {
+            return new ObjectResult(_answerManager.DownvoteAnswer(id, userId)) { StatusCode = 200 };
+        }
+
     }
 }

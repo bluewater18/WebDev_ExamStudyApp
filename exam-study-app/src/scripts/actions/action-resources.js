@@ -76,6 +76,20 @@ const deleteAnswer = (answerId) => {
     }
 }
 
+const upvoteAnswer = (answerId, userId)=> {
+    return {
+        type: actionConstants.UPVOTE_ANSWER,
+        payload: {answerId: answerId, userId: userId}
+    }
+}
+
+const downvoteAnswer = (answerId, userId)=> {
+    return {
+        type: actionConstants.DOWNVOTE_ANSWER,
+        payload: {answerId: answerId, userId: userId}
+    }
+}
+
 const goToResource = (groupId, resourceId) => {
     return{
         type: actionConstants.GO_TO_RESOURCE,
@@ -83,4 +97,4 @@ const goToResource = (groupId, resourceId) => {
     }
 }
 
-export {fetchResourceList, fetchActiveResource, addResource, editResource, deleteResource, addQuestion, editQuestion, deleteQuestion, addAnswer, editAnswer, deleteAnswer, goToResource};
+export {fetchResourceList, fetchActiveResource, addResource, editResource, deleteResource, addQuestion, editQuestion, deleteQuestion, addAnswer, editAnswer, deleteAnswer, upvoteAnswer, downvoteAnswer, goToResource};

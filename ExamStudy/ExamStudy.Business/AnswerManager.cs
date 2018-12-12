@@ -31,6 +31,17 @@ namespace ExamStudy.Business
             throw new CustomDomainException("could not delete answer");
         }
 
+        public bool DownvoteAnswer(int answerId, int userId)
+        {
+            try {
+                return _answerRepository.DownvoteAnswer(answerId, userId);
+            } catch (Exception e)
+            {
+                return _answerRepository.UpdateDownvoteAnswer(answerId, userId);
+            }
+            throw new CustomDomainException("could not add vote");
+        }
+
         public Answer GetAnswer(int answerId)
         {
             return _answerRepository.GetAnswer(answerId);
@@ -48,6 +59,19 @@ namespace ExamStudy.Business
         public bool UpdateAnswerPhoto(int answerId, string path)
         {
             return _answerRepository.UpdateAnswerPhoto(answerId, path);
+        }
+
+        public bool UpvoteAnswer(int answerId, int userId)
+        {
+            try
+            {
+                return _answerRepository.UpvoteAnswer(answerId, userId);
+            }
+            catch (Exception e)
+            {
+                return _answerRepository.UpdateUpvoteAnswer(answerId, userId);
+            }
+            throw new CustomDomainException("could not add vote");
         }
     }
 }

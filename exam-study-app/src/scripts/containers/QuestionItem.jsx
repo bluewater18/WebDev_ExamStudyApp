@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import '../../styles/main.scss';
 import PropTypes from 'prop-types';
 import { Card, CardMedia, IconButton, Modal, Button, Popover, TextField, InputLabel } from '@material-ui/core';

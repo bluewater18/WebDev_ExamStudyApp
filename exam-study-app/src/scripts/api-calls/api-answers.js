@@ -61,13 +61,13 @@ async function apiDeleteAnswer(answerId) {
     })
 }
 
-async function apiUpvoteAnswer(answerId) {
+async function apiUpvoteAnswer(answerId, userId) {
     return new Promise((resolve, reject) => {
         const fetchUpvoteAnswer = createFetch(
             base(API_BASE_PATH),
-            method("POST"),
+            method("PUT"),
         )
-        fetchUpvoteAnswer('/resource/question/answer/upvote/'+answerId).then((res) => {
+        fetchUpvoteAnswer('/resource/question/answer/'+answerId+'/upvote?userId='+userId).then((res) => {
             if(res.status === 200)
                 resolve()
             else
@@ -78,13 +78,13 @@ async function apiUpvoteAnswer(answerId) {
 }
 
 
-async function apiDownvoteAnswer(answerId) {
+async function apiDownvoteAnswer(answerId,userId) {
     return new Promise((resolve, reject) => {
         const fetchDownvoteAnswer = createFetch(
             base(API_BASE_PATH),
-            method("POST"),
+            method("PUT"),
         )
-        fetchDownvoteAnswer('/resource/answer/downvote/'+answerId).then((res) => {
+        fetchDownvoteAnswer('/resource/question/answer/'+answerId+'/downvote?userId='+userId).then((res) => {
             if(res.status === 200)
                 resolve()
             else

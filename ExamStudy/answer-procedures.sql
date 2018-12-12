@@ -12,6 +12,8 @@ DROP PROCEDURE IF EXISTS UpdateAnswer;
 DROP PROCEDURE IF EXISTS UpdateAnswerImage;
 DROP PROCEDURE IF EXISTS AnswerUpvote;
 DROP PROCEDURE IF EXISTS AnswerDownvote;
+DROP PROCEDURE IF EXISTS AnswerUpvoteUpdate;
+DROP PROCEDURE IF EXISTS AnswerDownvoteUpdate;
 
 
 CREATE TABLE IF NOT EXISTS Answers(
@@ -61,8 +63,6 @@ BEGIN
 		AnswerTitle = p_AnswerTitle,
 		AnswerText = p_AnswerText,
 		AnswerImageName = p_AnswerImageName,
-		AnswerUpvotes = 0,
-		AnswerDownvotes = 0,
 		QuestionId = p_QuestionId,
 		UserId = p_UserId;
 	SET tempId = LAST_INSERT_ID();
@@ -164,6 +164,37 @@ BEGIN
 		AnswerId = p_AnswerId,
 		UserId = p_UserId,
 		VoteType = 0;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `AnswerUpvoteUpdate`(
+	IN p_AnswerId INT,
+	IN p_UserId INT
+)
+BEGIN
+	UPDATE Votes
+	SET
+		VoteType = 1
+	WHERE
+		AnswerId = p_AnswerId AND
+		UserId = p_UserId;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `AnswerDownvoteUpdate`(
+	IN p_AnswerId INT,
+	IN p_UserId INT
+)
+BEGIN
+	UPDATE Votes
+	SET
+		VoteType = 0
+	WHERE
+		AnswerId = p_AnswerId AND
+		UserId = p_UserId;
 END $$
 DELIMITER ;
 

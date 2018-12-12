@@ -9,7 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import { IMAGE_PATH } from '../constants';
-import { editAnswer, deleteAnswer } from '../actions/action-resources';
+import { editAnswer, deleteAnswer, upvoteAnswer, downvoteAnswer } from '../actions/action-resources';
 
 
 class AnswerItem extends React.Component {
@@ -78,6 +78,14 @@ class AnswerItem extends React.Component {
         })
     }
 
+    handleUpvote = () => {
+        this.props.upvoteAnswer(this.props.answer.answerId, this.props.user.id)
+    }
+
+    handleDownvote = () => {
+        this.props.downvoteAnswer(this.props.answer.answerId, this.props.user.id)
+    }
+
     render() {
         return (
             <Card className="answer-item" >
@@ -94,10 +102,10 @@ class AnswerItem extends React.Component {
                     </div>
                     <div className="answer-answer-footer">
                     {this.renderActions()}
-                    <IconButton style={{padding:"4px"}}>
+                    <IconButton style={{padding:"4px"}} onClick={()=> this.handleUpvote()}>
                         <ThumbUpIcon style={{fontSize:"16px"}}/>
                     </IconButton>
-                    <IconButton style={{padding:"4px"}}>
+                    <IconButton style={{padding:"4px"}} onClick={()=> this.handleDownvote()}>
                         <ThumbDownIcon style={{fontSize:"16px"}}/>
                     </IconButton>
                         <h3>rating: {0 + this.props.answer.answerUpvotes - this.props.answer.answerDownvotes}</h3>
@@ -201,7 +209,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         editAnswer: editAnswer,
-        deleteAnswer: deleteAnswer
+        deleteAnswer: deleteAnswer,
+        upvoteAnswer: upvoteAnswer,
+        downvoteAnswer: downvoteAnswer,
+
     }, dispatch)
 }
 
