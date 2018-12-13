@@ -23,9 +23,10 @@ function* addAnswer({payload}) {
 
 function* deleteAnswer({payload}) {
     try{
-        let answerId = payload;
+        let answerId = payload.answerId;
+        let questionId = payload.questionId;
         yield call(apiDeleteAnswer, answerId)
-        yield put({ type: actionConstants.DELETE_ANSWER_SUCCESS, payload: answerId })
+        yield put({ type: actionConstants.DELETE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId} })
     } catch (err) {
         console.log(err)
         yield put({ type: actionConstants.DELETE_ANSWER_FAILURE })

@@ -42,8 +42,11 @@ function* getResourceList({payload}) {
 
 function* deleteResource({payload}) {
     try {
-        yield call(apiDeleteResource, payload)
-        yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS, payload:payload})
+        yield call(apiDeleteResource, payload.resourceId)
+        yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS, payload:payload.resourceId})
+        if(payload.sendHome){
+            yield call(history.push,'/group/'+payload.groupId);
+        }
     } catch (err){
         console.log(err)
         yield put({type: actionConstants.DELETE_RESOURCE_FAILURE})

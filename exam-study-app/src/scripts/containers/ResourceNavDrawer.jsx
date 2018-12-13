@@ -1,13 +1,14 @@
 ﻿import React from 'react';
 import '../../styles/main.scss';
 import { toggleResourceDrawer } from '../actions/action-ui';
-import { List, Paper, Divider, IconButton } from '@material-ui/core';
+import { List, Paper, Divider, IconButton, ListItem, } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ResourceListItem from './ResourceListItem';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { fetchResourceList } from '../actions/action-resources';
 import PropTypes from 'prop-types';
+import AddResource from './AddResource';
 
 class ResourceNavDrawer extends React.Component {
 
@@ -57,6 +58,9 @@ class ResourceNavDrawer extends React.Component {
             <List>
                 {/*amp resource to resourceListItems*/}
                 {resourceList}
+                <ListItem style={{margin:"0 0 6px 0", padding:"0", height:"fit-content",}}>
+                    <AddResource groupId={this.props.groupId}/>
+                </ListItem>
             </List>
         )
     }

@@ -53,7 +53,6 @@ namespace ExamStudy.Repository
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("p_AnswerTitle", answer.AnswerTitle);
             parameters.Add("p_AnswerText", answer.AnswerText);
-            parameters.Add("p_AnwserImageName", answer.AnswerImageName);
             parameters.Add("p_AnswerId", answer.AnswerId);
 
             SqlMapper.Execute(conn, "UpdateAnswer", param: parameters, commandType: StoredProcedure);

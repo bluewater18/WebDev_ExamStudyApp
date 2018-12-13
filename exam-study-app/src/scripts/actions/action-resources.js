@@ -27,10 +27,10 @@ const editResource = (resource) => {
     }
 } 
 
-const deleteResource = (resourceId) => {
+const deleteResource = (resourceId, activeResourceId, groupId) => {
     return { 
         type: actionConstants.DELETE_RESOURCE,
-        payload: resourceId
+        payload: {resourceId: resourceId, sendHome: activeResourceId===resourceId, groupId: groupId}
     }
 }
 
@@ -69,10 +69,10 @@ const editAnswer = (answer) => {
     }
 }
 
-const deleteAnswer = (answerId) => {
+const deleteAnswer = (answerId, questionId) => {
     return {
         type: actionConstants.DELETE_ANSWER,
-        payload: answerId
+        payload: {answerId: answerId, questionId: questionId}
     }
 }
 

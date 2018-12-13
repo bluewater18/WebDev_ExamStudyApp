@@ -21,6 +21,10 @@ export default function activeGroupReducer(state = initialState, action) {
                     return obj.resourceId !== action.payload
                 })
             })
+        case actionConstants.CREATE_RESOURCE_SUCCESS:
+        return Object.assign({}, state, {
+            resources: state.resources.concat([action.payload])
+        })
         default:
             return state;
     }

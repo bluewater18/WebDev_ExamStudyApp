@@ -182,6 +182,22 @@
     flex:1;
 }
 
+.add-card {
+    display: flex !important;
+    flex-direction: column !important;
+
+}
+
+.add-card div{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.add-card div *{
+    flex: 1;
+}
+
 
 
 // .group-member-list-item-div-img {

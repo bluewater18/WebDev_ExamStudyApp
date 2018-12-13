@@ -37,15 +37,17 @@ CREATE TABLE IF NOT EXISTS Votes(
 	CONSTRAINT FK_UserVote FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 	);
 
+DROP VIEW IF EXISTS AnswersDetailed;
 CREATE VIEW AnswersDetailed AS
-	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, A.*, COUNT(VUp.UserId) AS AnswerUpvotes, COUNT(VDown.UserId) AS AnswerDownvotes
+	SELECT U.UserName AS UserName, U.UserImageName AS UserImageName, A.*, COUNT(VUp.AnswerId) AS AnswerUpvotes, COUNT(VDown.AnswerId) AS AnswerDownvotes
 	FROM Answers A
-	INNER JOIN Users U
+	LEFT JOIN Users U
 	ON(U.UserId = A.UserId)
-	LEFT JOIN Votes VUp
+	LEFT OUTER JOIN Votes VUp
 	ON(A.AnswerId = VUp.AnswerId AND VUp.VoteType = 1)
-	LEFT JOIN Votes VDown
-	ON(A.AnswerId = VDown.AnswerId AND VDown.VoteType = 0);
+	LEFT OUTER JOIN Votes VDown
+	ON(A.AnswerId = VDown.AnswerId AND VDown.VoteType = 0)
+	GROUP BY AnswerId;
 
 
 DELIMITER $$
@@ -66,7 +68,7 @@ BEGIN
 		QuestionId = p_QuestionId,
 		UserId = p_UserId;
 	SET tempId = LAST_INSERT_ID();
-	SELECT * FROM Answers
+	SELECT * FROM AnswersDetailed
 	WHERE AnswerId = tempId;
 END $$
 DELIMITER ;
@@ -88,7 +90,7 @@ CREATE PROCEDURE `GetAnswer`(
 	IN p_AnswerId INT
 )
 BEGIN
-	SELECT * FROM Answers
+	SELECT * FROM AnswersDetailed
 	WHERE AnswerId = p_AnswerId;
 END $$
 DELIMITER ;
@@ -109,15 +111,13 @@ DELIMITER $$
 CREATE PROCEDURE `UpdateAnswer`(
 	IN p_AnswerTitle VARCHAR(64),
 	IN p_AnswerText VARCHAR(512),
-	IN p_AnswerImageName VARCHAR(64),
 	IN p_AnswerId INT
 )
 BEGIN
 	UPDATE Answers
 	SET
 		AnswerTitle = p_AnswerTitle,
-		AnswerText = p_AnswerText,
-		AnswerImageName = p_AnswerImageName
+		AnswerText = p_AnswerText
 	WHERE
 		AnswerId = p_AnswerId;
 END $$

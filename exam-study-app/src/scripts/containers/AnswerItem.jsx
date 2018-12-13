@@ -47,14 +47,14 @@ class AnswerItem extends React.Component {
         this.setState({
             deleteAnswerModal: false,
         });
-        this.props.deleteAnswer(this.props.answer.answerId)
+        this.props.deleteAnswer(this.props.answer.answerId, this.props.answer.questionId)
     }
 
     handleEditAnswerSubmit = () => {
         this.setState({
             title: "",
             text: "",
-            image: "",
+            image: null,
             editAnswerAnchor: null,
         })
         this.props.editAnswer({answerId: this.props.answer.answerId, answerTitle: this.state.title, answerText: this.state.text, image: this.state.image})
@@ -146,9 +146,8 @@ class AnswerItem extends React.Component {
                         horizontal: 'center',
                     }}
                     >
-                    <div className="group-home-content-popover">
+                    <div className="resource-popover">
                         <h2 style={{textAlign:"center"}}>Edit Question</h2>
-                        <hr/>
                         <TextField
                             required
                             value={this.state.title}
@@ -186,6 +185,7 @@ class AnswerItem extends React.Component {
                         <Button onClick={() => {this.handleEditAnswerSubmit()}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
                             Submit
                         </Button>
+                       
                     </div>
                 </Popover>
                 <IconButton

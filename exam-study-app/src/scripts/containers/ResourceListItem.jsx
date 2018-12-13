@@ -32,6 +32,7 @@ class ResourceListItem extends React.Component {
             editResourceName: '',
             editResourceAnchor: null,
         })
+        
         this.props.editResource(resource);
     }
     openEditPopper = event => {
@@ -50,6 +51,10 @@ class ResourceListItem extends React.Component {
     }
     closeDeleteModal = () => {
         this.setState({deleteModalOpen:false})
+    }
+
+    handleDeleteResource = () => {
+        this.props.deleteResource(this.props.resource.resourceId, this.props.activeResource.resourceId, this.props.resource.groupId)
     }
 
     render() {
@@ -139,7 +144,7 @@ class ResourceListItem extends React.Component {
                         <br/>
                         This action cannot be undone
                     </h1>
-                    <Button variant="contained"  style={{margin:"5px", fontSize:"1.2rem", color:"red"}} onClick={()=> this.props.deleteResource(this.props.resource.resourceId)}>
+                    <Button variant="contained"  style={{margin:"5px", fontSize:"1.2rem", color:"red"}} onClick={()=> this.handleDeleteResource()}>
                             I'm Sure
                     </Button>
                     <Button style={{margin:"5px", fontSize:"1.2rem", color:"primary"}} onClick={()=> this.closeDeleteModal()}>
@@ -157,7 +162,8 @@ ResourceListItem.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user:state.user
+        user:state.user,
+        activeResource: state.activeResource,
     };
 }
 

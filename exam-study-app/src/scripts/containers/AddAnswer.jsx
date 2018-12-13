@@ -87,7 +87,8 @@ class AddAnswer extends React.Component {
     renderAdding(){
         return(
             <div>
-                <CardContent className={"login-card-content"} style={{paddingBottom: "0", paddingTop: "5px" }}>
+                <CardContent className={"add-card"} style={{paddingBottom: "0", paddingTop: "5px" }}>
+                    <div>
                     <TextField
                         required
                         value={this.state.title}
@@ -124,10 +125,12 @@ class AddAnswer extends React.Component {
                             {(this.state.image === null?"Upload A File":"Upload A Different File")}
                         </Button>
                     </label>
-
-                    <Button onClick={() => {this.handleAddAnswer()}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                    </div>
+                    <div>
+                    <Button onClick={() => {this.handleAddAnswer()}} style={{ paddingTop: "5px", paddingBottom: "5px", width: "80%" }}>
                         Add
                     </Button>
+                    </div>
                 </CardContent>
 
                 <h2 onClick={()=>this.handleAdd(false)}>cancel</h2>
