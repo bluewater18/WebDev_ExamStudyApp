@@ -82,7 +82,7 @@
 
 .question-question-img img{
     object-fit: cover;
-    border-radius: 60%;
+    //border-radius: 60%;
 }
 
 
@@ -118,6 +118,12 @@
 
 .question-footer{
     flex:1;
+}
+
+.question-footer *{
+    padding:2px;
+    margin:0;
+    text-align: right;
 }
 
 .answer-item{

@@ -18,8 +18,8 @@ class AnswerItem extends React.Component {
         this.state = {
             editAnswerAnchor: null,
             deleteAnswerModal: false,
-            title: "",
-            text: "",
+            title: this.props.answer.answerTitle,
+            text: this.props.answer.answerText,
             image: null,
 
         }
@@ -79,11 +79,11 @@ class AnswerItem extends React.Component {
     }
 
     handleUpvote = () => {
-        this.props.upvoteAnswer(this.props.answer.answerId, this.props.user.id)
+        this.props.upvoteAnswer(this.props.answer.answerId, this.props.user.id, this.props.answer.questionId)
     }
 
     handleDownvote = () => {
-        this.props.downvoteAnswer(this.props.answer.answerId, this.props.user.id)
+        this.props.downvoteAnswer(this.props.answer.answerId, this.props.user.id, this.props.answer.questionId)
     }
 
     render() {
@@ -91,9 +91,9 @@ class AnswerItem extends React.Component {
             <Card className="answer-item" >
                 {this.deleteConfirm()}
                 <div className="answer-user">
-                    <CardMedia className="answer-user-img">
+                    <div className="answer-user-img">
                     <img className="answer-user-img" src={IMAGE_PATH+this.props.answer.userImageName} alt="user profile"/>
-                    </CardMedia>
+                    </div>
                     <h3 className="answer-user-img-name">{this.props.answer.userName}</h3>
                 </div>
                 <div className="answer-answer">

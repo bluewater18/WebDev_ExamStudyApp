@@ -21,8 +21,8 @@ class QuestionItem extends React.Component {
 
             editQuestionAnchor: null,
             deleteQuestionModal: false,
-            title: "",
-            text: "",
+            title: this.props.question.questionTitle,
+            text: this.props.question.questionText,
             image: null,
 
         }
@@ -74,9 +74,7 @@ class QuestionItem extends React.Component {
 
     handleEditQuestionSubmit = () => {
         this.setState({
-            title: "",
-            text: "",
-            image: "",
+            image: null,
             editQuestionAnchor: null,
         })
         this.props.editQuestion({questionId: this.props.question.questionId, questionTitle: this.state.title, questionText: this.state.text, image: this.state.image})
@@ -210,7 +208,7 @@ class QuestionItem extends React.Component {
     renderAnswers(){
         const answers = this.props.question.questionAnswers;
         if(answers !== null){
-            const answerElements = answers.map((answer) =>
+            const answerElements = answers.sort((a,b)=>((a.answerUpvotes-a.answerDownvotes) < (b.answerUpvotes - b.answerDownvotes))?1:(((b.answerUpvotes - b.answerDownvotes) < (a.answerUpvotes-a.answerDownvotes))? -1 : 0)).map((answer) =>
                 <AnswerItem key={answer.answerId} answer={answer} />
             )
         if(this.state.showAnswer && !this.state.showAnswers)
@@ -243,11 +241,11 @@ class QuestionItem extends React.Component {
         let hideAnswers = null;
         //let addAnAnswer = <h3 onClick={() => this.handleAddAnswer(true)}>Add An Answer</h3>;
         if(!this.state.showAnswer && !this.state.showAnswers)
-            showAnswer = <h3 onClick={() => this.handleShowAnswer(true)}>show top answer</h3>
+            showAnswer = <h3 onClick={() => this.handleShowAnswer(true)}>Show top answer</h3>
         if(this.state.showAnswer && !this.state.showAnswers)
-            showAnswers = <h3 onClick={() => this.handleShowAnswers(true)}>show all answers</h3>
+            showAnswers = <h3 onClick={() => this.handleShowAnswers(true)}>Show all answers</h3>
         if(this.state.showAnswer && this.state.showAnswers)
-            hideAnswers = <h3 onClick={() => this.handleHideAnswers(false)}>hide answers</h3>
+            hideAnswers = <h3 onClick={() => this.handleHideAnswers(false)}>Hide answers</h3>
         
         if(true)
         return(

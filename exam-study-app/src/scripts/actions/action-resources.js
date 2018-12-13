@@ -76,17 +76,17 @@ const deleteAnswer = (answerId, questionId) => {
     }
 }
 
-const upvoteAnswer = (answerId, userId)=> {
+const upvoteAnswer = (answerId, userId, questionId)=> {
     return {
         type: actionConstants.UPVOTE_ANSWER,
-        payload: {answerId: answerId, userId: userId}
+        payload: {answerId: answerId, userId: userId, questionId: questionId}
     }
 }
 
-const downvoteAnswer = (answerId, userId)=> {
+const downvoteAnswer = (answerId, userId, questionId)=> {
     return {
         type: actionConstants.DOWNVOTE_ANSWER,
-        payload: {answerId: answerId, userId: userId}
+        payload: {answerId: answerId, userId: userId, questionId: questionId}
     }
 }
 

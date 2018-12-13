@@ -1,5 +1,4 @@
 ﻿import { actionConstants } from '../constants/index';
-import { object } from 'prop-types';
 
 const initialState = {
     resourceId: null,
@@ -60,13 +59,24 @@ export default function activeResourceReducer(state = initialState, action) {
             })
 
         case actionConstants.DELETE_ANSWER_SUCCESS:
-            let delQ = Object.assign({}, state.resourceQuestions[state.resourceQuestions.findIndex(x => x.questionId == action.payload.questionId)])
-            console.log(delQ)
+            let delQ = Object.assign({}, state.resourceQuestions[state.resourceQuestions.findIndex(x => x.questionId === action.payload.questionId)])
             delQ.questionAnswers = delQ.questionAnswers.filter(a=> a.answerId !== action.payload.answerId)
             return Object.assign({}, state, {
                 resourceQuestions: state.resourceQuestions.map(q => q.questionId === delQ.questionId ? delQ: q)
             })
+        case actionConstants.UPVOTE_ANSWER_SUCCESS:
+            let upQ = Object.assign({}, state.resourceQuestions[state.resourceQuestions.findIndex(x => x.questionId === action.payload.questionId)])
+            upQ.questionAnswers = upQ.questionAnswers.map(a => a.answerId === action.payload.answerId ? Object.assign({},a,{answerUpvotes: a.answerUpvotes+1}): a )
+            return Object.assign({}, state, {
+                resourceQuestions: state.resourceQuestions.map(q => q.questionId === upQ.questionId ? upQ : q)
+            })
+        case actionConstants.DOWNVOTE_ANSWER_SUCCESS:
+            let downQ = Object.assign({}, state.resourceQuestions[state.resourceQuestions.findIndex(x => x.questionId === action.payload.questionId)])
+            downQ.questionAnswers = downQ.questionAnswers.map(a => a.answerId === action.payload.answerId ? Object.assign({},a,{answerUpvotes: a.answerUpvotes-1}): a )
+            return Object.assign({}, state, {
+                resourceQuestions: state.resourceQuestions.map(q => q.questionId === downQ.questionId ? downQ : q)
+            })
         default:
             return state;
-    }
+        }
 }

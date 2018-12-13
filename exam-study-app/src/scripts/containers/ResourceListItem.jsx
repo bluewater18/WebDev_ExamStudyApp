@@ -18,7 +18,7 @@ class ResourceListItem extends React.Component {
         this.state = {
             editResourceAnchor: null,
             deleteModalOpen: false,
-            editResourceName: '',
+            editResourceName: this.props.resource.resourceName,
           };
     }
 
@@ -29,7 +29,6 @@ class ResourceListItem extends React.Component {
     }
     editResourceSubmit = (resource) => {
         this.setState({
-            editResourceName: '',
             editResourceAnchor: null,
         })
         

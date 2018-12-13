@@ -73,7 +73,7 @@ CREATE PROCEDURE `GetQuestion`(
 	IN p_QuestionId INT
 )
 BEGIN
-	SELECT * FROM Questions
+	SELECT * FROM QuestionsDetailed
 	WHERE QuestionId = p_QuestionId;
 END $$
 DELIMITER ;

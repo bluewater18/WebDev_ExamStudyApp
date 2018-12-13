@@ -52,8 +52,9 @@ function* upvoteAnswer({payload}) {
     try{
         let answerId = payload.answerId;
         let userId = payload.userId;
+        let questionId = payload.questionId
         yield call(apiUpvoteAnswer, answerId, userId)
-        yield put({type: actionConstants.UPVOTE_ANSWER_SUCCESS})
+        yield put({type: actionConstants.UPVOTE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId}})
     } catch (err) {
         console.log(err)
         yield put({type: actionConstants.UPVOTE_ANSWER_FAILURE})
@@ -64,8 +65,9 @@ function* downvoteAnswer({payload}) {
     try{
         let answerId = payload.answerId;
         let userId = payload.userId;
+        let questionId = payload.questionId;
         yield call(apiDownvoteAnswer, answerId, userId)
-        yield put({type: actionConstants.DOWNVOTE_ANSWER_SUCCESS})
+        yield put({type: actionConstants.DOWNVOTE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId}})
     } catch (err) {
         console.log(err)
         yield put({type: actionConstants.DOWNVOTE_ANSWER_FAILURE})
