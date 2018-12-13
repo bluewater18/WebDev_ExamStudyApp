@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../../styles/main.scss';
 import PropTypes from 'prop-types';
-import { Card, CardMedia, IconButton, Popover, TextField, Button, InputLabel, Modal, } from '@material-ui/core';
+import { Card, IconButton, Popover, TextField, Button, InputLabel, Modal, } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -52,8 +52,6 @@ class AnswerItem extends React.Component {
 
     handleEditAnswerSubmit = () => {
         this.setState({
-            title: "",
-            text: "",
             image: null,
             editAnswerAnchor: null,
         })

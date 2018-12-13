@@ -52,6 +52,8 @@ namespace ExamStudy.Business
 
         public Question UpdateQuestion(Question question)
         {
+            if (_validator.IsNullOrEmpty(question.QuestionText) || _validator.IsNullOrEmpty(question.QuestionTitle))
+                throw new InvalidObjectException("Question missing title or text");
             if (_questionRepository.UpdateQuestion(question))
                 return _questionRepository.GetQuestion(question.QuestionId);
             throw new CustomDomainException("could not update question");

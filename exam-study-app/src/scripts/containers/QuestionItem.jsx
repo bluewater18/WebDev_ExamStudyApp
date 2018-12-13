@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../../styles/main.scss';
 import PropTypes from 'prop-types';
-import { Card, CardMedia, IconButton, Modal, Button, Popover, TextField, InputLabel } from '@material-ui/core';
+import { Card, IconButton, Modal, Button, Popover, TextField, InputLabel } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AnswerItem from './AnswerItem';
@@ -105,9 +105,9 @@ class QuestionItem extends React.Component {
             <Card className="question-item" >
                 {this.deleteConfirm()}
                 <div className="question-question">
-                    <CardMedia className="question-question-img">
+                    <div className="question-question-img">
                         <img  alt="question" src={IMAGE_PATH+this.props.question.questionImageName}/>
-                    </CardMedia>
+                    </div>
                     
                     <div className="question-question-text">
                         <h2>{this.props.question.questionTitle}</h2>

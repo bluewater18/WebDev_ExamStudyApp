@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import {fetchActiveResource} from '../actions/action-resources';
+import Background from '../components/Background';
 
 
 const drawerWidth = 240;
@@ -83,6 +84,7 @@ class ResourceHome extends React.Component {
         const{ classes } = this.props;
         return (
             <div className="resource-home">
+                <Background/>
                 <div className="resource-home-drawer-button">
                     <IconButton onClick={() => {this.props.toggleResourceDrawer(true)}} color="inherit">
                         <LibraryBooksIcon color="secondary" stlye={{}}/>

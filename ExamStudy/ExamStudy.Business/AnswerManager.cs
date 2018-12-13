@@ -21,6 +21,8 @@ namespace ExamStudy.Business
 
         public Answer AddAnswer(Answer answer)
         {
+            if (_validator.IsNullOrEmpty(answer.AnswerTitle) || _validator.IsNullOrEmpty(answer.AnswerText))
+                throw new InvalidObjectException("Answer missing title or text");
             return _answerRepository.AddAnser(answer);
         }
 
@@ -49,6 +51,8 @@ namespace ExamStudy.Business
 
         public Answer UpdateAnswer(Answer answer)
         {
+            if (_validator.IsNullOrEmpty(answer.AnswerTitle) || _validator.IsNullOrEmpty(answer.AnswerText))
+                throw new InvalidObjectException("Answer missing title or text");
             if (_answerRepository.UpdateAnswer(answer))
             {
                 return _answerRepository.GetAnswer(answer.AnswerId);
