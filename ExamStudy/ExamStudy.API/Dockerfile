@@ -1,0 +1,30 @@
+﻿FROM microsoft/aspnetcore:2.0 AS base
+WORKDIR /app
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS http://*:5000
+EXPOSE 5000
+
+FROM microsoft/aspnetcore-build:2.0 AS builder
+ARG Configuration=Release
+WORKDIR /src
+COPY *.sln ./
+COPY ExamStudy.API/ExamStudy.API.csproj ExamStudy.API/
+COPY ExamStudy.Business/ExamStudy.Business.csproj ExamStudy.Business/
+COPY ExamStudy.Business.Interfaces/ExamStudy.Business.Interfaces.csproj ExamStudy.Business.Interfaces/
+COPY ExamStudy.Entities/ExamStudy.Entities.csproj ExamStudy.Entities/
+COPY ExamStudy.Repository/ExamStudy.Repository.csproj ExamStudy.Repository/
+COPY ExamStudy.Repository.Interfaces/ExamStudy.Repository.Interfaces.csproj ExamStudy.Repository.Interfaces/
+
+RUN dotnet restore
+COPY . .
+WORKDIR /src/ProjectMain
+RUN dotnet build -c $Configuration -o /app
+
+FROM builder AS publish
+ARG Configuration=Release
+RUN dotnet publish -c $Configuration -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "ExamStudy.API.dll"]
