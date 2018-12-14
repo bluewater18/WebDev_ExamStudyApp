@@ -1,13 +1,13 @@
 ﻿﻿FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_URLS http://*:5000
-EXPOSE 5000
+ENV ASPNETCORE_URLS http://*:52940
+EXPOSE 52940
 
 FROM microsoft/aspnetcore-build:2.0 AS builder
 ARG Configuration=Release
-WORKDIR /src
-COPY *.sln ./
+WORKDIR /app
+COPY ./*.sln ./ *.sln
 COPY ExamStudy.API/ExamStudy.API.csproj ExamStudy.API/
 COPY ExamStudy.Business/ExamStudy.Business.csproj ExamStudy.Business/
 COPY ExamStudy.Business.Interfaces/ExamStudy.Business.Interfaces.csproj ExamStudy.Business.Interfaces/

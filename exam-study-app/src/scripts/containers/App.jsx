@@ -17,6 +17,9 @@ import JoinGroupCode from './JoinGroupCode';
 import BasicNotifier from '../components/BasicNotifier';
 import GroupEdit from './EditGroup';
 import ResourceHome from './ResourceHome';
+import DailyGoals from './DailyGoals';
+import MyCalendar from './MyCalendar';
+import StudyTimer from './StudyTimer';
 
 class App extends Component {
   render() {
@@ -30,6 +33,9 @@ class App extends Component {
                         <Route path="/help" component={Help} />
                         <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
+                        <Route path="/daily-goals" component={DailyGoals} />
+                        <Route path="/my-calendar" component={MyCalendar} />
+                        <Route path="/study-timer" component={StudyTimer} />
                         <Route path="/my-groups" component={MyGroups} />
                         <Route path="/user/edit" component={EditUser} />
                         <Route path="/group/:groupId/resource/:resourceId" component={ResourceHome}  />
