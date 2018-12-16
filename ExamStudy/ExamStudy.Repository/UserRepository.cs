@@ -140,5 +140,14 @@ namespace ExamStudy.Repository
             }
             return true;
         }
+
+        public bool LogoutUser(int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
+
+            SqlMapper.Execute(conn, "LogoutUser", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
     }
 }

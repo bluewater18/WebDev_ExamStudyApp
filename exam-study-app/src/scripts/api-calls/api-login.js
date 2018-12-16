@@ -9,7 +9,7 @@ async function apiLogin(user) {
             header('Content-Type', 'application/json'),
             body(JSON.stringify(user), 'application/json'),
         )
-        fetch('/login').then((response) => {
+        fetch('/account/login').then((response) => {
             if(response.status >= 200 && response.status< 300)
                 response.json().then((data) => {
                         resolve(data);       

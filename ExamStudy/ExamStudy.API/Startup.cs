@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ExamStudy.API
 {
@@ -30,7 +31,22 @@ namespace ExamStudy.API
         {
             services.AddCors();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                   options =>
+                   {
+                       options.LoginPath = "/Account/login";
+                       options.LogoutPath = "/Account/logoff";
+                   });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // authentication 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IGroupManager, GroupManager>();
             services.AddTransient<IResourceManager, ResourceManager>();
@@ -60,6 +76,8 @@ namespace ExamStudy.API
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 

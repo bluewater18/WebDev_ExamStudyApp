@@ -11,20 +11,25 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using ExamStudy.Business;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+
+
 namespace ExamStudy.API.Controllers
 {
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         IUserManager _userManager;
-        public LoginController(IUserManager userManager)
+        public AccountController(IUserManager userManager)
         {
             _userManager = userManager;
         }
 
         // Post api/login
-        [HttpPost]
-        public IActionResult Post([FromBody]User user)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]User user)
         {
             try
             {
@@ -34,6 +39,15 @@ namespace ExamStudy.API.Controllers
             {
                 return StatusCode(401, "{'reason':'Invalid Credentials'}");
             }
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout(int id)
+        {
+
+            if (_userManager.LogoutUser(id))
+                return Ok();
+            return StatusCode(400, "{'reason':'could not logout'}");
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
+using System.Net.Http;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using ExamStudy.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace ExamStudy.Business
 {
@@ -88,7 +91,7 @@ namespace ExamStudy.Business
             return dbUser;
         }
 
-        public User LoginUser(User user)
+        public User LoginUser(HttpContext httpContext, User user)
         {
             try
             {
@@ -100,7 +103,7 @@ namespace ExamStudy.Business
                 //update user token
                 string token = GenerateToken();
                 _userRepository.UpdateOrCreateUserToken(new UserToken(dbUser.UserId, token));
-
+                `
                 //sanitise returned user (could look to make a special return class)
                 dbUser.UserPassword = null;
                 dbUser.UserToken = token;
@@ -109,6 +112,13 @@ namespace ExamStudy.Business
             }catch(Exception ex){
                 throw new InvalidAuthorizationException(ex.Message);
             }
+        }
+
+        public async bool LogoutUser(HttpContext httpContext, int userId)
+        {
+            //await httpContext.SignOutAsync();
+            
+            
         }
 
         private string GenerateToken()

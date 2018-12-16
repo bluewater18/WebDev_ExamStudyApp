@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExamStudy.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class GroupController : Controller
     {

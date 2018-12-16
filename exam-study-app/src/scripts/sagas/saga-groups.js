@@ -1,6 +1,6 @@
 ﻿import { apiCreateGroup, apiUpdateGroupPhoto, apiGetGroup, apiGetUserGroups, apiGetAllGroups, apiGetMembersFromGroup, apiDeleteGroup, apiEditGroup } from '../api-calls/api-groups';
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest } from 'redux-saga/effects';
+import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 import history from '../../history';
 import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 
@@ -50,6 +50,8 @@ function* getAllGroups() {
 
 function* getUserGroups(userId) {
     try {
+        let user = yield select((state) => state.user)
+        console.log(user)
         let groups = yield call(apiGetUserGroups, userId)
         yield put({ type: actionConstants.GET_USER_GROUPS_SUCCESS, payload:groups})
     } catch(err) {
