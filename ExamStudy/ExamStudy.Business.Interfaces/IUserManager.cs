@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExamStudy.Entities;
+using System.Web;
 
 namespace ExamStudy.Business.Interfaces
 {
     public interface IUserManager
     {
         User RegisterUser(User user);
-        //User LoginUser(User user);
-        void LoginUser(System.Web.HttpContext httpContext, User user);
-        //bool LogoutUser(int userId);
-        void LogoutUser(System.Web.HttpContext httpContext, int userId);
+        User Authenticate(string token);
+        User LoginUser(User user);
+        bool LogoutUser(int userId);
         User UpdateUser(User user);
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();

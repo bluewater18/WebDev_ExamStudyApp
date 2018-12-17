@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ExamStudy.API
 {
@@ -31,21 +32,10 @@ namespace ExamStudy.API
         {
             services.AddCors();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-               .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                   options =>
-                   {
-                       options.LoginPath = "/Account/login";
-                       options.LogoutPath = "/Account/logoff";
-                   });
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            // authentication 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            });
 
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IGroupManager, GroupManager>();

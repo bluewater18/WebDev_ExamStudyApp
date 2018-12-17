@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Security;
+
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using ExamStudy.Repository.Interfaces;
@@ -95,7 +94,7 @@ namespace ExamStudy.Business
             return dbUser;
         }
 
-        public async void LoginUser(System.Web.HttpContext httpContext, User user)
+        public User LoginUser(User user)
         {
             try
             {
@@ -111,23 +110,24 @@ namespace ExamStudy.Business
                 //sanitise returned user (could look to make a special return class)
                 dbUser.UserPassword = null;
                 dbUser.UserToken = token;
-
-                ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(dbUser), CookieAuthenticationDefaults.AuthenticationScheme);
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                //return dbUser;
+                return dbUser;
             }
             catch(Exception ex){
                 throw new InvalidAuthorizationException(ex.Message);
             }
         }
 
-        public async void LogoutUser(HttpContext httpContext, int userId)
+        public bool LogoutUser(int userId)
         {
-            await httpContext.SignOutAsync();
-            
-            
+            return _userRepository.LogoutUser(userId);
+        }
+
+        public User Authenticate(string token)
+        {
+            User user = _userRepository.GetUserByToken(token);
+            if (user != null)
+                return user;
+            throw new InvalidAuthorizationException("Invalid Authorization");
             
         }
 
