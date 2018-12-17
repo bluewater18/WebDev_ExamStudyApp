@@ -6,11 +6,12 @@ import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 
 function* createGroup({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let group = payload.group;
         let photo = payload.group.groupPhoto;
         group.groupPhoto = null;
         group.groupOwnerId = payload.userId;
-        let createdGroup = yield call(apiCreateGroup, group);
+        let createdGroup = yield call(apiCreateGroup, group, user.token);
         if(photo !== null){
             group.groupImageName = yield call(apiUpdateGroupPhoto, photo, createdGroup.groupId)
         }
@@ -30,7 +31,8 @@ function* createGroupSuccess({payload}) {
 
 function* getGroup({payload}) {
     try {
-        let group = yield call(apiGetGroup, payload);
+        let user = yield select((state) => state.user)
+        let group = yield call(apiGetGroup, payload, user.token);
         yield put({type: actionConstants.GET_GROUP_SUCCESS, payload: group})
     } catch(err){
         console.log(err)
@@ -40,7 +42,8 @@ function* getGroup({payload}) {
 
 function* getAllGroups() {
     try {
-        let groups = yield call(apiGetAllGroups)
+        let user = yield select((state) => state.user)
+        let groups = yield call(apiGetAllGroups, user.token)
         yield put({ type: actionConstants.GET_ALL_GROUPS_SUCCESS, payload:groups})
     } catch(err){
         console.log(err);
@@ -52,7 +55,7 @@ function* getUserGroups(userId) {
     try {
         let user = yield select((state) => state.user)
         console.log(user)
-        let groups = yield call(apiGetUserGroups, userId)
+        let groups = yield call(apiGetUserGroups, userId, user.token)
         yield put({ type: actionConstants.GET_USER_GROUPS_SUCCESS, payload:groups})
     } catch(err) {
         console.log(err);
@@ -62,7 +65,8 @@ function* getUserGroups(userId) {
 
 function* getMembers({payload}){
     try{
-        let members = yield call(apiGetMembersFromGroup, payload)
+        let user = yield select((state) => state.user)
+        let members = yield call(apiGetMembersFromGroup, payload, user.token)
         yield put({type: actionConstants.GET_GROUP_MEMBERS_SUCCESS, payload: members})
     } catch (err) {
         console.log(err);
@@ -72,7 +76,8 @@ function* getMembers({payload}){
 
 function* deleteGroup({payload}) {
     try {
-        yield call(apiDeleteGroup, payload.groupId)
+        let user = yield select((state) => state.user)
+        yield call(apiDeleteGroup, payload.groupId, user.token)
         yield put({type: actionConstants.DELETE_GROUP_SUCCESS})
         yield call(history.push, '/')
         yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload: true})
@@ -84,7 +89,8 @@ function* deleteGroup({payload}) {
 
 function* editGroup({payload}) {
     try{
-        yield call(apiEditGroup, payload.group)
+        let user = yield select((state) => state.user)
+        yield call(apiEditGroup, payload.group, user.token)
         try{//update photo
             if(payload.group.groupPhoto !== null && payload.group.groupPhoto !== undefined )
                 yield call(apiUpdatePhoto, payload.group.groupPhoto, payload.group.groupId, 'group')

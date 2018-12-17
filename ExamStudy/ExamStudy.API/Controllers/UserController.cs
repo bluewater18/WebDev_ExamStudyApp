@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExamStudy.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         IUserManager _userManager;
-        public UserController(IUserManager userManager)
+        public UserController(IAuthManager authManager, IUserManager userManager) :  base(authManager)
         {
             _userManager = userManager;
         }
@@ -35,17 +32,20 @@ namespace ExamStudy.API.Controllers
         [HttpGet("{id}")]
         public User Get(int id)
         {
+            CheckUserAuth(id);
             return _userManager.GetUserById(id);
         }
 
         [HttpPatch("{id}")]
         public IActionResult Edit(int id, [FromBody] User user)
         {
+            CheckUserAuth(id);
             User returnableUser = _userManager.UpdateUser(user);
             return Created("hidden", returnableUser);
         }
 
         // POST api/user
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
@@ -53,17 +53,11 @@ namespace ExamStudy.API.Controllers
             return Created("hidden",returnableUser);
         }
 
-        // PUT api/user/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] User user)
-        {
-            _userManager.UpdateUser(user);
-        }
-
         // DELETE api/user/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            CheckUserAuth(id);
             _userManager.DeleteUser(id);
         }                
     }

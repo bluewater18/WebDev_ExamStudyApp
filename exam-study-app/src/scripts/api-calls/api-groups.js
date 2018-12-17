@@ -1,12 +1,13 @@
 import { createFetch, base, method, header, body } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
 
-async function apiCreateGroup(group) {
+async function apiCreateGroup(group, token) {
     console.log('creating group call')
     return new Promise((resolve, reject) => {
         const fetchCreateGroup = createFetch(
             base(API_BASE_PATH),
             method('POST'),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(group), 'application/json'),
         );
@@ -42,11 +43,12 @@ async function apiUpdateGroupPhoto(photo, id) {
     })
 }
 
-async function apiGetGroup(groupId) {
+async function apiGetGroup(groupId, token) {
     return new Promise((resolve, reject) => {
         const fetchGetGroup = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
         
         fetchGetGroup('/group/'+groupId).then((res) => {
@@ -61,11 +63,12 @@ async function apiGetGroup(groupId) {
     })
 }
 
-async function apiGetAllGroups() {
+async function apiGetAllGroups(token) {
     return new Promise((resolve, reject)=> {
         const fetchGetAllGroups = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
         fetchGetAllGroups('/group').then((res) => {
             if(res.status === 200)
@@ -79,11 +82,12 @@ async function apiGetAllGroups() {
     })
 }
 
-async function apiGetUserGroups({payload}) {
+async function apiGetUserGroups({payload}, token) {
     return new Promise((resolve, reject) => {
         const fetchGetUserGroups = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
         fetchGetUserGroups('/group/joined?userId='+payload).then((res) =>{
             if(res.status === 200)
@@ -97,11 +101,12 @@ async function apiGetUserGroups({payload}) {
     })
 }
 
-async function apiGetMembersFromGroup( groupId) { 
+async function apiGetMembersFromGroup(groupId, token) { 
     return new Promise((resolve, reject) => {
         const fetchGetMembersFromGroup = createFetch(
             base(API_BASE_PATH),
-            method("GET")
+            method("GET"),
+            header('Authorization', token),
         )
         fetchGetMembersFromGroup('/group/members/'+groupId).then((res) =>{
             if(res.status === 200)
@@ -115,11 +120,12 @@ async function apiGetMembersFromGroup( groupId) {
     })
 }
 
-async function apiEditGroup(group) {
+async function apiEditGroup(group, token) {
     return new Promise((resolve, reject) => {
         const fetchEditGroup = createFetch(
             base(API_BASE_PATH),
             method("PUT"),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(group), 'application/json'),
         )
@@ -135,11 +141,12 @@ async function apiEditGroup(group) {
 }
 
 
-async function apiDeleteGroup(groupId) {
+async function apiDeleteGroup(groupId, token) {
     return new Promise((resolve, reject) => {
         const fetchDeleteGroup = createFetch(
             base(API_BASE_PATH),
-            method("DELETE")
+            method("DELETE"),
+            header('Authorization', token),
         )
 
         fetchDeleteGroup('/group/'+groupId).then((res) => {

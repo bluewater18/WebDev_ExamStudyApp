@@ -37,6 +37,7 @@ namespace ExamStudy.API
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddTransient<IAuthManager, AuthManager>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IGroupManager, GroupManager>();
             services.AddTransient<IResourceManager, ResourceManager>();

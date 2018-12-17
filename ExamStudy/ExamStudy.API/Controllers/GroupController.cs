@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace ExamStudy.API.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class GroupController : Controller
+    public class GroupController : BaseController
     {
         IUserManager _userManager;
         IGroupManager _groupManager;
-        public GroupController(IUserManager userManager, IGroupManager groupManager)
+        public GroupController(IAuthManager authManager, IUserManager userManager, IGroupManager groupManager) : base(authManager)
         {
             _userManager = userManager;
             _groupManager = groupManager;
         }
 
+
         // GET api/group
-       [HttpGet]
+        [HttpGet]
        public IEnumerable<Group> Get()
         {
             return _groupManager.GetAllGroups();
@@ -33,8 +29,7 @@ namespace ExamStudy.API.Controllers
         [HttpGet("joined")]
         public IActionResult GetUsersGroups(int userId)
         {
-            if(userId != Convert.ToInt32(((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            CheckUserAuth(userId);
             return new ObjectResult(_groupManager.GetUsersGroups(userId)) { StatusCode = 200 };
         }
 
@@ -43,6 +38,7 @@ namespace ExamStudy.API.Controllers
         [ActionName("index")]
         public Group Get(int id)
         {
+            CheckGroupMember(id);
             return _groupManager.GetGroupById(id);
         }
 
@@ -65,6 +61,7 @@ namespace ExamStudy.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Group group)
         {
+            CheckGroupAdmin(id);
             return new ObjectResult(_groupManager.UpdateGroup(group)) { StatusCode = 200 };
         }
 
@@ -72,20 +69,23 @@ namespace ExamStudy.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            CheckGroupOwner(id);
             if (_groupManager.DeleteGroup(id))
                 return Ok();
             return new ObjectResult("Error Deleting Group") { StatusCode = 500 };
         }
         
         [HttpGet("members/{id}")]
-        public IActionResult GetMembers (int id) {
-            
+        public IActionResult GetMembers (int id)
+        {
+            CheckGroupMember(id);    
             return new ObjectResult(_groupManager.GetGroupMembers(id));
         }
 
         [HttpPost("members/join")]
         public IActionResult AddUserToGroup (int groupId, int userId, string type)
         {
+            CheckGroupMember(groupId);
             if(_groupManager.AddUserToGroup(groupId, userId, type)){
                 return Ok();
             }
@@ -96,6 +96,7 @@ namespace ExamStudy.API.Controllers
         [HttpPost("members/leave")]
         public IActionResult LeaveGroup (int groupId, int userId)
         {
+            CheckGroupMember(groupId);
             if (_groupManager.RemoveUserFromGroup(groupId, userId))
                 return Ok();
             return new ObjectResult("Issue removing user from group") { StatusCode = 500 };

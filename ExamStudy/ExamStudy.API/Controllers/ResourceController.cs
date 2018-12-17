@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExamStudy.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class ResourceController : Controller
+    public class ResourceController : BaseController
     {
         IResourceManager _resourceManager;
         IQuestionManager _questionManager;
         IAnswerManager _answerManager;
-        public ResourceController(IResourceManager resourceManager, IQuestionManager questionManager, IAnswerManager answerManager)
+        public ResourceController(IAuthManager authManager, IResourceManager resourceManager, IQuestionManager questionManager, IAnswerManager answerManager): base(authManager)
         {
             _resourceManager = resourceManager;
             _questionManager = questionManager;
@@ -26,7 +22,7 @@ namespace ExamStudy.API.Controllers
         [HttpGet()]
         public IActionResult GetGroupResources(int groupId)
         {
-            Console.WriteLine("!@#$%^&* Getting GROUP Resources");
+            CheckGroupMember(groupId);
             return new ObjectResult(_resourceManager.GetGroupResources(groupId)) { StatusCode = 200 };
         }
 
@@ -35,7 +31,8 @@ namespace ExamStudy.API.Controllers
         [ActionName("index")]
         public IActionResult Get(int id)
         {
-            Console.WriteLine("!@#$%^&* Getting SINGLE Resource");
+            //NOT TOO SURE HOW TO HANDLE AUTH FOR RESOURCES -- through group?
+            //CheckResourceMember(id);
             Resource resource = _resourceManager.GetResource(id);
             resource.ResourceQuestions = _questionManager.GetResourceQuestions(resource.ResourceId);
             return new ObjectResult(resource) { StatusCode = 200};
@@ -52,6 +49,7 @@ namespace ExamStudy.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Resource resource)
         {
+            CheckResourceOwner(id);
             return new ObjectResult(_resourceManager.UpdateResource(resource)) { StatusCode = 200 };
         }
 
@@ -59,6 +57,7 @@ namespace ExamStudy.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            CheckResourceOwner(id);
             if (_resourceManager.DeleteResource(id))
                 return Ok();
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
@@ -74,6 +73,7 @@ namespace ExamStudy.API.Controllers
         [HttpPut("question/{id}")]
         public IActionResult UpdateQuestion(int id, [FromBody] Question question)
         {
+            CheckQuestionOwner(id);
             return new ObjectResult(_questionManager.UpdateQuestion(question)) { StatusCode = 200 };
         }
 
@@ -81,6 +81,7 @@ namespace ExamStudy.API.Controllers
         [HttpDelete("question/{id}")]
         public IActionResult DeleteQuestion(int id)
         {
+            CheckQuestionOwner(id);
             if (_questionManager.DeleteQuestion(id))
                 return Ok();
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
@@ -97,6 +98,7 @@ namespace ExamStudy.API.Controllers
         [HttpPut("question/answer/{id}")]
         public IActionResult UpdateAnswer(int id, [FromBody] Answer answer)
         {
+            CheckAnswerOwner(id);
             return new ObjectResult(_answerManager.UpdateAnswer(answer)) { StatusCode = 200 };
         }
 
@@ -104,6 +106,7 @@ namespace ExamStudy.API.Controllers
         [HttpDelete("question/answer/{id}")]
         public IActionResult DeleteAnswer(int id)
         {
+            CheckAnswerOwner(id);
             if (_answerManager.DeleteAnswer(id))
                 return Ok();
             return new ObjectResult("Error Deleting Resource") { StatusCode = 500 };
