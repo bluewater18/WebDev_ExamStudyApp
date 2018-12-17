@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ExamStudy.API.Controllers
 {
@@ -32,6 +33,8 @@ namespace ExamStudy.API.Controllers
         [HttpGet("joined")]
         public IActionResult GetUsersGroups(int userId)
         {
+            if(userId != Convert.ToInt32(((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
             return new ObjectResult(_groupManager.GetUsersGroups(userId)) { StatusCode = 200 };
         }
 
