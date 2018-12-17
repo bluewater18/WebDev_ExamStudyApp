@@ -8,7 +8,7 @@ using ExamStudy.Repository.Interfaces;
 using System.Net.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using System.Threading.Tasks;
 
 namespace ExamStudy.Business
 {
@@ -122,13 +122,13 @@ namespace ExamStudy.Business
             return _userRepository.LogoutUser(userId);
         }
 
-        public User Authenticate(string token)
+        public async Task<User> Authenticate(string token)
         {
             User user = _userRepository.GetUserByToken(token);
             if (user != null)
                 return user;
             throw new InvalidAuthorizationException("Invalid Authorization");
-            
+
         }
 
 

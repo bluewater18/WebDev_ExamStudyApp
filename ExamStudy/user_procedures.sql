@@ -133,7 +133,7 @@ CREATE PROCEDURE `GetUserByToken`(
 	IN p_UserToken varchar(128)
 )
 BEGIN
-	SELECT * FROM User WHERE UserID = (SELECT UserID from UserTokens Where UserToken = p_UserToken);
+	SELECT * FROM Users WHERE UserID = (SELECT UserID from UserTokens Where UserToken = p_UserToken);
 END $$
 DELIMITER ;
 

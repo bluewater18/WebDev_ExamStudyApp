@@ -33,18 +33,21 @@ namespace ExamStudy.API
         {
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");
-
             User user = null;
             try
             {
-                var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-                var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-                var credentials = Encoding.UTF8.GetString(credentialBytes);
-                var token = credentials;
-                user = _userManager.Authenticate(token);
+                string token = Request.Headers["Authorization"];
+                //var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+                //var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+                //var credentials = Encoding.UTF8.GetString(credentialBytes);
+                //var token = credentials;
+                
+                user = await _userManager.Authenticate(token);
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 

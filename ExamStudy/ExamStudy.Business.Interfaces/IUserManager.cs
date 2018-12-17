@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using ExamStudy.Entities;
 using System.Web;
+using System.Threading.Tasks;
 
 namespace ExamStudy.Business.Interfaces
 {
     public interface IUserManager
     {
         User RegisterUser(User user);
-        User Authenticate(string token);
+        Task<User> Authenticate(string token);
         User LoginUser(User user);
         bool LogoutUser(int userId);
         User UpdateUser(User user);
