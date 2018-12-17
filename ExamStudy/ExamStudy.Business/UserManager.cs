@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Web;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Web.Mvc;
+using System.Web.Security;
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using ExamStudy.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 
 namespace ExamStudy.Business
 {
@@ -91,7 +95,7 @@ namespace ExamStudy.Business
             return dbUser;
         }
 
-        public User LoginUser(HttpContext httpContext, User user)
+        public async void LoginUser(System.Web.HttpContext httpContext, User user)
         {
             try
             {
@@ -103,22 +107,49 @@ namespace ExamStudy.Business
                 //update user token
                 string token = GenerateToken();
                 _userRepository.UpdateOrCreateUserToken(new UserToken(dbUser.UserId, token));
-                `
+                
                 //sanitise returned user (could look to make a special return class)
                 dbUser.UserPassword = null;
                 dbUser.UserToken = token;
 
-                return dbUser;
-            }catch(Exception ex){
+                ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(dbUser), CookieAuthenticationDefaults.AuthenticationScheme);
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                //return dbUser;
+            }
+            catch(Exception ex){
                 throw new InvalidAuthorizationException(ex.Message);
             }
         }
 
-        public async bool LogoutUser(HttpContext httpContext, int userId)
+        public async void LogoutUser(HttpContext httpContext, int userId)
         {
-            //await httpContext.SignOutAsync();
+            await httpContext.SignOutAsync();
             
             
+            
+        }
+
+
+        private IEnumerable<Claim> GetUserClaims(User user)
+        {
+            List<Claim> claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            claims.Add(new Claim(ClaimTypes.Email, user.UserEmail));
+            claims.AddRange(this.GetUserRoleClaims(user));
+            return claims;
+        }
+
+        private IEnumerable<Claim> GetUserRoleClaims(User user)
+        {
+            List<Claim> claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, "User"));
+            return claims;
         }
 
         private string GenerateToken()

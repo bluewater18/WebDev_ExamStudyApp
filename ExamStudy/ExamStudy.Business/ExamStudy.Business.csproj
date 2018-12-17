@@ -5,13 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ExamStudy.Business.Interfaces\ExamStudy.Business.Interfaces.csproj" />
     <ProjectReference Include="..\ExamStudy.Entities\ExamStudy.Entities.csproj" />
     <ProjectReference Include="..\ExamStudy.Repository.Interfaces\ExamStudy.Repository.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Cookies">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.authentication.cookies\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Cookies.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
