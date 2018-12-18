@@ -209,7 +209,8 @@ class GroupHome extends React.Component {
         )
         return (
             <Card className="group-home-container">
-                <CardContent className="group-home-content-header">
+                <CardContent className="group-home-content-header-members">
+                    <div/>
                     <h1>Resources</h1>
                     <div style={{height:"fit-content", maxHeight:"50vh", overflow:"auto"}}>
                         <Button

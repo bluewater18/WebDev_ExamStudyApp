@@ -1,11 +1,12 @@
 ﻿import { createFetch, base, method, header, body } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
 
-async function apiUpdateUser(user) {
+async function apiUpdateUser(user, token) {
     return new Promise((resolve) => { 
         const fetch = createFetch(
             base(API_BASE_PATH),
             method('PATCH'),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(user), 'application/json'),
         )

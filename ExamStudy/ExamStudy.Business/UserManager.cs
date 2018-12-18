@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Web;
 using System.Collections.Generic;
-
 using ExamStudy.Business.Interfaces;
 using ExamStudy.Entities;
 using ExamStudy.Repository.Interfaces;
-using System.Net.Http;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
 
 namespace ExamStudy.Business

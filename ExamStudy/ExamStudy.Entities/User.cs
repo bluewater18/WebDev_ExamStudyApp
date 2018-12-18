@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExamStudy.Entities
+﻿namespace ExamStudy.Entities
 {
     public class User
     {

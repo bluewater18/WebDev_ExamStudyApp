@@ -1,13 +1,14 @@
 ﻿import { apiCreateResource, apiGetResource, apiGetResources, apiEditResource, apiDeleteResource } from '../api-calls/api-resources';
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest, } from 'redux-saga/effects';
+import { call, all, put, takeLatest, select} from 'redux-saga/effects';
 import history from '../../history';
 
 function* createResource({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let resource = payload;
         resource.userId = payload.userId;
-        let createdResource = yield call(apiCreateResource, resource);
+        let createdResource = yield call(apiCreateResource, resource, user.token);
         yield put({ type: actionConstants.CREATE_RESOURCE_SUCCESS, payload: createdResource });
         yield call(history.push,'/group/'+payload.groupId+'/resource/'+createdResource.resourceId);
         yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type:'success', message:createdResource.resourceName+ ' Created Successfully! '}})
@@ -21,7 +22,8 @@ function* createResource({payload}) {
 
 function* getResource({payload}) {
     try {
-        let resource = yield call(apiGetResource, payload);
+        let user = yield select((state) => state.user)
+        let resource = yield call(apiGetResource, payload, user.token);
         yield put({type: actionConstants.GET_RESOURCE_SUCCESS, payload: resource})
     } catch(err){
         console.log(err)
@@ -31,7 +33,8 @@ function* getResource({payload}) {
 
 function* getResourceList({payload}) {
     try {
-        let resources = yield call(apiGetResources, payload)
+        let user = yield select((state) => state.user)
+        let resources = yield call(apiGetResources, payload, user.token)
         yield put({ type: actionConstants.GET_RESOURCE_LIST_SUCCESS, payload:resources})
     } catch(err){
         console.log(err);
@@ -42,7 +45,8 @@ function* getResourceList({payload}) {
 
 function* deleteResource({payload}) {
     try {
-        yield call(apiDeleteResource, payload.resourceId)
+        let user = yield select((state) => state.user)
+        yield call(apiDeleteResource, payload.resourceId, user.token)
         yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS, payload:payload.resourceId})
         if(payload.sendHome){
             yield call(history.push,'/group/'+payload.groupId);
@@ -55,7 +59,8 @@ function* deleteResource({payload}) {
 
 function* editResource({payload}) {
     try{
-        let updatedResource = yield call(apiEditResource, payload)
+        let user = yield select((state) => state.user)
+        let updatedResource = yield call(apiEditResource, payload, user.token)
         yield put({type: actionConstants.EDIT_RESOURCE_SUCCESS, payload: updatedResource})
     } catch(err){
         console.log(err)

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ExamStudy.Entities;
+﻿using ExamStudy.Entities;
 
 namespace ExamStudy.Business.Interfaces
 {

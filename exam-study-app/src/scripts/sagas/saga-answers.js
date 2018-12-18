@@ -1,12 +1,13 @@
 ﻿import { apiAddAnswer, apiEditAnswer, apiDeleteAnswer, apiUpvoteAnswer, apiDownvoteAnswer } from '../api-calls/api-answers';
 import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest, } from 'redux-saga/effects';
+import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 
 function* addAnswer({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let answer = payload;
-        let createdAnswer = yield call(apiAddAnswer, answer);
+        let createdAnswer = yield call(apiAddAnswer, answer, user.token);
         if(answer.image !== null && answer.image !== undefined){
             let createdPhoto = yield call(apiUpdatePhoto, answer.image, createdAnswer.answerId, "answer" )
             createdAnswer.questionImageName = createdPhoto.AnswerPhotoPath;
@@ -23,9 +24,10 @@ function* addAnswer({payload}) {
 
 function* deleteAnswer({payload}) {
     try{
+        let user = yield select((state) => state.user)
         let answerId = payload.answerId;
         let questionId = payload.questionId;
-        yield call(apiDeleteAnswer, answerId)
+        yield call(apiDeleteAnswer, answerId, user.token)
         yield put({ type: actionConstants.DELETE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId} })
     } catch (err) {
         console.log(err)
@@ -35,8 +37,9 @@ function* deleteAnswer({payload}) {
 
 function* editAnswer({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let answer = payload;
-        let updatedAnswer = yield call(apiEditAnswer, answer)
+        let updatedAnswer = yield call(apiEditAnswer, answer, user.token)
         if(answer.image !== null && answer.image !== undefined) {
             let updatedPhoto = yield call(apiUpdatePhoto, answer.image, updatedAnswer.answerId, "answer" )
             updatedAnswer.questionImageName = updatedPhoto.AnswerPhotoPath;
@@ -50,10 +53,11 @@ function* editAnswer({payload}) {
 
 function* upvoteAnswer({payload}) {
     try{
+        let user = yield select((state) => state.user)
         let answerId = payload.answerId;
         let userId = payload.userId;
         let questionId = payload.questionId
-        yield call(apiUpvoteAnswer, answerId, userId)
+        yield call(apiUpvoteAnswer, answerId, userId, user.token)
         yield put({type: actionConstants.UPVOTE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId}})
     } catch (err) {
         console.log(err)
@@ -63,10 +67,11 @@ function* upvoteAnswer({payload}) {
 
 function* downvoteAnswer({payload}) {
     try{
+        let user = yield select((state) => state.user)
         let answerId = payload.answerId;
         let userId = payload.userId;
         let questionId = payload.questionId;
-        yield call(apiDownvoteAnswer, answerId, userId)
+        yield call(apiDownvoteAnswer, answerId, userId, user.token)
         yield put({type: actionConstants.DOWNVOTE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId}})
     } catch (err) {
         console.log(err)

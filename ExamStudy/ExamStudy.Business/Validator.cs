@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ExamStudy.Entities;
+﻿using ExamStudy.Entities;
 
 namespace ExamStudy.Business
 {

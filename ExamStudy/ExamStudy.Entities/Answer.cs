@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ExamStudy.Entities
+﻿namespace ExamStudy.Entities
 {
     public class Answer { 
         public int AnswerId { get; set; }

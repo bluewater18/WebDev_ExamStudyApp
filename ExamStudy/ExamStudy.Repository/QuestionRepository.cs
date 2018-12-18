@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using ExamStudy.Entities;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using static System.Data.CommandType;
 using ExamStudy.Repository.Interfaces;
@@ -56,7 +54,6 @@ namespace ExamStudy.Repository
             parameters.Add("p_QuestionType", question.QuestionType);
             parameters.Add("p_QuestionTitle", question.QuestionTitle);
             parameters.Add("p_QuestionText", question.QuestionText);
-            parameters.Add("p_QuestionImageName", question.QuestionImageName);
             parameters.Add("p_QuestionId", question.QuestionId);
 
             SqlMapper.Execute(conn, "UpdateQuestion", param: parameters, commandType: StoredProcedure);

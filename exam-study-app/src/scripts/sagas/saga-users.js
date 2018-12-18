@@ -1,12 +1,13 @@
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest } from 'redux-saga/effects';
+import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 import {apiGetAllUsers, apiAddUserToGroup, apiLeaveGroup, apiJoinGroupWithCode} from '../api-calls/api-users'
 import history from '../../history';
 
 export function* getAllUsers() {
     try{
-    let users = yield call(apiGetAllUsers);
-    yield put({type:actionConstants.GET_ALL_USERS_SUCCESS, payload: users});
+        let user = yield select((state) => state.user)
+        let users = yield call(apiGetAllUsers, user.token);
+        yield put({type:actionConstants.GET_ALL_USERS_SUCCESS, payload: users});
     } catch(err) {
         console.log(err)
         yield put({type:actionConstants.GET_ALL_USERS_FAILURE, payload: null})
@@ -15,7 +16,8 @@ export function* getAllUsers() {
 
 export function* addUserToGroup({payload}) {
     try{
-        yield call(apiAddUserToGroup, payload.groupId, payload.user.userId)
+        let user = yield select((state) => state.user)
+        yield call(apiAddUserToGroup, payload.groupId, payload.user.userId, user.token)
         payload.user.memberType = "MEMBER"
         yield put({type: actionConstants.ADD_USER_TO_GROUP_SUCCESS, payload:payload.user})
     } catch(err) {
@@ -27,7 +29,8 @@ export function* addUserToGroup({payload}) {
 
 export function* userLeaveGroup({payload}) {
     try{
-        yield call(apiLeaveGroup, payload.groupId, payload.user.id)
+        let user = yield select((state) => state.user)
+        yield call(apiLeaveGroup, payload.groupId, payload.user.id, user.token)
         yield put({type: actionConstants.LEAVE_GROUP_SUCCESS, payload: payload.user})
         yield call(history.push,'/');
         yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Successfully Left group"}})
@@ -39,7 +42,8 @@ export function* userLeaveGroup({payload}) {
 }
 export function* removeUserFromGroup({payload}) {
     try{
-        yield call(apiLeaveGroup, payload.groupId, payload.user.userId)
+        let user = yield select((state) => state.user)
+        yield call(apiLeaveGroup, payload.groupId, payload.user.userId, user.token)
         yield put({type: actionConstants.REMOVE_USER_FROM_GROUP_SUCCESS, payload: payload.user})
     } catch(err) {
         console.log(err);
@@ -49,7 +53,8 @@ export function* removeUserFromGroup({payload}) {
 
 export function* joinWithCode({payload}) {
     try{
-        let group = yield call(apiJoinGroupWithCode, payload.code, payload.userId)
+        let user = yield select((state) => state.user)
+        let group = yield call(apiJoinGroupWithCode, payload.code, payload.userId, user.token)
         yield put({type:actionConstants.JOIN_GROUP_WITH_CODE_SUCCESS})
         yield call(history.push, '/group/'+group.groupId)
     } catch(err) {

@@ -61,7 +61,7 @@ class MyGroupHelper extends React.Component {
                 <div >
                     <IconButton>
                         <GroupIcon fontSize="small"/>
-                        <h3 style={{display:"inline", margin:"0"}}>65</h3>
+                        <h3 style={{display:"inline", margin:"0"}}>{this.props.group.groupMemberCount}</h3>
                     </IconButton>
                     
                 </div>

@@ -1,11 +1,12 @@
 import { createFetch, base, method, header, body } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
 
-async function apiAddQuestion(question) {
+async function apiAddQuestion(question, token) {
     return new Promise((resolve, reject) => {
         const fetchAddQuestion = createFetch(
             base(API_BASE_PATH),
             method('POST'),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(question), 'application/json'),
         );
@@ -24,11 +25,12 @@ async function apiAddQuestion(question) {
 }
 
 
-async function apiEditQuestion(question) {
+async function apiEditQuestion(question, token) {
     return new Promise((resolve, reject) => {
         const fetchEditQuestion = createFetch(
             base(API_BASE_PATH),
             method("PUT"),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(question), 'application/json'),
         )
@@ -45,11 +47,12 @@ async function apiEditQuestion(question) {
 
 }
 
-async function apiDeleteQuestion( questionId) {
+async function apiDeleteQuestion(questionId, token) {
     return new Promise((resolve, reject) => {
         const fetchDeleteQuestion =  createFetch(
             base(API_BASE_PATH),
             method("DELETE"),
+            header('Authorization', token),
         )
         fetchDeleteQuestion('/resource/question/'+questionId).then((res) => {
             if(res.status === 200)

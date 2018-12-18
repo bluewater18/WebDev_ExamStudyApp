@@ -1,11 +1,12 @@
-import { createFetch, base, method } from 'http-client';
+import { createFetch, base, method, header } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
 
-async function apiGetAllUsers() {
+async function apiGetAllUsers(token) {
     return new Promise((resolve, reject)=> {
         const fetchGetAllUsers = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
         fetchGetAllUsers('/user').then((res) => {
             if(res.status === 200)
@@ -19,11 +20,12 @@ async function apiGetAllUsers() {
     })
 }
 
-async function apiAddUserToGroup(userId, groupId) {
+async function apiAddUserToGroup(userId, groupId, token) {
     return new Promise((resolve, reject) => {
         const fetchAddUserToGroup = createFetch(
             base(API_BASE_PATH),
             method("POST"),
+            header('Authorization', token),
         )
         fetchAddUserToGroup('/group/members/join?groupId=' + groupId +'&userId=' + userId +'&type=MEMBER').then((res) => {
             if(res.status === 200)
@@ -34,11 +36,12 @@ async function apiAddUserToGroup(userId, groupId) {
     })  
 }
 
-async function apiLeaveGroup(groupId, userId) {
+async function apiLeaveGroup(groupId, userId, token) {
     return new Promise((resolve, reject) => {
         const fetchLeaveGroup = createFetch(
             base(API_BASE_PATH),
             method("POST"),
+            header('Authorization', token),
         )
         fetchLeaveGroup('/group/members/leave?groupId='+groupId+'&userId='+userId).then((res) => {
             if (res.status === 200)
@@ -50,11 +53,12 @@ async function apiLeaveGroup(groupId, userId) {
 }
 
 
-async function apiJoinGroupWithCode(code, userId) {
+async function apiJoinGroupWithCode(code, userId, token) {
     return new Promise((resolve, reject) => {
         const fetchJoinGroupWithCode = createFetch(
             base(API_BASE_PATH),
-            method('PUT')
+            method('PUT'),
+            header('Authorization', token),
         )
         fetchJoinGroupWithCode('/group/member/join?code='+code +"&userId="+ userId ).then((res)=>{
             if(res.status === 200)

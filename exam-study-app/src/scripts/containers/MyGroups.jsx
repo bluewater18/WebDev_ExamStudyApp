@@ -30,8 +30,10 @@ class MyGroups extends React.Component {
                     <img src={IMAGE_PATH+this.props.user.imagePath} alt="user profile" width="150" height="150" />
                     <h1 style={{fontSize:"xx-large"}}>My Groups</h1>
                 </div>
+                <div className="my-groups-content-wrapper">
                 <div className="my-groups-content">
                     {elements}
+                </div>
                 </div>     
             </div>
             )

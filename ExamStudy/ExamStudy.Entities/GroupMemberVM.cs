@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExamStudy.Entities
+﻿namespace ExamStudy.Entities
 {
     public class GroupMemberVM
     {

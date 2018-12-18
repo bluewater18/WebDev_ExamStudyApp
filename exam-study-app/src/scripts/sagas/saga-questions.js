@@ -1,12 +1,13 @@
 ﻿import { apiAddQuestion, apiEditQuestion, apiDeleteQuestion, } from '../api-calls/api-questions';
 import { apiUpdatePhoto } from '../api-calls/api-edit-user';
 import { actionConstants } from '../constants/index';
-import { call, all, put, takeLatest, } from 'redux-saga/effects';
+import { call, all, put, takeLatest, select} from 'redux-saga/effects';
 
 function* addQuestion({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let question = payload;
-        let createdQuestion = yield call(apiAddQuestion, question);
+        let createdQuestion = yield call(apiAddQuestion, question, user.token);
         if(question.image !==  null && question.image !== undefined){
             let createdPhoto = yield call(apiUpdatePhoto, question.image, createdQuestion.questionId, "question" )
             createdQuestion.questionImageName = createdPhoto.QuestionPhotoPath;
@@ -23,8 +24,9 @@ function* addQuestion({payload}) {
 
 function* deleteQuestion({payload}) {
     try{
+        let user = yield select((state) => state.user)
         let questionId = payload;
-        yield call(apiDeleteQuestion, questionId)
+        yield call(apiDeleteQuestion, questionId, user.token)
         yield put({ type: actionConstants.DELETE_QUESTION_SUCCESS, payload: questionId })
     } catch (err) {
         console.log(err)
@@ -34,8 +36,9 @@ function* deleteQuestion({payload}) {
 
 function* editQuestion({payload}) {
     try {
+        let user = yield select((state) => state.user)
         let question = payload;
-        let updatedQuestion = yield call(apiEditQuestion, question)
+        let updatedQuestion = yield call(apiEditQuestion, question, user.token)
         if(question.image !==  null && question.image !== undefined){
             let updatedPhoto = yield call(apiUpdatePhoto, question.image, updatedQuestion.questionId, "question" )
             updatedQuestion.questionImageName = updatedPhoto.QuestionPhotoPath;

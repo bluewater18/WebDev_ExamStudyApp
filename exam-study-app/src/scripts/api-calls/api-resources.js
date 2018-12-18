@@ -1,11 +1,12 @@
 import { createFetch, base, method, header, body } from 'http-client';
 import { API_BASE_PATH } from '../constants/index';
 
-async function apiCreateResource(resource) {
+async function apiCreateResource(resource, token) {
     return new Promise((resolve, reject) => {
         const fetchCreateResource = createFetch(
             base(API_BASE_PATH),
             method('POST'),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(resource), 'application/json'),
         );
@@ -24,11 +25,12 @@ async function apiCreateResource(resource) {
 }
 
 
-async function apiGetResources(groupId) {
+async function apiGetResources(groupId, token) {
     return new Promise((resolve, reject) => {
         const fetchGetResource = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
         
         fetchGetResource('/resource?groupId='+groupId).then((res) => {
@@ -44,11 +46,12 @@ async function apiGetResources(groupId) {
 }
 
 
-async function apiGetResource(resourceId) {
+async function apiGetResource(resourceId, token) {
     return new Promise((resolve, reject) => {
         const fetchGetResource = createFetch(
             base(API_BASE_PATH),
             method("GET"),
+            header('Authorization', token),
         )
 
         fetchGetResource('/resource/'+resourceId).then((res) => {
@@ -64,11 +67,12 @@ async function apiGetResource(resourceId) {
 
 
 
-async function apiEditResource(resource) {
+async function apiEditResource(resource, token) {
     return new Promise((resolve, reject) => {
         const fetchEditResource = createFetch(
             base(API_BASE_PATH),
             method("PUT"),
+            header('Authorization', token),
             header('Content-Type', 'application/json'),
             body(JSON.stringify(resource), 'application/json'),
         )
@@ -85,11 +89,12 @@ async function apiEditResource(resource) {
 }
 
 
-async function apiDeleteResource(resourceId) {
+async function apiDeleteResource(resourceId, token) {
     return new Promise((resolve, reject) => {
         const fetchDeleteResource = createFetch(
             base(API_BASE_PATH),
-            method("DELETE")
+            method("DELETE"),
+            header('Authorization', token),
         )
 
         fetchDeleteResource('/resource/'+resourceId).then((res) => {

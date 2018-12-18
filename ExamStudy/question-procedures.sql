@@ -95,7 +95,6 @@ CREATE PROCEDURE `UpdateQuestion`(
 	IN p_QuestionType VARCHAR(16),
 	IN p_QuestionTitle VARCHAR(64),
 	IN p_QuestionText VARCHAR(512),
-	IN p_QuestionImageName VARCHAR(64),
 	IN p_QuestionId INT
 )
 BEGIN
@@ -103,8 +102,7 @@ BEGIN
 	SET
 		QuestionType = p_QuestionType,
 		QuestionTitle = p_QuestionTitle,
-		QuestionText = p_QuestionText,
-		QuestionImageName = p_QuestionImageName
+		QuestionText = p_QuestionText
 	WHERE
 		QuestionId = p_QuestionId;
 END $$
