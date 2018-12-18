@@ -19,6 +19,7 @@ DROP PROCEDURE IF EXISTS AddPasswordReset;
 DROP PROCEDURE IF EXISTS UpdatePasswordReset;
 DROP PROCEDURE IF EXISTS GetPasswordReset;
 DROP PROCEDURE IF EXISTS DeletePasswordReset;
+DROP PROCEDURE IF EXISTS UpdateUserPassword;
 
 
 CREATE TABLE IF NOT EXISTS Users(
@@ -240,6 +241,20 @@ CREATE PROCEDURE `DeletePasswordReset`(
 )
 BEGIN
 	DELETE FROM UserPasswordReset
+	WHERE
+		UserId = p_UserId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `UpdateUserPassword`(
+	IN p_UserId INT,
+	IN p_UserPassword VARCHAR(256)
+)
+BEGIN
+	UPDATE Users
+	SET
+		UserPassword = p_UserPassword
 	WHERE
 		UserId = p_UserId;
 END $$

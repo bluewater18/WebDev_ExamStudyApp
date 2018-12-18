@@ -177,5 +177,15 @@ namespace ExamStudy.Repository
             SqlMapper.Execute(conn, "DeletePasswordReset", param: parameters, commandType: StoredProcedure);
             return true;
         }
+
+        public bool UpdateUserPassword(int userId, string password)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
+            parameters.Add("p_UserPassword", password);
+
+            SqlMapper.Execute(conn, "UpdateUserPassword", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
     }
 }

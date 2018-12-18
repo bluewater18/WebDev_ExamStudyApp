@@ -97,8 +97,9 @@ namespace ExamStudy.Business
                 _validator.ValidateUserLogin(user);
                 //check password
                 User dbUser = _userRepository.GetUserByEmail(user.UserEmail);
-                PasswordSecurity.PasswordStorage.VerifyPassword(user.UserPassword, dbUser.UserPassword);
-                
+                if(!PasswordSecurity.PasswordStorage.VerifyPassword(user.UserPassword, dbUser.UserPassword))
+                    throw new InvalidAuthorizationException("Invalid username or Password");
+
                 //update user token
                 string token = GenerateToken();
                 _userRepository.UpdateOrCreateUserToken(new UserToken(dbUser.UserId, token));
@@ -153,15 +154,14 @@ namespace ExamStudy.Business
             return new RandomGenerator().RandomToken();//generate new token
         }
 
-        public string CreateUserResetPasswordKey(string email)
+        public string CreateUserResetPasswordKey(int userId)
         {
-            User user = _userRepository.GetUserByEmail(email);
-            if (user == null)
+            if (userId <= 0)
                 throw new CustomNotFoundException("There is no user with that email");
 
             UserReset userReset = new UserReset
             {
-                UserId = user.UserId,
+                UserId = userId,
                 UrlKey = GenerateToken(),
                 TimeCreated = SecondsSinceEpoch()
             };
@@ -177,29 +177,33 @@ namespace ExamStudy.Business
             return userReset.UrlKey;
         }
 
-        public bool ConfirmUserResetPassword(string key)
+        public int ConfirmUserResetPassword(string key)
         {
             UserReset userReset = _userRepository.GetResetPassword(key);
-            if (userReset.TimeCreated < (SecondsSinceEpoch() - (5 * 60))) {
+            if (userReset.TimeCreated > (SecondsSinceEpoch() - (5 * 60))) {
                 try
                 {
                     _userRepository.DeleteResetPassword(userReset.UserId);
                 }
                 catch { }
-                return true;
+                return userReset.UserId;
             }
             else { 
                 try
                 {
                     _userRepository.DeleteResetPassword(userReset.UserId);
                 } catch { }
-                return false;
+                throw new TimeoutException("Key has timed out");
             }
         }
 
-        public User UpdateUserPassword(int userId, string password)
+        public void UpdateUserPassword(int userId, string password)
         {
-            throw new NotImplementedException();
+            if (_validator.IsNullOrEmpty(password) || password.Length < 4)
+                throw new CustomDomainException("The New Password Is Not Secure");
+            string hash = PasswordSecurity.PasswordStorage.CreateHash(password);//hash password
+            if (!_userRepository.UpdateUserPassword(userId, hash))
+                throw new CustomDomainException("Could not reset password");
         }
 
         private long SecondsSinceEpoch()
@@ -208,5 +212,11 @@ namespace ExamStudy.Business
             //return (int)t.TotalSeconds;
             return DateTimeOffset.Now.ToUnixTimeSeconds();
         }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
+        }
+
     }
 }

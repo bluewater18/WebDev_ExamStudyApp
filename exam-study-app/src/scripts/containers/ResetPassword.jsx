@@ -52,7 +52,7 @@ class ResetPassword extends React.Component {
 
                     <CardActions className={"login-card-actions"} style={{ display: "inline-block"}}>
                         <div style={{ width: "100%" }}>
-                            <Button onClick={() => {this.props.resetPassword(this.state.password, this.props.match.params)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
+                            <Button onClick={() => {this.props.resetPassword(this.state.password, this.props.match.params.resetKey)}} style={{ paddingTop: "15px", paddingBottom: "15px", marginBottom:"5px", width: "80%" }}>
                                 Submit
                             </Button>
                         </div>

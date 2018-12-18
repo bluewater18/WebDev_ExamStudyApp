@@ -14,11 +14,12 @@ namespace ExamStudy.Business.Interfaces
         bool DeleteUser(int userId);
         IList<User> GetAllUsers();
         User GetUserById(int userId);
+        User GetUserByEmail(string email);
         string UpdateUserPhoto(int id, string photoPath);
         string GetUserPhotoPath(int userId);
-        string CreateUserResetPasswordKey(string email);
-        bool ConfirmUserResetPassword(string key);
-        User UpdateUserPassword(int userId, string password);
+        string CreateUserResetPasswordKey(int userId);
+        int ConfirmUserResetPassword(string key);
+        void UpdateUserPassword(int userId, string password);
 
     }
 }

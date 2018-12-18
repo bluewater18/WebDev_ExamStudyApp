@@ -9,6 +9,7 @@ import sagaUsers from './saga-users';
 import sagaResources from './saga-resources';
 import sagaQuestions from './saga-questions';
 import sagaAnswers from './saga-answers';
+import sagaResetPassword from './saga-reset-password';
 
 export default function* root() {
     yield all([
@@ -21,5 +22,6 @@ export default function* root() {
         fork(sagaResources),
         fork(sagaQuestions),
         fork(sagaAnswers),
+        fork(sagaResetPassword),
     ])
 }

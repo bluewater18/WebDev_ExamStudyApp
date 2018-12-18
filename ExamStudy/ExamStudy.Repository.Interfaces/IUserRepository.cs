@@ -20,6 +20,7 @@ namespace ExamStudy.Repository.Interfaces
         bool AddResetPassword(UserReset userReset);
         bool DeleteResetPassword(int userId);
         UserReset GetResetPassword(string key);
+        bool UpdateUserPassword(int userId, string password);
 
     }
 }
