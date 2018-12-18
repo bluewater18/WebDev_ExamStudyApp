@@ -60,6 +60,11 @@ class Login extends React.Component {
                                 Don't have an account? Register Here
                             </Button>
                         </Link>
+                        <Link to="/reset-password">
+                            <Button style={{ justifySelf: "right", fontSize: "xsmall", padding: "5px", minHeight:"0", marginBottom:"5px",}} >
+                                Forgot your password? Click here
+                            </Button>
+                        </Link>
                     </CardActions>
                 </Card>
 

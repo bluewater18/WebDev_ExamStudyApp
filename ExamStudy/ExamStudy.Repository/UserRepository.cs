@@ -148,5 +148,34 @@ namespace ExamStudy.Repository
             SqlMapper.Execute(conn, "LogoutUser", param: parameters, commandType: StoredProcedure);
             return true;
         }
+
+        public bool AddResetPassword(UserReset userReset)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userReset.UserId);
+            parameters.Add("p_TimeCreated", userReset.TimeCreated);
+            parameters.Add("p_UrlKey", userReset.UrlKey);
+
+            SqlMapper.Execute(conn, "AddPasswordReset", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
+
+        public UserReset GetResetPassword(string key)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UrlKey", key);
+
+            return SqlMapper.Query<UserReset>(conn, "GetPasswordReset", param: parameters, commandType: StoredProcedure).FirstOrDefault();
+            
+        }
+
+        public bool DeleteResetPassword(int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("p_UserId", userId);
+
+            SqlMapper.Execute(conn, "DeletePasswordReset", param: parameters, commandType: StoredProcedure);
+            return true;
+        }
     }
 }

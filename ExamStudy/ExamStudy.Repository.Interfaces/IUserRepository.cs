@@ -17,5 +17,9 @@ namespace ExamStudy.Repository.Interfaces
         bool LogoutUser(int userId);
         bool UpdateUserPhoto(int id, string photoPath);
         string GetUserPhotoPath(int userId);
+        bool AddResetPassword(UserReset userReset);
+        bool DeleteResetPassword(int userId);
+        UserReset GetResetPassword(string key);
+
     }
 }

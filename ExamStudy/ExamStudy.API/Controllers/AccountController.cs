@@ -23,7 +23,7 @@ namespace ExamStudy.API.Controllers
             {
                 User returnableUser = _userManager.LoginUser(user);
                 return Ok(returnableUser);
-            } catch(InvalidAuthorizationException)
+            } catch (InvalidAuthorizationException)
             {
                 return StatusCode(401, "{'reason':'Invalid Credentials'}");
             }
@@ -36,6 +36,14 @@ namespace ExamStudy.API.Controllers
             if (_userManager.LogoutUser(id))
                 return Ok();
             return StatusCode(400, "{'reason':'could not logout'}");
+        }
+
+        [HttpPut]
+        public IActionResult test(string name, string email)
+        {
+            MailHandler mail = new MailHandler();
+            mail.SendRegistrationEmail(email, name, "http://localhost:3000");
+            return Ok();
         }
     }
 }

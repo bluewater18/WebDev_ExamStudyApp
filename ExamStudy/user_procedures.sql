@@ -1,5 +1,6 @@
 ﻿DROP TABLE IF EXISTS GroupMembers;
 DROP TABLE IF EXISTS Groups;
+DROP TABLE IF EXISTS UserPasswordReset;
 DROP TABLE IF EXISTS UserTokens;
 DROP TABLE IF EXISTS Users;
 
@@ -14,6 +15,11 @@ DROP PROCEDURE IF EXISTS GetUserByEmail;
 DROP PROCEDURE IF EXISTS UpdateUserPhoto;
 DROP PROCEDURE IF EXISTS GetUserPhotoPath;
 DROP PROCEDURE IF EXISTS UpdateUser;
+DROP PROCEDURE IF EXISTS AddPasswordReset;
+DROP PROCEDURE IF EXISTS UpdatePasswordReset;
+DROP PROCEDURE IF EXISTS GetPasswordReset;
+DROP PROCEDURE IF EXISTS DeletePasswordReset;
+
 
 CREATE TABLE IF NOT EXISTS Users(
 	UserId INT AUTO_INCREMENT,
@@ -31,6 +37,14 @@ KEY (UserToken),
 CONSTRAINT FK_UserToken FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS UserPasswordReset;
+CREATE TABLE IF NOT EXISTS UserPasswordReset(
+	UserId INT NOT NULL,
+	UrlKey VARCHAR(64) NOT NULL,
+	TimeCreated BIGINT NOT NULL,
+	CONSTRAINT FK_UserPassReset FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
+	PRIMARY KEY(UserId)
+);
 
 
 DELIMITER $$
@@ -175,5 +189,58 @@ BEGIN
 	WHERE
 		UserId = p_UserId;
 	SELECT * FROM Users WHERE UserId = p_UserId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `AddPasswordReset`(
+	IN p_UserId INT,
+	IN p_UrlKey VARCHAR(64),
+	IN p_TimeCreated BIGINT
+)
+BEGIN
+	INSERT INTO UserPasswordReset
+	SET
+		UserId = p_UserId,
+		UrlKey = p_UrlKey,
+		TimeCreated = p_TimeCreated;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `UpdatePasswordReset`(
+	IN p_UserId INT,
+	IN p_UrlKey VARCHAR(64),
+	IN p_TimeCreated BIGINT
+)
+BEGIN
+	UPDATE UserPasswordReset
+	SET
+		UrlKey = p_UrlKey,
+		TimeCreated = p_TimeCreated
+	WHERE
+		UserId = p_UserId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `GetPasswordReset`(
+	IN p_UrlKey VARCHAR(64)
+)
+BEGIN
+	SELECT * FROM UserPasswordReset
+	WHERE
+		UrlKey = p_UrlKey;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `DeletePasswordReset`(
+	IN p_UserId INT
+)
+BEGIN
+	DELETE FROM UserPasswordReset
+	WHERE
+		UserId = p_UserId;
 END $$
 DELIMITER ;

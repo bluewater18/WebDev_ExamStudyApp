@@ -16,5 +16,9 @@ namespace ExamStudy.Business.Interfaces
         User GetUserById(int userId);
         string UpdateUserPhoto(int id, string photoPath);
         string GetUserPhotoPath(int userId);
+        string CreateUserResetPasswordKey(string email);
+        bool ConfirmUserResetPassword(string key);
+        User UpdateUserPassword(int userId, string password);
+
     }
 }

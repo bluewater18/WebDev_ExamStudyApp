@@ -20,6 +20,8 @@ import ResourceHome from './ResourceHome';
 import DailyGoals from './DailyGoals';
 import MyCalendar from './MyCalendar';
 import StudyTimer from './StudyTimer';
+import RequestResetPassword from './RequestResetPassword';
+import ResetPassword from './ResetPassword';
 
 class App extends Component {
   render() {
@@ -43,6 +45,9 @@ class App extends Component {
                         <Route path="/group/:groupId" component={GroupHome} />
                         <Route path="/groups/create" component={CreateGroup} />
                         <Route path="/groups/join-code" component={JoinGroupCode} />
+                        <Route path="/reset-password/:resetKey" component={ResetPassword} />
+                        <Route path="/reset-password" component={RequestResetPassword} />
+
 
                         
                         <Route exact path="/" component={Home} />

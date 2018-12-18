@@ -152,5 +152,61 @@ namespace ExamStudy.Business
         {
             return new RandomGenerator().RandomToken();//generate new token
         }
+
+        public string CreateUserResetPasswordKey(string email)
+        {
+            User user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+                throw new CustomNotFoundException("There is no user with that email");
+
+            UserReset userReset = new UserReset
+            {
+                UserId = user.UserId,
+                UrlKey = GenerateToken(),
+                TimeCreated = SecondsSinceEpoch()
+            };
+
+            try
+            {
+                _userRepository.DeleteResetPassword(userReset.UserId);
+            }
+            finally
+            {
+                _userRepository.AddResetPassword(userReset);
+            }
+            return userReset.UrlKey;
+        }
+
+        public bool ConfirmUserResetPassword(string key)
+        {
+            UserReset userReset = _userRepository.GetResetPassword(key);
+            if (userReset.TimeCreated < (SecondsSinceEpoch() - (5 * 60))) {
+                try
+                {
+                    _userRepository.DeleteResetPassword(userReset.UserId);
+                }
+                catch { }
+                return true;
+            }
+            else { 
+                try
+                {
+                    _userRepository.DeleteResetPassword(userReset.UserId);
+                } catch { }
+                return false;
+            }
+        }
+
+        public User UpdateUserPassword(int userId, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        private long SecondsSinceEpoch()
+        {
+            //TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            //return (int)t.TotalSeconds;
+            return DateTimeOffset.Now.ToUnixTimeSeconds();
+        }
     }
 }
