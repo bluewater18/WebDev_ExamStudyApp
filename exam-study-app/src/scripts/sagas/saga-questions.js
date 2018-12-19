@@ -14,7 +14,7 @@ function* addQuestion({payload}) {
         }
         
         yield put({ type: actionConstants.ADD_QUESTION_SUCCESS, payload: createdQuestion });
-        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'New Question Added Successfully!'}})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'New Question Added!'}})
         
     } catch (err) {
         console.log(err)
@@ -45,9 +45,11 @@ function* editQuestion({payload}) {
         }
         
         yield put({type:actionConstants.EDIT_QUESTION_SUCCESS, payload: updatedQuestion})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'Question edited successfully'}})
     } catch(err) {
         console.log(err)
         yield put({type: actionConstants.EDIT_QUESTION_FAILURE})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Question could not be edited'}})
     } 
 }
 

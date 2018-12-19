@@ -18,12 +18,13 @@ export function* editUser({ payload }) {
             editedUser.userImageName = res.UserPhotoPath;
             
         }
-        
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Edited details successsfully"}})
         yield put({ type: actionConstants.EDIT_USER_SUCCESS, payload: editedUser });
         yield put({type:actionConstants.EDIT_USER_RESET_FIELDS})
 
     } catch (err) {
         yield put({ type: actionConstants.EDIT_USER_FAILURE })
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Details could not be edited"}})
     }
 }
 

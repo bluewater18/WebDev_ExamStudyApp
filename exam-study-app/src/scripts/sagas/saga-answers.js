@@ -14,11 +14,12 @@ function* addAnswer({payload}) {
         }
         
         yield put({ type: actionConstants.ADD_ANSWER_SUCCESS, payload: createdAnswer });
-        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'New Answer Added Successfully!'}})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'New Answer Added!'}})
         
     } catch (err) {
         console.log(err)
         yield put({ type: actionConstants.ADD_ANSWER_FAILURE})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Answer could not be added"}})
     }
 }
 
@@ -29,9 +30,11 @@ function* deleteAnswer({payload}) {
         let questionId = payload.questionId;
         yield call(apiDeleteAnswer, answerId, user.token)
         yield put({ type: actionConstants.DELETE_ANSWER_SUCCESS, payload: {answerId: answerId, questionId: questionId} })
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Answer Deleted."}})
     } catch (err) {
         console.log(err)
         yield put({ type: actionConstants.DELETE_ANSWER_FAILURE })
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Answer could not be deleted"}})
     }
 }
 
@@ -45,9 +48,11 @@ function* editAnswer({payload}) {
             updatedAnswer.questionImageName = updatedPhoto.AnswerPhotoPath;
         }
         yield put({type:actionConstants.EDIT_ANSWER_SUCCESS, payload: updatedAnswer})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Answer edited successfully"}})
     } catch(err) {
         console.log(err)
         yield put({type: actionConstants.EDIT_ANSWER_FAILURE})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Answer could not be edited"}})
     } 
 }
 

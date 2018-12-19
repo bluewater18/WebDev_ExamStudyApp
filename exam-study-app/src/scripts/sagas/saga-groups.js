@@ -81,9 +81,11 @@ function* deleteGroup({payload}) {
         yield put({type: actionConstants.DELETE_GROUP_SUCCESS})
         yield call(history.push, '/')
         yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload: true})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Group deleted successfully"}})
     } catch (err){
         console.log(err)
         yield put({type: actionConstants.DELETE_GROUP_FAILURE})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Group could not be deleted"}})
     }
 }
 
@@ -98,10 +100,12 @@ function* editGroup({payload}) {
 
         }
         yield put({type: actionConstants.EDIT_GROUP_SUCCESS, payload: null})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"success", message:"Group edited successfully"}})
         yield call(history.push, "/group/"+payload.group.groupId)
     } catch(err){
         console.log(err)
         yield put({type:actionConstants.EDIT_GROUP_FAILURE})
+        yield put({ type: actionConstants.SHOW_NOTIFIER, payload:{type:"error", message:"Group could not be edited"}})
     }
 }
 

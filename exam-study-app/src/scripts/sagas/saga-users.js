@@ -20,9 +20,11 @@ export function* addUserToGroup({payload}) {
         yield call(apiAddUserToGroup, payload.groupId, payload.user.userId, user.token)
         payload.user.memberType = "MEMBER"
         yield put({type: actionConstants.ADD_USER_TO_GROUP_SUCCESS, payload:payload.user})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'User added to group'}})
     } catch(err) {
         console.log(err);
         yield put({type:actionConstants.ADD_USER_TO_GROUP_FAILURE, payload: null})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'User could not be added to group'}})
     }
 }
 
@@ -38,6 +40,7 @@ export function* userLeaveGroup({payload}) {
     } catch(err) {
         console.log(err);
         yield put({type: actionConstants.LEAVE_GROUP_FAILURE, payload: null})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Error leaving group'}})
     }
 }
 export function* removeUserFromGroup({payload}) {
@@ -45,9 +48,11 @@ export function* removeUserFromGroup({payload}) {
         let user = yield select((state) => state.user)
         yield call(apiLeaveGroup, payload.groupId, payload.user.userId, user.token)
         yield put({type: actionConstants.REMOVE_USER_FROM_GROUP_SUCCESS, payload: payload.user})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'User removed from group'}})
     } catch(err) {
         console.log(err);
         yield put({type: actionConstants.REMOVE_USER_FROM_GROUP_FAILURE, payload: null})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Error removing user from group'}})
     }
 }
 
@@ -57,9 +62,11 @@ export function* joinWithCode({payload}) {
         let group = yield call(apiJoinGroupWithCode, payload.code, payload.userId, user.token)
         yield put({type:actionConstants.JOIN_GROUP_WITH_CODE_SUCCESS})
         yield call(history.push, '/group/'+group.groupId)
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'Joined group successfully'}})
     } catch(err) {
         console.log(err);
         yield put({type: actionConstants.JOIN_GROUP_WITH_CODE_FAILURE})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Could not join group, please make sure the code is correct'}})
     }
 }
 

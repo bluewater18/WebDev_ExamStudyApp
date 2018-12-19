@@ -48,12 +48,14 @@ function* deleteResource({payload}) {
         let user = yield select((state) => state.user)
         yield call(apiDeleteResource, payload.resourceId, user.token)
         yield put({type: actionConstants.DELETE_RESOURCE_SUCCESS, payload:payload.resourceId})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'Resource Deleted'}})
         if(payload.sendHome){
             yield call(history.push,'/group/'+payload.groupId);
         }
     } catch (err){
         console.log(err)
         yield put({type: actionConstants.DELETE_RESOURCE_FAILURE})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Could not delete resource'}})
     }
 }
 
@@ -62,9 +64,11 @@ function* editResource({payload}) {
         let user = yield select((state) => state.user)
         let updatedResource = yield call(apiEditResource, payload, user.token)
         yield put({type: actionConstants.EDIT_RESOURCE_SUCCESS, payload: updatedResource})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'Resource edited successfully'}})
     } catch(err){
         console.log(err)
         yield put({type:actionConstants.EDIT_RESOURCE_FAILURE})
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'error', message: 'Could not edit resource'}})
     }
 }
 

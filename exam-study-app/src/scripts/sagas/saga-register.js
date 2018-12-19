@@ -24,6 +24,7 @@ export function* registerUser({ payload }) {
 
 export function* registerSuccess({ payload }) {
     try{
+        yield put({type: actionConstants.SHOW_NOTIFIER, payload:{type: 'success', message: 'Welcome ' +payload.UserName + ' you have registered successfully'}})
         yield call (history.push,'/')
         yield put({type: actionConstants.REGISTER_SUCCESS_POST_SAGA, payload: payload});
         yield put({type: actionConstants.LEFT_DRAWER_TOGGLE, payload:true})
